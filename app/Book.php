@@ -1,0 +1,27 @@
+<?php
+
+namespace App;
+
+use Illuminate\Database\Eloquent\Model;
+
+class Book extends Model
+{
+    protected $primaryKey = 'ISBN';
+
+    protected $fillable = ['ISBN','title','author','editorial',
+                        'classification','genre','saga','collection','amount'];
+
+    public $timestamps = false;
+
+    protected $table = 'books';
+
+    public function characteristics()
+    {
+        return $this->belongsToMany(Characteristic::class);
+    }
+
+    public function classification()
+    {
+   	    return $this->belongsTo(Classification::class, 'clasificacion');
+    }
+}
