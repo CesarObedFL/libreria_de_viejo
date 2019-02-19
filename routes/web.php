@@ -24,8 +24,12 @@ $this->post('password/reset', 'Auth\ResetPasswordController@reset');
 
 Route::get('/home', 'HomeController@index')->name('home');
 
+// REGISTROS
 Route::resource('user', 'UserController');
-
 Route::resource('book', 'BookController');
-
 Route::resource('classification', 'ClassificationController');
+Route::resource('client', 'ClientController');
+
+// OPERACIONES
+Route::resource('sale', 'SaleController');
+Route::resource('bartering', 'BarteringController');

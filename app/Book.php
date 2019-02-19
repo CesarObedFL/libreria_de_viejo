@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Book extends Model
 {
-    protected $primaryKey = 'ISBN';
+    //protected $primaryKey = 'ISBN';
 
     protected $fillable = ['ISBN','title','author','editorial',
                         'classification','genre','saga','collection','amount'];
@@ -15,9 +15,9 @@ class Book extends Model
 
     protected $table = 'books';
 
-    public function characteristics()
+    public function features()
     {
-        return $this->belongsToMany(Characteristic::class);
+        return $this->belongsToMany(Feature::class);
     }
 
     public function classification()

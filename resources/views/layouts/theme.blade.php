@@ -15,6 +15,9 @@
   <link rel="stylesheet" href="{{ asset('bower_components/bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css') }}">
   <link rel="stylesheet" href="{{ asset('bower_components/bootstrap-daterangepicker/daterangepicker.css') }}">
   <link rel="stylesheet" href="{{ asset('plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.min.css') }}">
+
+  @yield('styles')
+
 </head>
 <body class="hold-transition skin-blue sidebar-mini">
 
@@ -96,8 +99,8 @@
             </span>
           </a>
           <ul class="treeview-menu">
-            <li><a href="{{ route(/*'sale.create'*/'home') }}"><i class="fa fa-circle-o"></i> Libros</a></li>
-            <li><a href=""><i class="fa fa-circle-o"></i> Plantas</a></li>
+            <li><a href="{{ route('sale.create') }}"><i class="fa fa-circle-o"></i> Libros</a></li>
+            <!-- <li><a href=""><i class="fa fa-circle-o"></i> Plantas</a></li> -->
           </ul>
         </li>
         <li class="treeview">
@@ -109,8 +112,8 @@
             </span>
           </a>
           <ul class="treeview-menu">
-            <li><a href="{{ route(/*'barter.create'*/'home') }}"><i class="fa fa-circle-o"></i> Realizar</a></li>
-            <li><a href="{{ route(/*'barter.index'*/'home') }}"><i class="fa fa-circle-o"></i> Mostrar</a></li>
+            <li><a href="{{ route('bartering.create') }}"><i class="fa fa-circle-o"></i> Realizar</a></li>
+            <li><a href="{{ route('bartering.index') }}"><i class="fa fa-circle-o"></i> Mostrar</a></li>
           </ul>
         </li>
         <li class="treeview">
@@ -149,13 +152,13 @@
           <a href="{{ route('book.index') }}"><i class="fa fa-book"></i><span> Libros </span></a>
         </li>
         <li>
-          <a href="{{ route(/*'plant.index'*/'home') }}"><i class="fa fa-pagelines"></i><span> Plantas </span></a>
+          <!-- <a href="{ { route(/*'plant.index'*/'home') }}"><i class="fa fa-pagelines"></i><span> Plantas </span></a> -->
         </li>
         <li>
           <a href="{{ route('user.index') }}"><i class="fa fa-users"></i><span> Usuarios </span></a>
         </li>
         <li>
-          <a href="{{ route(/*'client.index'*/'home') }}"><i class="fa fa-user-plus"></i><span> Clientes </span></a>
+          <a href="{{ route('client.index') }}"><i class="fa fa-user-plus"></i><span> Clientes </span></a>
         </li>
         <li>
           <a href="{{ route('classification.index') }}"><i class="fa fa-tags"></i><span> Clasificaciones</span></a>
@@ -163,7 +166,7 @@
       </ul>
       <ul class="sidebar-menu" data-widget="tree">
         <li class="header"><i class="fa fa-chevron-right"></i> DOCUMENTACIÓN </li>
-        <li><a href="#"><i class="fa fa-search"></i><span> Busquedas </span></a></li>
+        <!-- <li><a href="#"><i class="fa fa-search"></i><span> Busquedas </span></a></li> -->
         <li><a href="https://adminlte.io/docs"><i class="fa fa-info"></i> <span>Documentación </span></a></li>
       </ul>
     </section>
@@ -179,7 +182,6 @@
         @if(session()->has('flash'))
           <div class="alert alert-info">{{ session('flash') }} </div>
         @endif
-        <!-- @ include('flash::message') -->
       </div>
       @yield('content-header')
     </section>
@@ -189,7 +191,7 @@
 
       <div class="row"> <!-- DIV para el carrusel de imagenes (home.blade.php) -->
         <div class="col-md-10">
-          @yield('H')
+          @yield('H')  <!-- home.blade.php : carrucel -->
         </div>
       </div>
 
@@ -307,6 +309,7 @@
 
 @section('js')
 @show
+@yield('scripts')
 
 </body>
 </html>

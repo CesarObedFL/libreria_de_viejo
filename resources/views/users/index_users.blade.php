@@ -2,6 +2,28 @@
 
 @section('title', 'Usuarios')
 
+@section('styles')
+    <link rel="stylesheet" href="{{ asset('bower_components/datatables.net-bs/css/dataTables.bootstrap.min.css') }}">
+@endsection
+
+@section('scripts')
+    <script src="{{ asset('bower_components/datatables.net/js/jquery.dataTables.min.js') }}"></script>
+    <script src="{{ asset('bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js') }}"></script>
+    <script src="{{ asset('bower_components/jquery-slimscroll/jquery.slimscroll.min.js') }}"></script>
+    <script>
+      $(function () {
+        $('#usersTable').DataTable({
+          'paging'      : true,
+          'lengthChange': true,
+          'searching'   : true,
+          'ordering'    : true,
+          'info'        : true,
+          'autoWidth'   : true
+        })
+      })
+    </script>
+@endsection
+
 @section('content-header')
 	<h1>
 		<div class="col-md-8"><strong>Lista de Usuarios</strong></div>
@@ -25,7 +47,7 @@
         </div>
 
 	@else
-		<table class="table table-hover text-center">
+		<table id="usersTable" class="table table-bordered table-striped">
 	        <thead>
 	            <tr class="success">
 	                <th> ID </th>
