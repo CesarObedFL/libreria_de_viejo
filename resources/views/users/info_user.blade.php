@@ -15,7 +15,6 @@
         <div class="box box-solid">
             <div class="box-header with-border">
                 <h1 class="box-title"> {{ $USER->getUserRoleAttribute() }} </h1>
-                <i class="fa fa-text-width"></i>
             </div>
             <div class="box-body">
                 <dl class="dl-horizontal">
@@ -33,8 +32,6 @@
                     <div class="box-footer">
                         <a class="btn btn-primary col-md-4" href="{{ route('user.index') }}"> Aceptar </a>
                         <a class="btn btn-success col-md-4" href="{{ route('user.edit', $USER->id) }}"> Editar </a>
-                        <!--<a href="users/edit_user" class="btn btn-success col-md-4" data-toggle="modal" data-target="#edit_user"> Editar </a>
-                        @ include('users.edit_user') -->
                         <button type="submit" class="btn btn-danger col-md-4"> Eliminar </button>
                     </div>
                 </form>

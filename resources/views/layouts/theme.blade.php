@@ -10,10 +10,10 @@
   <link rel="stylesheet" href="{{ asset('bower_components/Ionicons/css/ionicons.min.css') }}">
   <link rel="stylesheet" href="{{ asset('dist/css/AdminLTE.min.css') }}">
   <link rel="stylesheet" href="{{ asset('dist/css/skins/_all-skins.min.css') }}">
-  <link rel="stylesheet" href="{{ asset('bower_components/morris.js/morris.css') }}">
-  <link rel="stylesheet" href="{{ asset('bower_components/jvectormap/jquery-jvectormap.css') }}">
-  <link rel="stylesheet" href="{{ asset('bower_components/bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css') }}">
-  <link rel="stylesheet" href="{{ asset('bower_components/bootstrap-daterangepicker/daterangepicker.css') }}">
+  <!-- <link rel="stylesheet" href="{ { asset('bower_components/morris.js/morris.css') }}"> -->
+  <!-- <link rel="stylesheet" href="{ { asset('bower_components/jvectormap/jquery-jvectormap.css') }}"> -->
+  <!-- <link rel="stylesheet" href="{ { asset('bower_components/bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css') }}"> -->
+  <!-- <link rel="stylesheet" href="{ { asset('bower_components/bootstrap-daterangepicker/daterangepicker.css') }}"> -->
   <link rel="stylesheet" href="{{ asset('plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.min.css') }}">
 
   @yield('styles')
@@ -152,7 +152,7 @@
           <a href="{{ route('book.index') }}"><i class="fa fa-book"></i><span> Libros </span></a>
         </li>
         <li>
-          <!-- <a href="{ { route(/*'plant.index'*/'home') }}"><i class="fa fa-pagelines"></i><span> Plantas </span></a> -->
+          <a href="{{ route('plant.index') }}"><i class="fa fa-pagelines"></i><span> Plantas </span></a>
         </li>
         <li>
           <a href="{{ route('user.index') }}"><i class="fa fa-users"></i><span> Usuarios </span></a>
@@ -280,20 +280,20 @@
 <!-- Bootstrap 3.3.7 -->
 <script src="{{ asset('bower_components/bootstrap/dist/js/bootstrap.min.js') }}"></script>
 <!-- Morris.js charts -->
-<script src="{{ asset('bower_components/raphael/raphael.min.js') }}"></script>
-<script src="{{ asset('bower_components/morris.js/morris.min.js') }}"></script>
+<!-- <script src="{ { asset('bower_components/raphael/raphael.min.js') }}"></script> -->
+<!-- <script src="{ { asset('bower_components/morris.js/morris.min.js') }}"></script> -->
 <!-- Sparkline -->
-<script src="{{ asset('bower_components/jquery-sparkline/dist/jquery.sparkline.min.js') }}"></script>
+<!-- <script src="{ { asset('bower_components/jquery-sparkline/dist/jquery.sparkline.min.js') }}"></script> -->
 <!-- jvectormap -->
-<script src="{{ asset('plugins/jvectormap/jquery-jvectormap-1.2.2.min.js') }}"></script>
-<script src="{{ asset('plugins/jvectormap/jquery-jvectormap-world-mill-en.js') }}"></script>
+<!-- <script src="{ { asset('plugins/jvectormap/jquery-jvectormap-1.2.2.min.js') }}"></script>
+<script src="{ { asset('plugins/jvectormap/jquery-jvectormap-world-mill-en.js') }}"></script> -->
 <!-- jQuery Knob Chart -->
-<script src="{{ asset('bower_components/jquery-knob/dist/jquery.knob.min.js') }}"></script>
+<!-- <script src="{ { asset('bower_components/jquery-knob/dist/jquery.knob.min.js') }}"></script> -->
 <!-- daterangepicker -->
-<script src="{{ asset('bower_components/moment/min/moment.min.js') }}"></script>
-<script src="{{ asset('bower_components/bootstrap-daterangepicker/daterangepicker.js') }}"></script>
+<!-- <script src="{ { asset('bower_components/moment/min/moment.min.js') }}"></script> -->
+<!-- <script src="{ { asset('bower_components/bootstrap-daterangepicker/daterangepicker.js') }}"></script> -->
 <!-- datepicker -->
-<script src="{{ asset('bower_components/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js') }}"></script>
+<!-- <script src="{ { asset('bower_components/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js') }}"></script> -->
 <!-- Bootstrap WYSIHTML5 -->
 <script src="{{ asset('plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.all.min.js') }}"></script>
 <!-- Slimscroll -->

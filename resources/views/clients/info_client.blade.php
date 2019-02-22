@@ -15,7 +15,6 @@
         <div class="box box-solid">
             <div class="box-header with-border">
                 <h1 class="box-title"> {{ $CLIENT->id }} : {{ $CLIENT->name }} </h1>
-                <!-- <i class="fa fa-text-width"></i> -->
             </div>
             <div class="box-body">
                 <dl class="dl-horizontal">
@@ -33,7 +32,7 @@
                     <input type="hidden" name="_method" value="DELETE">
                     <div class="box-footer">
                         <a class="btn btn-primary col-md-4" href="{{ route('client.index') }}"> Aceptar </a>
-                        <!-- <a class="btn btn-success col-md-4" href="{ { route('book.edit', $BOOK->ID) }}"> Editar </a> -->
+                        <a class="btn btn-success col-md-4" href="{{ route('client.edit', $CLIENT->id) }}"> Editar </a>
                         <button type="submit" class="btn btn-danger col-md-4"> Eliminar </button>
                     </div>
                 </form>

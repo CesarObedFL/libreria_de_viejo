@@ -12,6 +12,6 @@ $factory->define(App\Book::class, function(Faker $faker) {
 		'genre' => $faker->lexify('Genre ??????'),
 		'saga' => $faker->lexify('Saga ??????'),
 		'collection' => $faker->lexify('Coll ??????'),
-		'amount' => $faker->numberBetween($min = 1, $max = 5),
+		'stock' => $faker->numberBetween($min = 1, $max = 5),
 	];
 });

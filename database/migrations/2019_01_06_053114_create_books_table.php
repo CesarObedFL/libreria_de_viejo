@@ -19,7 +19,7 @@ class CreateBooksTable extends Migration
             $table->string('genre');
             $table->string('saga');
             $table->string('collection');
-            $table->unsignedInteger('amount');
+            $table->unsignedInteger('stock');
         });
     }
 

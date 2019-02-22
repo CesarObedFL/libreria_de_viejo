@@ -27,7 +27,7 @@
                     <dt>Género:</dt><dd>{{ $BOOK->genre }}</dd>
                     <dt>Saga:</dt><dd>{{ $BOOK->saga }}</dd>
                     <dt>Colección:</dt><dd>{{ $BOOK->collection }}</dd>
-                    <dt>Cantidad:</dt><dd>{{ $BOOK->amount }}</dd>
+                    <dt>Stock:</dt><dd>{{ $BOOK->stock }}</dd>
                     <dt>Registro:</dt><dd>{{ $BOOK->ID }}</dd>
                 </dl>
             </div>
@@ -39,7 +39,7 @@
                     <input type="hidden" name="_method" value="DELETE">
                     <div class="box-footer">
                         <a class="btn btn-primary col-md-4" href="{{ route('book.index') }}"> Aceptar </a>
-                        <!-- <a class="btn btn-success col-md-4" href="{ { route('book.edit', $BOOK->ID) }}"> Editar </a> -->
+                        <a class="btn btn-success col-md-4" href="{{ route('book.edit', $BOOK->ID) }}"> Editar </a>
                         <button type="submit" class="btn btn-danger col-md-4"> Eliminar </button>
                     </div>
                 </form>

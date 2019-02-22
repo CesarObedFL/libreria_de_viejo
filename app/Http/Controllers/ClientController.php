@@ -25,8 +25,8 @@ class ClientController extends Controller
     {
         $validator = Validator::make($request->all(), [
             'name' => 'required',
-            'email' => 'required',
-            'phone' => 'required',
+            'email' => 'required|unique:clients',
+            'phone' => 'required|min:8',
             'interests' => 'required',
             'type' => 'required',
         ]);
@@ -47,18 +47,31 @@ class ClientController extends Controller
 
     public function edit($id)
     {
-        //
+        $CLIENT = Client::findOrFail($id);
+        return view('clients.edit_client', compact('CLIENT'));
     }
 
     public function update(Request $request, $id)
     {
-        //
+        $validator = Validator::make($request->all(), [
+            'name' => 'required',
+            'email' => 'required|unique:clients',
+            'phone' => 'required|min:8',
+            'type' => 'required',
+            'interests' => 'required'
+        ]);
+
+        if($validator->fails()) {
+            return redirect()->back()->withErrors($validator->errors())->withInput();
+        }
+
+        Client::where('id',$id)->update($request->except('_token','_method'));
+        return redirect()->action('ClientController@show',$id)->with('edit','El cliente se ha modificado exitosamente!...');
     }
 
     public function destroy($id)
     {
-        $CLIENT = Client::findOrFail($id);
-        $CLIENT->delete();
+        $CLIENT = Client::findOrFail($id)->delete();
         return redirect()->action('ClientController@index')->with('delete', 'El cliente se ha eliminado exitosamente!...');
     }
 }

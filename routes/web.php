@@ -2,9 +2,7 @@
 
 Route::get('/', function () {
     return view('welcome');
-});
-
-//Auth::routes();
+})->name('welcome');
 
 // Authentication Routes...
 $this->get('login', 'Auth\LoginController@showLoginForm')->name('login');
@@ -25,10 +23,11 @@ $this->post('password/reset', 'Auth\ResetPasswordController@reset');
 Route::get('/home', 'HomeController@index')->name('home');
 
 // REGISTROS
-Route::resource('user', 'UserController');
-Route::resource('book', 'BookController');
-Route::resource('classification', 'ClassificationController');
-Route::resource('client', 'ClientController');
+Route::resource('user', 'UserController')->middleware('auth');
+Route::resource('book', 'BookController')->middleware('auth');
+Route::resource('classification', 'ClassificationController')->middleware('auth');
+Route::resource('client', 'ClientController')->middleware('auth');
+Route::resource('plant', 'PlantController')->middleware('auth');
 
 // OPERACIONES
 Route::resource('sale', 'SaleController');

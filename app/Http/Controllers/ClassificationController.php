@@ -40,43 +40,36 @@ class ClassificationController extends Controller
 
     public function show($id)
     {
-        $CLASS = Classification::find($id);
+        $CLASS = Classification::findOrFail($id);
         return view('classifications.info_class', compact('CLASS','id'));
     }
 
     public function edit($id)
     {
-        $CLASS = Classification::find($id);
-        return view('classifications.edit_class')->with(['CLASS' => $CLASS]);
+        $CLASS = Classification::findOrFail($id);
+        return view('classifications.edit_class', compact('CLASS','id'));
     }
 
     public function update(Request $request, $id)
     {
-        //Classification::where('id', $id)->update($request->except('_token','_method'));
-        //return redirect()->action('ClassificationController@show', $id);
+        
         $validator = Validator::make($request->all(), [
             'class'     => 'required',
             'location' => 'required',
-            'type'      => 'required',
+            //'type'      => 'required',
         ]);
 
         if ($validator->fails()) {
             return redirect()->back()->withErrors($validator->errors())->withInput();
-
-        } else {
-            $CLASS = Classification::find($id);
-            $CLASS->class = $request->get('class');
-            $CLASS->location = $request->get('location');
-            $CLASS->type = $request->get('type');
-            $CLASS->update();
-            return view('classifications.info_class')->with(['CLASS' => $CLASS]);
         }
+
+        Classification::where('id',$id)->update($request->except('_token','_method'));
+        return redirect()->action('ClassificationController@show',$id)->with('edit','El cliente se ha modificado exitosamente!...');
     }
 
     public function destroy($id)
     {
-        $CLASS = Classification::find($id);
-        $CLASS->delete();
+        $CLASS = Classification::findOrFail($id)->delete();
         return redirect()->action('ClassificationController@index')->with('delete', 'La clase se ha eliminado exitosamente!...');
     }
 }

@@ -9,7 +9,7 @@ class Book extends Model
     //protected $primaryKey = 'ISBN';
 
     protected $fillable = ['ISBN','title','author','editorial',
-                        'classification','genre','saga','collection','amount'];
+                        'classification','genre','saga','collection','stock'];
 
     public $timestamps = false;
 

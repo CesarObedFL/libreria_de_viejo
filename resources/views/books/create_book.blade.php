@@ -60,8 +60,8 @@
 					</select>
             	</div>
             	<div class="col-md-4">
-					<label for="amount"> Cantidad </label>
-					<input class="form-control" type="text" name="amount" id="amount" value="{{ old('amount') }}">
+					<label for="stock"> Cantidad </label>
+					<input class="form-control" type="text" name="stock" id="stock" value="{{ old('amount') }}">
 				</div>
 				<div class="col-md-4">
 					<label for="price"> Precio </label>
