@@ -39,7 +39,7 @@ class BarteringController extends Controller
 
     public function show($id)
     {
-        $BARTERING = Bartering::find($id);
+        $BARTERING = Bartering::findOrFail($id);
         return view('bartering.info_bartering', compact('BARTERING'));
     }
 

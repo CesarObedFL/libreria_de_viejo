@@ -14,8 +14,8 @@ class Classification extends Model
 
     public $timestamps = false;
 
-    public function book()
+    public function books()
     {
-    	return $this->hasMany(Book::class, 'ISBN', 'local_key');
+    	return $this->hasMany('App\Book', 'classification', 'id');
     }
 }

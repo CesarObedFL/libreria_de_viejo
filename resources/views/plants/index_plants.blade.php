@@ -43,7 +43,7 @@
     @if($PLANTS->isEmpty())
         <div class="col-md-12">
             <div class="alert alert-warning">
-                <i class="icon fa fa-warning"></i> No hay libros registrados...
+                <i class="icon fa fa-warning"></i> No hay plantas registradas...
             </div>
         </div>
     

@@ -3,14 +3,14 @@
 @section('title', 'Edición de Libro')
 
 @section('content-header')
-	<h1><div class="col-md-8"><strong> Edición de Libro : {{ $BOOK->ID }} </strong></div></h1><hr>
+	<h1><div class="col-md-8"><strong> Edición de Libro : {{ $BOOK->id }} </strong></div></h1><hr>
 @endsection
 
 @section('content')
 	
 	@include('partials.errors')
 
-	<form role="form" action="{{ route('book.update', $BOOK->ID) }}" method="POST">
+	<form role="form" action="{{ route('book.update', $BOOK->id) }}" method="POST">
 		{{ csrf_field() }}
 		<div class="box-body">
 			<input name="_method" type="hidden" value="PATCH">
@@ -24,18 +24,14 @@
 				<input type="text" class="form-control" id="author" name="author" value="{{ $BOOK->author }}">
 			</div>
 			<div class="form-group">
-				<div class="col-md-4">
+				<div class="col-md-6">
 					<label for="editoral"> Editorial </label>
 					<input type="text" class="form-control" id="editorial" name="editorial" value="{{ $BOOK->editorial }}">
 				</div>
-				<div class="col-md-4">
-					<label for="genre"> Género </label>
-					<input type="text" class="form-control" id="genre" name="genre" value="{{ $BOOK->genre }}">
-				</div>
-				<div class="col-md-4">
+				<div class="col-md-6">
 					<label for="classification"> Clasificación </label>
 	                <select class="form-control select2" style="width:100%;" name="classification" id="classification" value="{{ $BOOK->classification }}">
-	                  	<option selected="disabled"> </option>
+	                  	<option value="{{ $BOOK->classification }}"> {{-- $BOOK->getClassification($BOOK->classification) --}}</option>
 	                  	@foreach($CLASSES as $CLASS)
 	                  		<option value="{{ $CLASS->id }}"> {{ $CLASS->class }}</option>
 						@endforeach
@@ -43,15 +39,11 @@
             	</div>
 			</div>
 			<div class="form-group">
-				<div class="col-md-4">
-					<label for="stock"> Stock </label>
-					<input type="text" class="form-control" id="stock" name="stock" value="{{ $BOOK->stock }}">
+				<div class="col-md-6">
+					<label for="genre"> Género </label>
+					<input type="text" class="form-control" id="genre" name="genre" value="{{ $BOOK->genre }}">
 				</div>
-				<div class="col-md-4">
-					<label for="saga"> Saga </label>
-					<input type="text" class="form-control" id="saga" name="saga" value="{{ $BOOK->saga }}">
-				</div>
-				<div class="col-md-4">
+				<div class="col-md-6">
 					<label for="collection"> Colección </label>
 					<input type="text" class="form-control" id="collection" name="collection" value="{{ $BOOK->collection }}">
 				</div>
@@ -59,7 +51,7 @@
 		</div>
 		<div class="box-footer">
 			<button type="submit" class="btn btn-primary btn-block"> Guardar </button>
-			<a class="btn btn-danger btn-block" href="{{ route('book.show', $BOOK->ID) }}"> Cancelar </a>
+			<a class="btn btn-danger btn-block" href="{{ route('book.show', $BOOK->id) }}"> Cancelar </a>
 		</div>
 	</form>
 		

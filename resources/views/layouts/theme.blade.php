@@ -4,7 +4,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <title>Librería de Viejo | @yield('title')</title>
 
-  <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+  <meta content="width=device-width, height=device-height, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
   <link rel="stylesheet" href="{{ asset('bower_components/bootstrap/dist/css/bootstrap.min.css') }}">
   <link rel="stylesheet" href="{{ asset('bower_components/font-awesome/css/font-awesome.min.css') }}">
   <link rel="stylesheet" href="{{ asset('bower_components/Ionicons/css/ionicons.min.css') }}">
@@ -36,6 +36,23 @@
       <div class="navbar-custom-menu">
         <ul class="nav navbar-nav">
           @if(Auth::check())
+
+            <!-- <li class="dropdown user user-menu">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                <i class="fa fa-money"></i>
+                <span> Ventas </span>
+              </a>
+              <ul class="dropdown-menu">
+                <li class="user-body">
+                  <div class="row">
+                    <div class="col-xs-6 text-center"><a href="{ { route('BookSale') }}"><i class="fa fa-circle-o"></i> Libros</a></div>
+                    <div class="col-xs-6 text-center"><a href="{ { route('PlantSale') }}"><i class="fa fa-circle-o"></i> Plantas</a></div>
+                  </div>
+                </li>
+              </ul>
+            </li> -->
+
+            <!----------------------------- USER MENU ------------------------------>
             <li class="dropdown user user-menu">
               <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                 <span class="hidden-xs">{{ Auth::user()->getUserRoleAttribute() }}</span>
@@ -57,6 +74,8 @@
                 </li>
               </ul>
             </li>
+            <!----------------------------- USER MENU ------------------------------>
+
             <li>
               <a href="#" data-toggle="control-sidebar"><i class="fa fa-gears"></i></a>
             </li>
@@ -99,8 +118,8 @@
             </span>
           </a>
           <ul class="treeview-menu">
-            <li><a href="{{ route('sale.create') }}"><i class="fa fa-circle-o"></i> Libros</a></li>
-            <!-- <li><a href=""><i class="fa fa-circle-o"></i> Plantas</a></li> -->
+            <li><a href="{{ route('BookSale') }}"><i class="fa fa-circle-o"></i> Libros</a></li>
+            <li><a href="{{ route('PlantSale') }}"><i class="fa fa-circle-o"></i> Plantas</a></li>
           </ul>
         </li>
         <li class="treeview">
@@ -142,27 +161,20 @@
             <li><a href="{{ route(/*'loan.index'*/'home') }}"><i class="fa fa-circle-o"></i> Mostrar</a></li>
           </ul>
         </li>
-        <!-- <li><a href="{ route('home') }}"><i class="fa fa-mail-reply"></i><span> Devoluciones</span></a></li>
-        <li><a href="{ route('home') }}"><i class="fa fa-calculator"></i><span> Corte de Caja</span></a></li>-->
+
+        <li><a href="{{ route('home') }}"><i class="fa fa-mail-reply"></i><span> Devoluciones</span></a></li>
+        <li><a href="{{ route('home') }}"><i class="fa fa-calculator"></i><span> Corte de Caja</span></a></li>
+        <li><a href="{{ route('home') }}"><i class="fa fa-barcode"></i><span> Códigos de Barras</span></a></li>
       </ul>
 
       <ul class="sidebar-menu" data-widget="tree">
         <li class="header"><i class="fa fa-chevron-right"></i> REGISTROS </li>
-        <li>
-          <a href="{{ route('book.index') }}"><i class="fa fa-book"></i><span> Libros </span></a>
+        <li><a href="{{ route('book.index') }}"><i class="fa fa-book"></i><span> Libros </span></a></li>
+        <li><a href="{{ route('plant.index') }}"><i class="fa fa-pagelines"></i><span> Plantas </span></a></li>
+        <li><a href="{{ route('user.index') }}"><i class="fa fa-user-plus"></i><span> Usuarios </span></a></li>
+        <li><a href="{{ route('client.index') }}"><i class="fa fa-users"></i><span> Clientes </span></a>
         </li>
-        <li>
-          <a href="{{ route('plant.index') }}"><i class="fa fa-pagelines"></i><span> Plantas </span></a>
-        </li>
-        <li>
-          <a href="{{ route('user.index') }}"><i class="fa fa-users"></i><span> Usuarios </span></a>
-        </li>
-        <li>
-          <a href="{{ route('client.index') }}"><i class="fa fa-user-plus"></i><span> Clientes </span></a>
-        </li>
-        <li>
-          <a href="{{ route('classification.index') }}"><i class="fa fa-tags"></i><span> Clasificaciones</span></a>
-        </li>
+        <li><a href="{{ route('classification.index') }}"><i class="fa fa-tags"></i><span> Clasificaciones</span></a></li>
       </ul>
       <ul class="sidebar-menu" data-widget="tree">
         <li class="header"><i class="fa fa-chevron-right"></i> DOCUMENTACIÓN </li>
@@ -259,12 +271,14 @@
        immediately after the control sidebar -->
   <div class="control-sidebar-bg"></div>
 
-  <footer class="main-footer">
-    <div class="pull-right hidden-xs">
-      <b>Version</b> 2.4.0
+  <footer>
+    <div align="center">
+      <p class="text-muted">CASACEM - Av Chapultepec Sur 376, Obrera, 44140, Guadalajara, Jalisco, Mexico. - Tel: 01 33 3615 4499</p>
+      <a href="https://www.facebook.com/casacemgdl/" target="_black"><img src="{{ asset('dist/img/facebook.png') }}" width="30" height="30" align="center"></img></a>
+      <!--<a href="https://www.instagram.com" target="_black"><img src="./Recursos/imagenes/instagram.jpg" width="30" height="30" align="right"></img></a></td>-->
     </div>
-    <strong> Copyright &copy; 2014-2016 <a href="https://adminlte.io">Almsaeed Studio</a>. </strong> All rights reserved.
   </footer>
+  <br>
 
 </div>
 <!-- ./wrapper -->
@@ -302,14 +316,8 @@
 <script src="{{ asset('bower_components/fastclick/lib/fastclick.js') }}"></script>
 <!-- AdminLTE App -->
 <script src="{{ asset('dist/js/adminlte.min.js') }}"></script>
-<!-- AdminLTE dashboard demo (This is only for demo purposes) -->
-<!-- <script src="{ { asset('dist/js/pages/dashboard.js') }}"></script> -->
-<!-- AdminLTE for demo purposes -->
-<!-- <script src="{ { asset('dist/js/demo.js') }}"></script> -->
 
-@section('js')
-@show
-@yield('scripts')
+@yield('scripts') {{-- PARA CARGAR LOS SCRIPS PROPIOS DE CADA VISTA --}}
 
 </body>
 </html>

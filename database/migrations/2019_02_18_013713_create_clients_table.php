@@ -16,7 +16,6 @@ class CreateClientsTable extends Migration
             $table->string('phone');
             $table->string('interests');
             $table->enum('type',['Interno','Externo']);
-            $table->timestamps();
         });
     }
 

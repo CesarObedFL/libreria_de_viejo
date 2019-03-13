@@ -10,8 +10,6 @@ $factory->define(App\Book::class, function(Faker $faker) {
 		'editorial' => $faker->company(),
 		'classification' => $faker->numberBetween($min = 1, $max = 15),
 		'genre' => $faker->lexify('Genre ??????'),
-		'saga' => $faker->lexify('Saga ??????'),
 		'collection' => $faker->lexify('Coll ??????'),
-		'stock' => $faker->numberBetween($min = 1, $max = 5),
 	];
 });

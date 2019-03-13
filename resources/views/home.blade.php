@@ -2,7 +2,7 @@
 
 @section('title', 'Home')
 
-@section('H') <!-- VISTA PARA EL CARRUCEL DE IMAGENES -->
+@section('content') <!-- VISTA PARA EL CARRUCEL DE IMAGENES -->
 
     <div class="box-body">
         <div id="carousel-example-generic" class="carousel slide" data-ride="carousel">

@@ -16,7 +16,7 @@
           'paging'      : true,
           'lengthChange': true,
           'searching'   : true,
-          'ordering'    : true,
+          'ordering'    : true, 
           'info'        : true,
           'autoWidth'   : true
         })
@@ -29,7 +29,7 @@
 		<div class="col-md-8"><strong>Lista de Clasificaciones</strong></div>
 		<div class="col-md-4">
 			<a class="btn btn-success btn-block pull-right" href="{{ route('classification.create') }}">
-			<i class="fa fa-barcode"></i> NUEVO REGISTRO </a>
+			<i class="fa fa-pencil-square-o"></i> NUEVO REGISTRO </a>
 		</div>
 	</h1> <hr>
 @endsection

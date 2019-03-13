@@ -17,19 +17,10 @@
                 <h1 class="box-title"> {{ $CLASS->id }} : {{ $CLASS->class }} </h1>
             </div>
             <div class="box-body">
-                {{-- <div class="col-md-12"> --}}
-                    <dl class="dl-horizontal">
-                        <dt>Ubicación : </dt><dd>{{ $CLASS->location }}</dd>
-                        <dt>Tipo : </dt><dd>{{ $CLASS->type }}</dd>
-                    </dl>
-                {{-- </div> --}}
-                {{-- <div class="col-md-6">
-                    <dl class="dl-horizontal">
-                        @foreach($CLASS->books as $b)
-                             <dt>-></dt><dd>{{ $b->ISBN }} : {{ $b->title }}</dd>
-                        @endforeach
-                    </dl>
-                </div> --}}
+                <dl class="dl-horizontal">
+                    <dt>Ubicación : </dt><dd>{{ $CLASS->location }}</dd>
+                    <dt>Tipo : </dt><dd>{{ $CLASS->type }}</dd>
+                </dl>
             </div>
         </div>
         <div class="col-md-13">

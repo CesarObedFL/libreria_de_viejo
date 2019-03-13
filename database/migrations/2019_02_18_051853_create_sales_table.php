@@ -16,7 +16,7 @@ class CreateSalesTable extends Migration
             $table->unsignedInteger('amount'); 
             $table->unsignedInteger('discount');
             $table->float('price',5,2);
-            //$table->enum('type',['Libros', 'Planta']);
+            $table->enum('type',['Libros', 'Plantas']);
         });
     }
 

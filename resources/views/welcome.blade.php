@@ -72,11 +72,12 @@
 </body>
 
 <footer>
-  <div class="pull-right">
-    <b class="text-muted">Version 2.4.0 </b>
+  <div align="center">
+    <p class="text-muted">CASACEM - Av Chapultepec Sur 376, Obrera, 44140, Guadalajara, Jalisco, Mexico. - Tel: 01 33 3615 4499</p>
+    <a href="https://www.facebook.com/casacemgdl/" target="_black"><img src="{{ asset('dist/img/facebook.png') }}" width="30" height="30" align="center"></img></a>
+    <!--<a href="https://www.instagram.com" target="_black"><img src="./Recursos/imagenes/instagram.jpg" width="30" height="30" align="right"></img></a></td>-->
   </div>
-  <strong class="text-muted"> Copyright &copy; 2014-2016 <a href="https://adminlte.io">Almsaeed Studio</a>. </strong> <b class="text-muted">All rights reserved.</b>
-  <br>
+  <hr>
 </footer>
 
 <script src="{{ asset('bower_components/jquery/dist/jquery.min.js') }}"></script>

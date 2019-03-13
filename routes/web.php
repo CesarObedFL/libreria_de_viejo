@@ -23,12 +23,24 @@ $this->post('password/reset', 'Auth\ResetPasswordController@reset');
 Route::get('/home', 'HomeController@index')->name('home');
 
 // REGISTROS
-Route::resource('user', 'UserController')->middleware('auth');
-Route::resource('book', 'BookController')->middleware('auth');
+Route::resource('user','UserController')->middleware('auth');
+Route::put('book/updateStock','BookController@updateStock')->name('book.updateStock')->middleware('auth');
+Route::get('book/search','BookController@search')->name('book.search')->middleware('auth');
+Route::resource('book','BookController')->middleware('auth');
+Route::get('feature/newFeature/{id}','FeatureController@newFeature')->name('feature.newFeature')->middleware('auth');
+Route::resource('feature','FeatureController')->middleware('auth');
 Route::resource('classification', 'ClassificationController')->middleware('auth');
-Route::resource('client', 'ClientController')->middleware('auth');
-Route::resource('plant', 'PlantController')->middleware('auth');
+Route::resource('client','ClientController')->middleware('auth');
+Route::resource('plant','PlantController')->middleware('auth');
 
 // OPERACIONES
-Route::resource('sale', 'SaleController');
-Route::resource('bartering', 'BarteringController');
+
+// VENTAS ///////////////////////////////////////////////////////////////////////
+Route::get('sale/books','SaleController@books')->name('BookSale');
+Route::get('sale/searchBook','SaleController@searchBook')->name('SearchBook');
+Route::get('sale/plants','SaleController@plants')->name('PlantSale');
+Route::get('sale/searchPlant','SaleController@searchPlant')->name('SearchPlant');
+Route::resource('sale','SaleController');
+/////////////////////////////////////////////////////////////////////////////////
+
+Route::resource('bartering','BarteringController');

@@ -13,7 +13,7 @@ class CreatePlantsTable extends Migration
             $table->increments('id');
             $table->string('name', 30);
             $table->float('price');
-            $table->string('image');
+            $table->string('image')->nullable();
             $table->string('tips');
             $table->unsignedInteger('stock');
             $table->unsignedInteger('classification');

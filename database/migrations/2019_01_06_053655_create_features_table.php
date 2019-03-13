@@ -7,19 +7,19 @@ use Illuminate\Database\Migrations\Migration;
 class CreateFeaturesTable extends Migration
 {
 
-    public function up()
+    public function up() 
     {
         Schema::create('features', function (Blueprint $table) {
             $table->increments('id'); // PK
-            //$table->string('ID'); // FK
-            //$table->foreign('ID')->references('ID')->on('books')->onDelete('cascade'); // FK = Libro al que pertenece
-            $table->char('edition');
+            $table->unsignedInteger('book_id');
+            $table->string('edition');
             $table->string('conditions');
-            $table->enum('place', ['libreria', 'almacén', 'exhibición', 'bazar']); // lugar donde se encuentra actualmente el libro
-            $table->string('language');
+            $table->enum('place', ['Libreria', 'Almacén', 'Exhibición', 'Bazar']); // lugar donde se encuentra actualmente el libro
+            $table->string('language')->default('español');
             $table->float('price');
             $table->enum('status', ['Disponible','Prestado']);
-            $table->unsignedInteger('amount');
+            $table->unsignedInteger('stock');
+            $table->foreign('book_id')->references('id')->on('books')->onDelete('cascade');
         });
     }
 

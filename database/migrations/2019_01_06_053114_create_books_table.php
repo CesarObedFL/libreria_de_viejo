@@ -10,16 +10,14 @@ class CreateBooksTable extends Migration
     public function up()
     {
         Schema::create('books', function (Blueprint $table) {
-            $table->increments('ID');
+            $table->increments('id');
             $table->char('ISBN', 15)->unique(); // PK necesita
             $table->string('title');
             $table->string('author');
             $table->string('editorial');
             $table->unsignedInteger('classification'); // FK
-            $table->string('genre');
-            $table->string('saga');
-            $table->string('collection');
-            $table->unsignedInteger('stock');
+            $table->string('genre')->nullable();
+            $table->string('collection')->nullable();
         });
     }
 
