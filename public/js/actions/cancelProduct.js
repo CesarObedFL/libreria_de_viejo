@@ -1,5 +1,5 @@
 $(document).ready(function () {
-	$('.btn-deleteProduct').click(function (e) {
+	$('#btnCancelProduct').click(function (e) {
 		e.preventDefault();
 		if(confirm("¿Deseas cancelar éste registro de la venta?...")) {
 			//var row = $(this).parents('tr');

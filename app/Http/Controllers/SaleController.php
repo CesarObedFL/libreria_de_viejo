@@ -79,4 +79,4 @@ class SaleController extends Controller
         $CLIENTS = Client::all();
         return view('sales.plants.salePlants',compact('CLIENTS','PLANTS','PLANT'));
     }
-}
+} 
