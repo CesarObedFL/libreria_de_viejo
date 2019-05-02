@@ -29,7 +29,7 @@
         <div class="col-md-8"><strong>Lista de Clientes</strong></div>
         <div class="col-md-4">
             <a class="btn btn-success btn-block pull-right" href="{{ route('client.create') }}">
-            <i class="fa  fa-pencil-square-o"></i> NUEVO REGISTRO </a>
+            <i class="fa fa-pencil-square-o"></i> NUEVO REGISTRO </a>
         </div>
     </h1>
     <hr>
@@ -59,7 +59,11 @@
             <tbody>
                 @foreach($CLIENTS as $client)
                     <tr>
-                        <td><a class="btn btn-sm btn-info bg-olive" href="{{ route('client.show', $client->id) }}">{{ $client->id }}</a></td>
+                        @if($client->ID == 1)
+                            <td>{{ $client->ID }}</a></td>
+                        @else
+                            <td><a class="btn btn-sm btn-info bg-olive" href="{{ route('client.show', $client->ID) }}">{{ $client->ID }}</a></td>
+                        @endif
                         <td>{{ $client->name }}</td>
                         <td>{{ $client->type }}</td>
                     </tr>

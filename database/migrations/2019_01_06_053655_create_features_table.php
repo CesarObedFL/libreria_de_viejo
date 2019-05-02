@@ -10,8 +10,8 @@ class CreateFeaturesTable extends Migration
     public function up() 
     {
         Schema::create('features', function (Blueprint $table) {
-            $table->increments('id'); // PK
-            $table->unsignedInteger('book_id');
+            $table->increments('ID'); // PK
+            $table->unsignedInteger('bookID');
             $table->string('edition');
             $table->string('conditions');
             $table->enum('place', ['Libreria', 'Almacén', 'Exhibición', 'Bazar']); // lugar donde se encuentra actualmente el libro
@@ -19,7 +19,7 @@ class CreateFeaturesTable extends Migration
             $table->float('price');
             $table->enum('status', ['Disponible','Prestado']);
             $table->unsignedInteger('stock');
-            $table->foreign('book_id')->references('id')->on('books')->onDelete('cascade');
+            $table->foreign('bookID')->references('ID')->on('books')->onDelete('cascade');
         });
     }
 

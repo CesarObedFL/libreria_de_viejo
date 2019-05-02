@@ -8,7 +8,7 @@ class Sale extends Model
 {
     protected $table = 'sales';
 
-    protected $timestamps = false;
+    public $timestamps = false;
 
     protected $fillable = [ 'invoiceID','product','amount','discount','price', 'type' ];
 

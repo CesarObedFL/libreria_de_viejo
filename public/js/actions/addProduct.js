@@ -1,28 +1,32 @@
-/*$(document).ready(function () {
-	$('#btnAddProduct').click(function (event) {
-		console.log("añadiendo producto...");
-		event.preventDefault();
-		add();
-	});
+function addProduct(jsonObject) {
+	// si hay productos en la tabla habilitar el boton de aceptar
+	$('#btnAccept').removeAttr('disabled');
+	var product = jQuery.parseJSON(jsonObject);
+	products[counter] = JSON.stringify(product);
+	var row = '<tr id="row'+(++counter)+'">'+
+				'<td style="width:5%" class="success">'+counter+'</td>'+
+				'<td style="width:15%">'+product.ID+'</td>'+
+				'<td style="width:30%">'+product.name+'</td>'+
 
-	$('#btnCancelProduct').click(function (event) {
-		console.log("eliminando producto...");
-		event.preventDefault();
-		cancel();
-	});
-});*/
+				'<td><input class="form-control price" type="number" min="5" max="1000"'+
+					' onkeypress="typeNumber(event,2);"'+
+					' name="price" id="price'+counter+'" value="'+product.price+
+					'" style="width:90%;height:90%;" required></td>'+
+				
+				'<td><input class="form-control amount" type="number" min="1" max="'+product.stock+
+					'" onkeypress="typeNumber(event,1);" onblur="validateAmount('+counter+');"'+
+					' name="amount" id="amount'+counter+'" value="1" style="width:90%;height:90%;" required></td>'+
 
+				'<td><input class="form-control discount" type="number" min="0" max="20"'+
+					' onkeypress="typeNumber(event,1)" onblur="validateDiscount('+counter+')"'+
+					' name="discount" id="discount'+counter+'" value="0" style="width:90%;height:90%;"></td>'+
+				
+				'<td><input class="form-control" name="stock" id="stock'+counter+'" value="'+product.stock+
+					'"style="width:90%;height:90%;" readonly></td>'+
 
-/*
-function cancel() {
-	if(confirm("¿Deseas cancelar éste registro de la venta?...")) {
-		//var row = $(this).parents('tr');
-		($(this).parents('tr')).fadeOut(); // se elimina la fila de la tabla de ventas
-		//var id = row.data('id');
-		//var form = $('#form-delete');
-		//var url = form.attr('action').replace(':PLANT_ID',id);
-		//var data = form.serialize();
-
-	} // else
+				'<td><button class="btn btn-danger btn-block" id="btnCancelProduct"'+
+					' onclick="cancelProduct('+counter+');" style="width:90%;height:80%;">X</button></td>'+
+			'</tr>';
+	$('#productsTable').append(row);
+	calculateTotal();
 }
-//*/ 

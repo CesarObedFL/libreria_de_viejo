@@ -1,6 +1,6 @@
 @extends('layouts.theme')
 
-@section('title', 'Clasificaciones')
+@section('title', 'Ventas Realizadas')
 
 @section('styles')
     <link rel="stylesheet" href="{{ asset('bower_components/datatables.net-bs/css/dataTables.bootstrap.min.css') }}">
@@ -12,7 +12,7 @@
     <script src="{{ asset('bower_components/jquery-slimscroll/jquery.slimscroll.min.js') }}"></script>
     <script>
       $(function () {
-        $('#classesTable').DataTable({
+        $('#ventasTable').DataTable({
           'paging'      : true,
           'lengthChange': true,
           'searching'   : true,
@@ -26,11 +26,7 @@
 
 @section('content-header')
 	<h1>
-		<div class="col-md-8"><strong>Lista de Clasificaciones</strong></div>
-		<div class="col-md-4">
-			<a class="btn btn-success btn-block pull-right" href="{{ route('classification.create') }}">
-			<i class="fa fa-barcode"></i> NUEVO REGISTRO </a>
-		</div>
+		<div class="col-md-8"><strong>Ventas Realizadas</strong></div>
 	</h1> <hr>
 @endsection
 
@@ -39,28 +35,34 @@
 	@include('partials.success')
 	@include('partials.delete')
 
-	@if($CLASSES->isEmpty())
+	@if($INVOICES->isEmpty())
         <div class="col-md-12">
             <div class="alert alert-warning">
-                <i class="icon fa fa-warning"></i>No hay classificaciones registradas...
+                <i class="icon fa fa-warning"></i>No hay ventas realizadas...
             </div>
         </div>
 
 	@else
-        <table id="classesTable" class="table table-bordered table-striped">
+        <table id="ventasTable" class="table table-bordered table-striped">
 	        <thead>
 	            <tr class="success">
-	                <th> Clase </th>
-	                <th> Ubicación </th>
-	                <th> Tipo </th>
+	                <th> ID </th>
+	                <th> Fecha </th>
+	                <th> Turno </th>
+	                <th> SubTotal </th>
+	                <th> Total </th>
+	                <th> Monto </th>
 	            </tr>
 	        </thead>
 	        <tbody>
-	            @foreach($CLASSES as $class)
+	            @foreach($INVOICES as $invoice)
 	            <tr>
-	                <td><a class="btn btn-sm btn-block btn-info bg-olive" href="{{ route('classification.show', $class->id) }}">{{ $class->class }}</a></td>
-	                <td>{{ $class->location }}</td>
-	                <td>{{ $class->type }}</td>
+	                <td><a class="btn btn-sm btn-block btn-info bg-olive" href="{{ route('sale.show', $invoice->ID) }}">{{ $invoice->ID }}</a></td>
+	                <td>{{ 'Date' }}</td>
+	                <td>{{ $invoice->turn }}</td>
+	                <td>{{ $invoice->subTotal }}</td>
+	                <td>{{ $invoice->total }}</td>
+	                <td>{{ $invoice->received }}</td>
 	            </tr>
 	            @endforeach
 	        </tbody>

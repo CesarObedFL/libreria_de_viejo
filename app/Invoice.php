@@ -8,7 +8,7 @@ class Invoice extends Model
 {
     protected $table = 'invoices';
 
-    protected $timestamps = false;
+    public $timestamps = false;
 
     protected $fillable = [
         'userID','date','turn','clientID',

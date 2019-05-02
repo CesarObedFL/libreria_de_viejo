@@ -50,15 +50,15 @@
                         @foreach($BOOK->features as $feature)
                             <div class="box-header with-border">
                                 <div class="pull-right">
-                                    <b><a data-toggle="collapse" data-parent="#accordion" href="#collapse{{ $feature->id }}" align="pull-right"> ver detalles </a></b>
-                                    <input type="radio" name="feature_id" class="minimal" value="{{ $feature->id }}"required>
+                                    <b><a data-toggle="collapse" data-parent="#accordion" href="#collapse{{ $feature->ID }}" align="pull-right"> ver detalles </a></b>
+                                    <input type="radio" name="feature_id" class="minimal" value="{{ $feature->ID }}"required>
                                 </div>
                                 Condiciones: {{ $feature->conditions }} &nbsp;::&nbsp; Stock: {{ $feature->stock }}
                             </div>
-                            <div id="collapse{{ $feature->id }}" class="panel-collapse collapse">
+                            <div id="collapse{{ $feature->ID }}" class="panel-collapse collapse">
                                 <div class="box-body">
                                     <dl class="dl-horizontal">
-                                    	<dt>Precio: $</dt><dd>{{ $feature->price }}</dd>
+                                    	<dt>Precio:</dt><dd>{{ "$ ".$feature->price }}</dd>
                                         <dt>Edición:</dt><dd>{{ $feature->edition }}</dd>
                                         <dt>Lenguaje:</dt><dd>{{ $feature->language }}</dd>
                                         <dt>Lugar:</dt><dd>{{ $feature->place }}</dd>
@@ -72,9 +72,9 @@
             </div> {{-- CARACTERÍSTICAS DE LOS LIBROS - MODIFICAR Y ELIMINAR --}}
 
             <div class="col-md-6">
-            	<input name="book_id" type="hidden" value="{{ $BOOK->id }}">
+            	<input name="book_id" type="hidden" value="{{ $BOOK->ID }}">
             	<label for="stock"> Nueva Cantidad </label>
-				<input class="form-control" type="text" name="stock" value="{{ old('stock') }}" required="required">
+				<input class="form-control" type="text" name="stock" id="stock" value="{{ old('stock') }}" required="required">
             </div>
 
 		</div> {{-- box-body --}}
@@ -84,4 +84,8 @@
 		</div>
 	</form>
 
+@endsection
+
+@section('scripts')
+	<script src="{{ asset('js/functions/typeNumber.js') }}"></script>
 @endsection

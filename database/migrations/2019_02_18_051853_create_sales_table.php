@@ -10,13 +10,13 @@ class CreateSalesTable extends Migration
     public function up()
     {
         Schema::create('sales', function (Blueprint $table) {
-            $table->increments('id');
+            $table->increments('ID');
             $table->unsignedInteger('invoiceID'); // FK
             $table->unsignedInteger('productID'); // FK
             $table->unsignedInteger('amount'); 
             $table->unsignedInteger('discount');
             $table->float('price',5,2);
-            $table->enum('type',['Libros', 'Plantas']);
+            $table->enum('type',['Libro', 'Planta']);
         });
     }
 

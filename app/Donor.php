@@ -11,4 +11,14 @@ class Donor extends Model
     protected $fillable = ['institution', 'contact', 'email', 'phone', 'address', 'commercialBusiness'];
 
     public $timestamps = false;
+
+    protected function donations()
+    {
+    	return $this->hasMany('App\Donation','donorID','ID');
+    }
+
+    public function getDonor() 
+    {
+    	return $this->institution.' : '.$this->contact;
+    }
 }

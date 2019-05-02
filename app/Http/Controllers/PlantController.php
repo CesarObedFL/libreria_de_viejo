@@ -26,7 +26,7 @@ class PlantController extends Controller
     {
         $validator = Validator::make($request->all(), [
             'name' => 'required',
-            'price' => 'required|numeric|min:1|gte:10',
+            'price' => 'required|numeric|min:1',
             'tips' => 'required',
             'image' => 'required',//'mimes:jpeg,png',
             'stock' => 'required|integer|min:1',
@@ -44,24 +44,24 @@ class PlantController extends Controller
         return redirect()->action('PlantController@index')->with('success', 'La planta se ha registrado exitosamente!...');
     }
 
-    public function show($id)
+    public function show($ID)
     {
-        $PLANT = Plant::findOrFail($id);
+        $PLANT = Plant::findOrFail($ID);
         return view('plants.info_plant', compact('PLANT'));
     }
 
-    public function edit($id)
+    public function edit($ID)
     {
-        $CLASSES = Classification::orderBy('class')->where('type',1)->get();
-        $PLANT = Plant::findOrFail($id);
-        return view('plants.edit_plant', compact('PLANT','id','CLASSES'));
+        $CLASSES = Classification::orderBy('class')->where('type',2)->get();
+        $PLANT = Plant::findOrFail($ID);
+        return view('plants.edit_plant', compact('PLANT','ID','CLASSES'));
     }
 
-    public function update(Request $request, $id)
+    public function update(Request $request, $ID)
     {
         $validator = Validator::make($request->all(), [
             'name' => 'required',
-            'price' => 'required|numeric|min:1|gte:10',
+            'price' => 'required|numeric|min:1',
             'tips' => 'required',
             'image' => 'required', // mimes:jpeg,png
             'stock' => 'required|integer|min:1',
@@ -72,13 +72,13 @@ class PlantController extends Controller
             return redirect()->back()->withErrors($validator->errors())->withInput();
         }
 
-        Plant::where('id',$id)->update($request->except('_token','_method'));
-        return redirect()->action('PlantController@show',$id)->with('edit','La planta se ha modificador exitosamente!...');
+        Plant::where('ID',$ID)->update($request->except('_token','_method'));
+        return redirect()->action('PlantController@show',$ID)->with('edit','La planta se ha modificador exitosamente!...');
     }
 
-    public function destroy($id)
+    public function destroy($ID)
     {
-        $PLANT = Plant::findOrFail($id)->delete();
+        $PLANT = Plant::findOrFail($ID)->delete();
         return redirect()->action('PlantController@index')->with('delete', 'La planta se ha eliminado correctamente!...');
     }
 }

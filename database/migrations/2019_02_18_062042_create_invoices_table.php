@@ -10,7 +10,7 @@ class CreateInvoicesTable extends Migration
     public function up()
     {
         Schema::create('invoices', function (Blueprint $table) {
-            $table->increments('id'); // PK
+            $table->increments('ID'); // PK
             $table->unsignedInteger('userID'); // FK
             $table->enum('turn', ['M','T','S','D']);
             $table->unsignedInteger('clientID'); // FK

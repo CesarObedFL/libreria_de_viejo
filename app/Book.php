@@ -17,32 +17,32 @@ class Book extends Model
 
     protected $table = 'books';
 
-    public function features() 
+    public function features()
     {
-        return $this->hasMany('App\Feature', 'book_id', 'id');
+        return $this->hasMany('App\Feature','bookID','ID');
     }
 
-    public function classification() 
+    public function classification()
     {
-        return $this->hasOne('App\Classification', 'id', 'classification');
+        return $this->hasOne('App\Classification','ID','classification');
         //return $this->hasOne(Classification::class);
     }
 
-    public function getClassification($id)
+    public function getClassification($ID)
     {    
-        $CLASS = Classification::findOrFail($id);
+        $CLASS = Classification::findOrFail($ID);
         return $CLASS->class;
     }
 
-    public function getLocation($id)
+    public function getLocation($ID)
     {    
-        $CLASS = Classification::findOrFail($id);
+        $CLASS = Classification::findOrFail($ID);
         return $CLASS->location;
     }
 
-    public function getTotalStock($id) 
+    public function getTotalStock($ID) 
     {
-        $FEATURES = Book::findOrFail($id)->features;
+        $FEATURES = Book::findOrFail($ID)->features;
         $TOTALSTOCK = 0;
         foreach($FEATURES as $feature) {
             $TOTALSTOCK += $feature->stock;

@@ -3,14 +3,14 @@
 @section('title', 'Edición de Libro')
 
 @section('content-header')
-	<h1><div class="col-md-8"><strong> Edición de Libro : {{ $BOOK->id }} </strong></div></h1><hr>
+	<h1><div class="col-md-8"><strong> Edición de Libro : {{ $BOOK->ID }} </strong></div></h1><hr>
 @endsection
 
 @section('content')
 	
 	@include('partials.errors')
 
-	<form role="form" action="{{ route('book.update', $BOOK->id) }}" method="POST">
+	<form role="form" action="{{ route('book.update', $BOOK->ID) }}" method="POST">
 		{{ csrf_field() }}
 		<div class="box-body">
 			<input name="_method" type="hidden" value="PATCH">
@@ -31,9 +31,9 @@
 				<div class="col-md-6">
 					<label for="classification"> Clasificación </label>
 	                <select class="form-control select2" style="width:100%;" name="classification" id="classification" value="{{ $BOOK->classification }}">
-	                  	<option value="{{ $BOOK->classification }}"> {{-- $BOOK->getClassification($BOOK->classification) --}}</option>
+	                  	<option value="{{ $BOOK->classification }}"> {{ $BOOK->getClassification($BOOK->classification) }}</option>
 	                  	@foreach($CLASSES as $CLASS)
-	                  		<option value="{{ $CLASS->id }}"> {{ $CLASS->class }}</option>
+	                  		<option value="{{ $CLASS->ID }}"> {{ $CLASS->class }}</option>
 						@endforeach
 					</select>
             	</div>
@@ -51,7 +51,7 @@
 		</div>
 		<div class="box-footer">
 			<button type="submit" class="btn btn-primary btn-block"> Guardar </button>
-			<a class="btn btn-danger btn-block" href="{{ route('book.show', $BOOK->id) }}"> Cancelar </a>
+			<a class="btn btn-danger btn-block" href="{{ route('book.show', $BOOK->ID) }}"> Cancelar </a>
 		</div>
 	</form>
 		

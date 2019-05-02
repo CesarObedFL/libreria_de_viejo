@@ -38,19 +38,19 @@ class ClassificationController extends Controller
         return redirect()->action('ClassificationController@index')->with('success','La clase se ha registrado exitosamente!...');
     }
 
-    public function show($id)
+    public function show($ID)
     {
-        $CLASS = Classification::findOrFail($id);
-        return view('classifications.info_class', compact('CLASS','id'));
+        $CLASS = Classification::findOrFail($ID);
+        return view('classifications.info_class', compact('CLASS','ID'));
     }
 
-    public function edit($id)
+    public function edit($ID)
     {
-        $CLASS = Classification::findOrFail($id);
-        return view('classifications.edit_class', compact('CLASS','id'));
+        $CLASS = Classification::findOrFail($ID);
+        return view('classifications.edit_class', compact('CLASS','ID'));
     }
 
-    public function update(Request $request, $id)
+    public function update(Request $request, $ID)
     {
         
         $validator = Validator::make($request->all(), [
@@ -63,13 +63,13 @@ class ClassificationController extends Controller
             return redirect()->back()->withErrors($validator->errors())->withInput();
         }
 
-        Classification::where('id',$id)->update($request->except('_token','_method'));
-        return redirect()->action('ClassificationController@show',$id)->with('edit','El cliente se ha modificado exitosamente!...');
+        Classification::where('ID',$ID)->update($request->except('_token','_method'));
+        return redirect()->action('ClassificationController@show',$ID)->with('edit','El cliente se ha modificado exitosamente!...');
     }
 
-    public function destroy($id)
+    public function destroy($ID)
     {
-        $CLASS = Classification::findOrFail($id)->delete();
+        $CLASS = Classification::findOrFail($ID)->delete();
         return redirect()->action('ClassificationController@index')->with('delete', 'La clase se ha eliminado exitosamente!...');
     }
 }

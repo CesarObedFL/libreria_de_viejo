@@ -3,14 +3,14 @@
 @section('title', 'Edición de Clientes')
 
 @section('content-header')
-	<h1><div class="col-md-8"><strong> Edición de Clientes : {{ $CLIENT->id }} </strong></div></h1><hr>
+	<h1><div class="col-md-8"><strong> Edición de Clientes : {{ $CLIENT->ID }} </strong></div></h1><hr>
 @endsection
 
 @section('content')
 	
 	@include('partials.errors')
 
-	<form role="form" action="{{ route('client.update', $CLIENT->id) }}" method="POST">
+	<form role="form" action="{{ route('client.update', $CLIENT->ID) }}" method="POST">
 		{{ csrf_field() }}
 		<div class="box-body">
 			<input name="_method" type="hidden" value="PATCH">
@@ -30,7 +30,7 @@
 				<div class="col-md-4">
 					<label for="type"> Tipo </label>
 					<select class="form-control select2" style="width:100%;" id="type" name="type">
-						<option value="0" selected="disabled"></option>
+						<option value="{{ $CLIENT->type }}" selected="disabled"> {{ $CLIENT->type }} </option>
 						<option value="1"> Interno </option>
 						<option value="2"> Externo </option>
 					</select>	
@@ -47,4 +47,8 @@
 		</div>
 	</form>
 
+@endsection
+
+@section('scripts')
+	<script src="{{ asset('js/functions/typeNumber.js') }}"></script>
 @endsection

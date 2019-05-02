@@ -10,7 +10,7 @@ class CreatePlantsTable extends Migration
     public function up()
     {
         Schema::create('plants', function (Blueprint $table) {
-            $table->increments('id');
+            $table->increments('ID');
             $table->string('name', 30);
             $table->float('price');
             $table->string('image')->nullable();

@@ -39,19 +39,19 @@ class ClientController extends Controller
         return redirect()->action('ClientController@index')->with('success', 'El cliente se ha registrado exitosamente!...');
     }
 
-    public function show($id)
+    public function show($ID)
     {
-        $CLIENT = Client::find($id);
+        $CLIENT = Client::find($ID);
         return view('clients.info_client', compact('CLIENT'));
     }
 
-    public function edit($id)
+    public function edit($ID)
     {
-        $CLIENT = Client::findOrFail($id);
+        $CLIENT = Client::findOrFail($ID);
         return view('clients.edit_client', compact('CLIENT'));
     }
 
-    public function update(Request $request, $id)
+    public function update(Request $request, $ID)
     {
         $validator = Validator::make($request->all(), [
             'name' => 'required',
@@ -65,13 +65,13 @@ class ClientController extends Controller
             return redirect()->back()->withErrors($validator->errors())->withInput();
         }
 
-        Client::where('id',$id)->update($request->except('_token','_method'));
-        return redirect()->action('ClientController@show',$id)->with('edit','El cliente se ha modificado exitosamente!...');
+        Client::where('ID',$ID)->update($request->except('_token','_method'));
+        return redirect()->action('ClientController@show',$ID)->with('edit','El cliente se ha modificado exitosamente!...');
     }
 
-    public function destroy($id)
+    public function destroy($ID)
     {
-        $CLIENT = Client::findOrFail($id)->delete();
+        $CLIENT = Client::findOrFail($ID)->delete();
         return redirect()->action('ClientController@index')->with('delete', 'El cliente se ha eliminado exitosamente!...');
     }
 }

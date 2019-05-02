@@ -28,4 +28,24 @@ class User extends Authenticatable
     {
         return $this->name . ' : ' . $this->role;
     }
+
+    public function isAdmin()
+    {
+        return ($this->role == "Administrador") ? true : false;
+    }
+
+    public function getUser()
+    {
+        return $this->name . ' : ' . $this->email;
+    }
+
+    public function donations()
+    {
+        return $this->hasMany('App\Donation','userID','ID');
+    }
+
+    public function loans()
+    {
+        return $this->hasMany('App\Loan','userID','ID');
+    }
 }

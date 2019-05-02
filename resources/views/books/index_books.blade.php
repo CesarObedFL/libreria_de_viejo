@@ -19,15 +19,16 @@
           'ordering'    : true,
           'info'        : true,
           'autoWidth'   : true
-        })
-      })
+        });
+        $('#booksTable td:last-child:contains(0)').addClass('bg-orange- color-palette');
+      });
     </script>
 @endsection
 
 @section('content-header')
     <h1>
         <div class="col-md-8"><strong>Lista de Libros</strong></div>
-        <div class="col-md-3">
+        <div class="col-md-4">
             <a class="btn btn-success btn-block pull-right" href="{{ route('book.create') }}">
             <i class="fa fa-pencil-square-o"></i> NUEVO REGISTRO </a>
         </div>
@@ -55,17 +56,19 @@
                     <th> Título </th>
                     <th> Autor </th>
                     <th> Editorial </th>
+                    <th> Ubicación </th>
                     <th> Stock </th>
                 </tr>
             </thead>
             <tbody>
                 @foreach($BOOKS as $book)
                     <tr>
-                        <td><a class="btn btn-sm btn-info bg-olive" href="{{ route('book.show', $book->id) }}">{{ $book->ISBN }}</a></td>
+                        <td><a class="btn btn-sm btn-info bg-olive" href="{{ route('book.show', $book->ID) }}">{{ $book->ISBN }}</a></td>
                         <td>{{ $book->title }}</td>
                         <td>{{ $book->author }}</td>
                         <td>{{ $book->editorial }}</td>
-                        <td>{{ $book->getTotalStock($book->id) }}</td>
+                        <td></td>
+                        <td>{{ $book->getTotalStock($book->ID) }}</td>
                     </tr>
                 @endforeach
             </tbody>

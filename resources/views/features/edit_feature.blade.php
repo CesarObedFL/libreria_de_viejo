@@ -3,14 +3,14 @@
 @section('title', 'Edición de Libro')
 
 @section('content-header')
-	<h1><div class="col-md-8"><strong> {{ $BOOK->id }} : {{ $BOOK->title }}</strong></div></h1><hr>
+	<h1><div class="col-md-8"><strong> {{ $BOOK->ID }} : {{ $BOOK->title }}</strong></div></h1><hr>
 @endsection
 
 @section('content')
 	
 	@include('partials.errors')
 	<h3>Edición de Características</h3>
-	<form role="form" action="{{ route('feature.update', $FEATURE->id) }}" method="POST">
+	<form role="form" action="{{ route('feature.update', $FEATURE->ID) }}" method="POST">
 		{{ csrf_field() }}
 		<div class="box-body">
 			<input name="_method" type="hidden" value="PATCH">
@@ -22,7 +22,10 @@
 				</div>
 				<div class="col-md-4">
 					<label for="price"> Precio </label>
-					<input type="text" class="form-control" id="price" name="price" value="{{ $FEATURE->price }}">
+					<div class="input-group">
+						<span class="input-group-addon"> $ </span>
+						<input class="form-control" type="text" name="price" id="price" value="{{ $FEATURE->price }}">
+					</div>
 				</div>
 				<div class="col-md-4">
 					<label for="conditions"> Condiciones </label>
@@ -60,9 +63,13 @@
 		</div>
 		<div class="box-footer">
 			<button type="submit" class="btn btn-primary btn-block"> Guardar </button>
-			<a class="btn btn-danger btn-block" href="{{ route('feature.show', $FEATURE->id) }}"> Cancelar </a>
+			<a class="btn btn-danger btn-block" href="{{ route('feature.show', $FEATURE->ID) }}"> Cancelar </a>
 		</div>
 	</form>
 		
 
+@endsection
+
+@section('scripts')
+	<script src="{{ asset('js/functions/typeNumber.js') }}"></script>
 @endsection

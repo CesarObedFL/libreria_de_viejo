@@ -10,7 +10,7 @@ class CreateBarteringsTable extends Migration
     public function up()
     {
         Schema::create('barterings', function (Blueprint $table) {
-            $table->increments('id');
+            $table->increments('ID');
             $table->date('date');
             $table->unsignedInteger('userID');
             $table->unsignedInteger('in');

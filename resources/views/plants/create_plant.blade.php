@@ -8,14 +8,6 @@
 
 @section('content')
 
-	<!-- <form action="#" method="get">
-		<div class="input-group">
-			<input type="text" name="q" class="form-control" placeholder="Search...">
-			<span class="input-group-btn">
-				<button type="submit" name="search" id="search-btn" class="btn btn-flat"><i class="fa fa-search"></i></button>
-			</span>
-		</div>
-	</form>	-->
 	@include('partials.errors')
 
 	<form role="form" action="{{ route('plant.store') }}" method="POST">
@@ -37,7 +29,7 @@
 	                <select class="form-control select2" style="width:100%;" name="classification" id="classification" value="{{ old('classification') }}">
 	                  	<option value="" selected="disabled"> </option>
 	                  	@foreach($CLASSES as $CLASS)
-	                  		<option value="{{ $CLASS->id }}"> {{ $CLASS->class }} </option>
+	                  		<option value="{{ $CLASS->ID }}"> {{ $CLASS->class }} </option>
 						@endforeach
 					</select>
             	</div>
@@ -57,7 +49,6 @@
 				<div class="col-md-6">
 					<label for="image"> Imagen: </label>
 					<input class="form-control" type="file" name="image" id="image" value="{{ old('image') }}">
-					<!-- <input class="form-control" type="text" name="image" id="image" value="{ { old('image') }}"> -->
 				</div>
 			</div>
 		</div>
@@ -67,4 +58,8 @@
 		</div>
 	</form>
 
+@endsection
+
+@section('scripts')
+	<script src="{{ asset('js/functions/typeNumber.js') }}"></script>
 @endsection

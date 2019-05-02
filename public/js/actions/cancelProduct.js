@@ -1,64 +1,26 @@
-$(document).ready(function () {
-	$('#btnCancelProduct').click(function (e) {
-		e.preventDefault();
-		if(confirm("¿Deseas cancelar éste registro de la venta?...")) {
-			//var row = $(this).parents('tr');
-			($(this).parents('tr')).fadeOut(); // se elimina la fila de la tabla de ventas
-			//var id = row.data('id');
-			//var form = $('#form-delete');
-			//var url = form.attr('action').replace(':PLANT_ID',id);
-			//var data = form.serialize();
-
-		} // else {
-			// do nothing
-		//}
-	});
-});
-
-/*
-$(document).ready(function () {
-	$('.btn-delete').click(function (e) {
-		e.preventDefault();
-		//if(confirm("¿Deseas cancelar éste registro?...")) {
-			var row = $(this).parents('tr');
-			var id = row.data('id');
-			var form = $('#form-delete');
-			var url = form.attr('action').replace(':PLANT_ID',id);
-			var data = form.serialize();
-			row.fadeOut();
-
-			$.post(url, data, function (result) {
-				alert(result);
-			}).fail(function () {
-				alert('Ocurrio un error en el servidor...'.
-					'/nEl registro no fue eliminado...');
-				row.show();
-			});
-
-		//} else {
-			// do nothing
-		//}
-
-
-	});
-});
-//*/
-
-/*
 function cancelProduct(index) {
-	var answer = confirm("¿Deseas cancelar éste registro?...")
-	if (answer) {
-		$("#fila" + index).remove();
-		$(this).closest('tr').remove();
-		//$(this).parent('td').parent('tr').remove();
-		/*$.post('modificarLibro.php',{
-			Caso:'Eliminar',
-			Id:$(this).attr('data-id')
-		},function(e){	
-			alert(e);
-		});*
-	} else {
-		// do nothing
+	if(confirm("Seguro de cancelar el producto "+index+" de la venta?...")) {
+		$('#row'+index).remove();
+		reOrder();
+		counter--;
+		calculateTotal();
+
+		products.splice(index - 1,1);
+		if(products.length < 1) 
+			$('#btnAccept').prop('disabled','true');
 	}
 }
-*/
+
+function reOrder() {
+	var index = 0;
+	$('#productsTable tbody tr').each(function() {
+		$(this).attr('id','row'+(++index));
+		$(this).find('td').eq(0).text(index);
+		$(this).find('td').eq(3).find('input').attr('id','price'+index);
+		$(this).find('td').eq(4).find('input').attr('id','amount'+index);
+		$(this).find('td').eq(4).find('input').attr('onblur','validateAmount('+index+');');
+		$(this).find('td').eq(5).find('input').attr('id','discount'+index);
+		$(this).find('td').eq(5).find('input').attr('onblur','validateDiscount('+index+');');
+		$(this).find('td').eq(7).find('button').attr('onclick','cancelProduct('+index+');');
+	});
+}

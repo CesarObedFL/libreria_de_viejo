@@ -10,7 +10,7 @@
 
 	<form action="{{ route('book.search') }}" method="get" class="sidebar-form">
     	<div class="input-group">
-      		<input type="text" name="search_isbn" id="search_isbn" class="form-control" placeholder="Introduce el ISBN a registrar...">
+      		<input type="text" name="isbn" id="isbn" class="form-control" placeholder="Introduce el ISBN a registrar...">
       		<span class="input-group-btn">
 	        	<button type="submit" name="search" id="search-btn" class="btn btn-flat">
 	          		<i class="fa fa-search"></i>
@@ -19,4 +19,8 @@
     	</div>
   	</form>
 
+@endsection
+
+@section('scripts')
+  <script src="{{ asset('js/functions/typeNumber.js') }}"></script>
 @endsection

@@ -17,10 +17,12 @@
 				<label for="class"> Clase </label>
 				<input type="text" class="form-control" id="class" name="class">
 			</div>
+			{{--
 			<div class="form-group col-md-12">
 				<label for="location"> Ubicación </label>
 				<input type="text" class="form-control" id="location" name="location">
 			</div>
+			--}}
 			<div class="form-group col-md-12">
 				<p> Cuál es el tipo de la clase? &nbsp&nbsp&nbsp
 					<input type="radio" name="type" value="1" class="flat-red">

@@ -4,7 +4,7 @@ use Faker\Generator as Faker;
 
 $factory->define(App\Feature::class, function (Faker $faker) {
     return [
-    	'book_id' => $faker->numberBetween($min = 1, $max = 50),
+    	'bookID' => $faker->numberBetween($min = 1, $max = 50),
     	'edition' => $faker->numberBetween($min = 1, $max = 5),
     	'conditions' => $faker->randomElement($array = array ('buenas','usado','malas')),
     	'place' => $faker->numberBetween($min = 1, $max = 4),

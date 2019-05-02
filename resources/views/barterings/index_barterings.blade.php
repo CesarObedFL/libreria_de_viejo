@@ -1,6 +1,6 @@
 @extends('layouts.theme')
 
-@section('title', 'Libros')
+@section('title', 'Trueques')
 
 @section('styles')
     <link rel="stylesheet" href="{{ asset('bower_components/datatables.net-bs/css/dataTables.bootstrap.min.css') }}">

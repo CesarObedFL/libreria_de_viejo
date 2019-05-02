@@ -1,68 +1,73 @@
-<?php 
+<?php
 
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Collection;
 use App\Client;
 use App\Plant;
+use App\Invoice;
+use App\Sale;
+
 
 class SaleController extends Controller
 {
-    //$BooksToSell = collect();
-
-    public function index()
-    {
-        
+    public function index() 
+    { 
+        $INVOICES = Invoice::all();
+        return view('sales.index',compact('INVOICES'));
     }
 
     public function create()
     {
-        
+        $PLANTS = Plant::all();
+        $CLIENTS = Client::all();
+        return view('sales.realize', compact('CLIENTS','PLANTS'));
     }
-
+    
     public function store(Request $request)
     {
+        dd($request->all());
+    }
+
+    public function show($ID) 
+    { 
+        // por user_ID y todas (administrador)
+    }
+
+    public function edit($ID)
+    { 
         //
     }
 
-    public function show($id)
-    {
+    public function update(Request $request, $ID)
+    { 
         //
     }
 
-    public function edit($id)
-    {
+    public function destroy($ID) 
+    { 
         //
     }
 
-    public function update(Request $request, $id)
-    {
-        //
-    }
-
-    public function destroy($id)
-    {
-        return "aqui ando:" + $id;
-    }
-
-    public function books() 
-    {
+    public function books()     {
         $CLIENTS = Client::all();
-        return view('sales.books.saleBooks', compact('CLIENTS'));
+        return view('sales.books.sale', compact('CLIENTS'));
     }
 
     public function searchBook(Request $request)
     {
-        $BOOK = DB::table('books')->where('ISBN',$request->search_isbn)->first();
-        //$BooksToSell->push($BOOK);
-        $CLIENTS = Client::all();
-        return view('sales.books.saleBooks',compact('CLIENTS','BOOK'));
+        $BOOK = DB::table('books')->where('ISBN',$request->ISBN)->first();
+        return response()->json([
+            'ID' => $BOOK->ISBN, 
+            'name' => $BOOK->title,
+            'price' => '100',
+            'stock' => '1',
+            'type' => 1
+        ]);
     }
 
-    public function plants() 
-    {
+    public function plants()     {
         $PLANTS = Plant::all();
         $CLIENTS = Client::all();
         return view('sales.plants.salePlants', compact('CLIENTS','PLANTS'));
@@ -70,13 +75,13 @@ class SaleController extends Controller
 
     public function searchPlant(Request $request)
     {
-        //dd(explode('_',$request));
-        $ID = explode('_',$request);
-        $ID = explode('=',$ID[1]);
-        $PLANT = DB::table('plants')->where('id',$ID[1])->first();
-        //$PLANT = DB::table('plants')->where('id',$request->product)->first();
-        $PLANTS = Plant::all();
-        $CLIENTS = Client::all();
-        return view('sales.plants.salePlants',compact('CLIENTS','PLANTS','PLANT'));
+        $PLANT = DB::table('plants')->where('ID',$request->plantID)->first();
+        return response()->json([
+            'ID' => $PLANT->ID,
+            'name' => $PLANT->name,
+            'price' => $PLANT->price,
+            'stock' => $PLANT->stock,
+            'type' => 2
+        ]);
     }
 } 

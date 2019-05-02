@@ -24,7 +24,7 @@
 				</div>
 				<div class="col-md-4">
 					<label for="phone"> Teléfono </label>
-					<input class="form-control" type="number" name="phone" id="phone" value="{{ old('phone') }}">
+					<input class="form-control" type="text" name="phone" id="phone" value="{{ old('phone') }}">
 				</div>
 				<div class="col-md-4">
 					<label for="type"> Tipo </label>
@@ -47,4 +47,8 @@
 		</div>
 	</form>
 
+@endsection
+
+@section('scripts')
+	<script src="{{ asset('js/functions/typeNumber.js') }}">
 @endsection

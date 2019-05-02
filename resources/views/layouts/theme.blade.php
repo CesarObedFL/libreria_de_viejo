@@ -36,35 +36,49 @@
       <div class="navbar-custom-menu">
         <ul class="nav navbar-nav">
           @if(Auth::check())
+            <li class="user user-menu">
+              <a href="{{ route('sale.create') }}"><i class="fa fa-money"></i> Realizar Venta</a>
+            </li>
 
-            <!-- <li class="dropdown user user-menu">
-              <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                <i class="fa fa-money"></i>
-                <span> Ventas </span>
-              </a>
-              <ul class="dropdown-menu">
-                <li class="user-body">
-                  <div class="row">
-                    <div class="col-xs-6 text-center"><a href="{ { route('BookSale') }}"><i class="fa fa-circle-o"></i> Libros</a></div>
-                    <div class="col-xs-6 text-center"><a href="{ { route('PlantSale') }}"><i class="fa fa-circle-o"></i> Plantas</a></div>
-                  </div>
-                </li>
-              </ul>
-            </li> -->
+            @if(Auth::user()->isAdmin())        <!--  Admin functions   -->
+            <li class="user user-menu">
+              <a href="{{ route('home') }}"><i class="fa fa-calculator"></i><span> Corte de Caja</span></a>
+            </l>
+            <li class="user user-menu">
+              <a href="{{ route('home') }}"><i class="fa fa-barcode"></i><span> Códigos de Barras</span></a>
+            </li>
+            <li>
+              <a href="{{ route('user.index') }}"><i class="fa fa-user-plus"></i><span> Usuarios</span></a>
+            </li>
+            @endif
 
             <!----------------------------- USER MENU ------------------------------>
             <li class="dropdown user user-menu">
               <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                <span class="hidden-xs">{{ Auth::user()->getUserRoleAttribute() }}</span>
+                <span class="hidden-xs">
+                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                  {{ Auth::user()->getUserRoleAttribute() }}
+                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                </span>
               </a>
-              <ul class="dropdown-menu">
+              <ul class="dropdown-menu" style="border-color: black">
                 <li class="user-body">
                   <div class="row">
-                    <div class="col-xs-4 text-center"><a href="#">Perfil</a></div>
-                    <div class="col-xs-4 text-center"><a href="#">Ventas</a></div>
-                    <div class="col-xs-4 text-center">
+                    <div class="text-center"><a href="{{ route('user.perfil') }}">
+                      <i class="fa fa-user"></i> Perfil</a></div>
+                  </div>
+                </li>
+                <li class="user-body">
+                  <div class="row">
+                    <div class="text-center"><a href="{{ route('sale.index') }}">{{ (Auth::user()->isAdmin()) ? '': 'Mis' }} <i class="fa fa-archive"></i> Ventas</a></div>
+                  </div>
+                </li>
+                <li class="user-body">
+                  <div class="row">
+                    <div class="text-center">
                       <a href="{{ route('logout') }}" onclick="event.preventDefault();
-                        document.getElementById('logout-form').submit();">Salir <i class="fa fa-sign-out"></i>
+                        document.getElementById('logout-form').submit();">
+                        <i class="fa fa-sign-out"></i> Salir
                       </a>
                       <form id="logout-form" action="{{ route('logout') }}" method="POST">
                         {{ csrf_field() }}
@@ -76,9 +90,7 @@
             </li>
             <!----------------------------- USER MENU ------------------------------>
 
-            <li>
-              <a href="#" data-toggle="control-sidebar"><i class="fa fa-gears"></i></a>
-            </li>
+            <!-- <li><a href="#" data-toggle="control-sidebar"><i class="fa fa-gears"></i></a></li> -->
           </ul>
         @else
           <li><a href="{{ route('login') }}">Entrar <i class="fa fa-sign-in"></i></a></li>
@@ -94,21 +106,9 @@
     <!-- sidebar: style can be found in sidebar.less -->
     <section class="sidebar">
 
-      <!-- search form - ->
-      <form action="#" method="get" class="sidebar-form">
-        <div class="input-group">
-          <input type="text" name="q" class="form-control" placeholder="Search...">
-          <span class="input-group-btn">
-                <button type="submit" name="search" id="search-btn" class="btn btn-flat"><i class="fa fa-search"></i>
-                </button>
-              </span>
-        </div>
-      </form>
-      <!-- /.search form -->
-
-      <!-- sidebar menu: : style can be found in sidebar.less -->
       <ul class="sidebar-menu" data-widget="tree">
         <li class="header"><i class="fa fa-chevron-right"></i> OPERACIONES</li>
+        <!--
         <li class="treeview">
           <a href="#">
             <i class="fa fa-money"></i>
@@ -118,158 +118,98 @@
             </span>
           </a>
           <ul class="treeview-menu">
-            <li><a href="{{ route('BookSale') }}"><i class="fa fa-circle-o"></i> Libros</a></li>
-            <li><a href="{{ route('PlantSale') }}"><i class="fa fa-circle-o"></i> Plantas</a></li>
+            <li><a href="{ { route('BookSale') }}"><i class="fa fa-circle-o"></i> Libros</a></li>
+            <li><a href="{ { route('PlantSale') }}"><i class="fa fa-circle-o"></i> Plantas</a></li>
           </ul>
-        </li>
-        <li class="treeview">
-          <a href="#">
-            <i class="fa fa-refresh"></i>
-            <span> Trueques </span>
-            <span class="pull-right-container">
-              <i class="fa fa-angle-left pull-right"></i>
-            </span>
-          </a>
-          <ul class="treeview-menu">
-            <li><a href="{{ route('bartering.create') }}"><i class="fa fa-circle-o"></i> Realizar</a></li>
-            <li><a href="{{ route('bartering.index') }}"><i class="fa fa-circle-o"></i> Mostrar</a></li>
-          </ul>
-        </li>
-        <li class="treeview">
-          <a href="#">
-            <i class="fa fa-gift"></i>
-            <span> Donaciones </span>
-            <span class="pull-right-container">
-              <i class="fa fa-angle-left pull-right"></i>
-            </span>
-          </a>
-          <ul class="treeview-menu">
-            <li><a href="{{ route(/*'donation.create'*/'home') }}"><i class="fa fa-circle-o"></i> Realizar</a></li>
-            <li><a href="{{ route(/*'donation.index'*/'home') }}"><i class="fa fa-circle-o"></i> Mostrar</a></li>
-          </ul>
-        </li>
-        <li class="treeview">
-          <a href="#">
-            <i class="fa fa-mail-forward"></i>
-            <span> Préstamos </span>
-            <span class="pull-right-container">
-              <i class="fa fa-angle-left pull-right"></i>
-            </span>
-          </a>
-          <ul class="treeview-menu">
-            <li><a href="{{ route(/*'loan.create'*/'home') }}"><i class="fa fa-circle-o"></i> Realizar</a></li>
-            <li><a href="{{ route(/*'loan.index'*/'home') }}"><i class="fa fa-circle-o"></i> Mostrar</a></li>
-          </ul>
-        </li>
-
-        <li><a href="{{ route('home') }}"><i class="fa fa-mail-reply"></i><span> Devoluciones</span></a></li>
-        <li><a href="{{ route('home') }}"><i class="fa fa-calculator"></i><span> Corte de Caja</span></a></li>
-        <li><a href="{{ route('home') }}"><i class="fa fa-barcode"></i><span> Códigos de Barras</span></a></li>
+        </li> 
+        -->
+        <li><a href="{{ route('bartering.index') }}"><i class="fa fa-refresh"></i><span>Trueques</span></a></li>
+        <li><a href="{{ route('donation.index') }}"><i class="fa fa-gift"></i><span>Donaciones</span></a></li>
+        <li><a href="{{ route('loan.index') }}"><i class="fa fa-mail-forward"></i><span>Préstamos</span></a></li>
+        <li><a href="{{ route('loan.devolution') }}"><i class="fa fa-mail-reply"></i><span>Devoluciones</span></a></li>
       </ul>
 
       <ul class="sidebar-menu" data-widget="tree">
         <li class="header"><i class="fa fa-chevron-right"></i> REGISTROS </li>
         <li><a href="{{ route('book.index') }}"><i class="fa fa-book"></i><span> Libros </span></a></li>
         <li><a href="{{ route('plant.index') }}"><i class="fa fa-pagelines"></i><span> Plantas </span></a></li>
-        <li><a href="{{ route('user.index') }}"><i class="fa fa-user-plus"></i><span> Usuarios </span></a></li>
         <li><a href="{{ route('client.index') }}"><i class="fa fa-users"></i><span> Clientes </span></a>
         </li>
         <li><a href="{{ route('classification.index') }}"><i class="fa fa-tags"></i><span> Clasificaciones</span></a></li>
       </ul>
+      {{--
       <ul class="sidebar-menu" data-widget="tree">
         <li class="header"><i class="fa fa-chevron-right"></i> DOCUMENTACIÓN </li>
-        <!-- <li><a href="#"><i class="fa fa-search"></i><span> Busquedas </span></a></li> -->
         <li><a href="https://adminlte.io/docs"><i class="fa fa-info"></i> <span>Documentación </span></a></li>
       </ul>
+      --}}
     </section>
     <!-- /.sidebar -->
   </aside>
   @endif
 
-  <!-- Content Wrapper. Contains page content -->
-  <div class="content-wrapper">
-    <!-- Content Header (Page header) -->
-    <section class="content-header">
-      <div class="container"
-        @if(session()->has('flash'))
-          <div class="alert alert-info">{{ session('flash') }} </div>
-        @endif
-      </div>
+  
+  <div class="content-wrapper"> <!-- Content Wrapper. Contains page content -->
+
+    <section class="content-header"> <!-- Content Header (Page header) -->
       @yield('content-header')
     </section>
-
-    <!-- Main content -->
-    <section class="content">
-
+    <section class="content"> <!-- Main content -->
       <div class="row"> <!-- DIV para el carrusel de imagenes (home.blade.php) -->
         <div class="col-md-10">
           @yield('H')  <!-- home.blade.php : carrucel -->
         </div>
       </div>
 
-      <!-- Main row -->
-      <div class="row">
-
+      <div class="row"> <!-- Main row -->
         <div class="col-md-12">
           <div class="box box-primary">
-            <div class="box-header">
-            </div>
+            <div class="box-header"> </div>
             <div class="box-body pad table-responsive">
-
               @yield('content')                           <!--  /.CONTENT  -->
-
             </div>
-            <!-- /.box -->
           </div>
         </div>
-
-        <!-- Left col -->
-        <section class="col-lg-7 connectedSortable">
-        </section>
-        <!-- /.Left col -->
-
-        <!-- right col (We are only adding the ID to make the widgets sortable)-->
-        <section class="col-lg-5 connectedSortable">
-        </section>
-        <!-- right col -->
-      </div>
-      <!-- /.row (main row) -->
-
-    </section>
-    <!-- /.content -->
+        <!--
+        <section class="col-lg-7 connectedSortable"> </section> < !-- Left col - ->
+        <section class="col-lg-5 connectedSortable"> </section> < !-- right col (We are only adding the ID to make the widgets sortable) - ->
+        -->
+      </div>  <!-- /.row (main row) -->
+    </section>   <!-- /.main content -->
   </div>
   <!-- /.content-wrapper -->
-
-  <!-- Control Sidebar -->
+  <!--
+  <!-- Control Sidebar -->                                    <!--      SETTINGS        - ->
   <aside class="control-sidebar control-sidebar-dark">
-    <!-- Create the tabs -->
+    < !-- Create the tabs - ->
     <ul class="nav nav-tabs nav-justified control-sidebar-tabs">
       <li><a href="#control-sidebar-home-tab" data-toggle="tab"><i class="fa fa-home"></i></a></li>
       <li><a href="#control-sidebar-settings-tab" data-toggle="tab"><i class="fa fa-gears"></i></a></li>
     </ul>
-    <!-- Tab panes -->
-    <div class="tab-content">
-      <!-- Home tab content -->
-      <div class="tab-pane" id="control-sidebar-home-tab">
+    
+    <div class="tab-content"> < !-- Tab panes - ->
+      
+      <div class="tab-pane" id="control-sidebar-home-tab"> < !-- Home tab content - ->
          <h3 class="control-sidebar-heading">Home Settings</h3>
       </div>
-      <!-- /.tab-pane -->
-      <!-- Stats tab content -->
-      <!-- <div class="tab-pane" id="control-sidebar-stats-tab">Stats Tab Content</div> -->
-      <!-- /.tab-pane -->
-      <!-- Settings tab content -->
+      < !-- /.tab-pane - ->
+      < !-- Stats tab content - ->
+      < !-- <div class="tab-pane" id="control-sidebar-stats-tab">Stats Tab Content</div> - ->
+      < !-- /.tab-pane - ->
+      < !-- Settings tab content - ->
       <div class="tab-pane" id="control-sidebar-settings-tab">
         <form method="post">
           <h3 class="control-sidebar-heading">General Settings</h3>
         </form>
       </div>
-      <!-- /.tab-pane -->
+      < !-- /.tab-pane - ->
     </div>
   </aside>
-  <!-- /.control-sidebar -->
-  <!-- Add the sidebar's background. This div must be placed
-       immediately after the control sidebar -->
-  <div class="control-sidebar-bg"></div>
+  < !-- /.control-sidebar - ->
+  < !-- Add the sidebar's background. This div must be placed
+       immediately after the control sidebar - ->
+  < !-- <div class="control-sidebar-bg"></div> - ->
+  -->
 
   <footer>
     <div align="center">

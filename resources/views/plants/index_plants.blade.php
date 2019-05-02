@@ -53,16 +53,14 @@
                 <tr class="success">
                     <th> ID </th>
                     <th> Planta </th>
-                    <th> Imagen </th>
                     <th> Stock </th>
                 </tr>
             </thead>
             <tbody>
                 @foreach($PLANTS as $plant)
                     <tr>
-                        <td><a class="btn btn-sm btn-info bg-olive" href="{{ route('plant.show', $plant->id) }}">{{ $plant->id }}</a></td>
+                        <td><a class="btn btn-sm btn-info bg-olive" href="{{ route('plant.show', $plant->ID) }}">{{ $plant->ID }}</a></td>
                         <td>{{ $plant->name }}</td>
-                        <td>{{ $plant->image }}</td>
                         <td>{{ $plant->stock }}</td>
                     </tr>
                 @endforeach

@@ -10,12 +10,12 @@ class Feature extends Model
     public $timestamps = false; 
 
     protected $fillable = [
-        'book_id','edition','conditions','place',
+        'bookID','edition','conditions','place',
         'language','price','status','stock',
     ];
 
     protected function books() {
-        return $this->belongsTo(Book::class, 'book_id');
+        return $this->belongsTo(Book::class, 'bookID');
     }
 
     /*

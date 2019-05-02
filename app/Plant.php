@@ -12,4 +12,21 @@ class Plant extends Model
 
     protected $table = 'plants';
 
+    public function classification() 
+    {
+        return $this->hasOne('App\Classification', 'ID', 'classification');
+        //return $this->hasOne(Classification::class);
+    }
+
+    public function getClassification($ID)
+    {    
+        $CLASS = Classification::findOrFail($ID);
+        return $CLASS->class;
+    }
+
+    public function getInfo()
+    {
+        return $this->name.' :: Precio: $'.$this->price;
+    }
+
 }

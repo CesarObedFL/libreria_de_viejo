@@ -9,7 +9,7 @@ class CreateDonorsTable extends Migration
     public function up()
     {
         Schema::create('donors', function (Blueprint $table) {
-            $table->increments('id');
+            $table->increments('ID');
             $table->string('institution')->nullable();
             $table->string('contact');
             $table->string('email')->unique();

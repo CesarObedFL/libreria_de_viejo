@@ -23,8 +23,8 @@ class FeatureController extends Controller
 
     public function newFeature($book)
     {
-        $book_id = Book::findOrFail($book)->id;
-        return view('features.create_feature', compact('book_id'));
+        $bookID = Book::findOrFail($book)->ID;
+        return view('features.create_feature', compact('bookID'));
     }
 
     public function store(Request $request)
@@ -36,7 +36,7 @@ class FeatureController extends Controller
             'language' => 'required',
             'price' => 'required|min:5|numeric',
             //'status' => 'required',
-            'stock' => 'required',
+            'stock' => 'required|min:0|numeric',
         ]);
 
         if($validator->fails()) {
@@ -45,23 +45,25 @@ class FeatureController extends Controller
         
         Feature::create($request->all());
         //return redirect()->back()->with('success','La entrada del libro se ha creado exitosamente!...'); 
-        $BOOK = Book::findOrFail($request->book_id);
+        $BOOK = Book::findOrFail($request->bookID);
         return view('books.info_book', compact('BOOK'))->with('success','La entrada del libro se ha creado exitosamente!...');
     }
 
-    public function show($id)
+    public function show($ID)
     {
-        $BOOK = Book::findOrFail(Feature::findOrFail($id)->book_id);
+        $BOOK = Book::findOrFail(Feature::findOrFail($ID)->bookID);
         return view('books.info_book', compact('BOOK'));
     }
 
-    public function edit($id)
+    public function edit($ID)
     {
-        $BOOK = Book::findOrFail(Feature::findOrFail($id)->book_id);
-        return view('features.edit_feature', compact('FEATURE','id','BOOK'));
+        $FEATURE = Feature::findOrFail($ID);
+        $BOOK = Book::findOrFail($FEATURE->bookID);
+        //$BOOK = Book::findOrFail(Feature::findOrFail($ID)->book_ID);
+        return view('features.edit_feature', compact('FEATURE','ID','BOOK'));
     }
 
-    public function update(Request $request, $id)
+    public function update(Request $request, $ID)
     {
         $validator = Validator::make($request->all(), [
             'edition' => 'required',
@@ -70,21 +72,21 @@ class FeatureController extends Controller
             'language' => 'required',
             'price' => 'required|min:5|numeric',
             'status' => 'required',
-            'stock' => 'required',
+            'stock' => 'required|min:0|numeric',
         ]);
 
         if($validator->fails()) {
             return redirect()->back()->withErrors($validator->errors())->withInput();
         }
         
-        Feature::where('id',$id)->update($request->except('_token','_method'));
-        $BOOK = Book::findOrFail(Feature::findOrFail($id)->book_id);
-        return redirect()->action('BookController@show',$BOOK->id)->with('edit','La entrada del libro se ha modificado exitosamente!...');
+        Feature::where('ID',$ID)->update($request->except('_token','_method'));
+        $BOOK = Book::findOrFail(Feature::findOrFail($ID)->bookID);
+        return redirect()->action('BookController@show',$BOOK->ID)->with('edit','La entrada del libro se ha modificado exitosamente!...');
     }
 
-    public function destroy($id)
+    public function destroy($ID)
     {
-        $FEATURE = Feature::findOrFail($id)->delete();
+        $FEATURE = Feature::findOrFail($ID)->delete();
         return redirect()->back()->with('delete', 'La entrada del libro se ha eliminado exitosamente!...');
     }
 }

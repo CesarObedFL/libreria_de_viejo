@@ -10,12 +10,12 @@ class CreateDonationsTable extends Migration
     public function up()
     {
         Schema::create('donations', function (Blueprint $table) {
-            $table->increments('id');
-            $table->unsignedInteger('donor_id');
+            $table->increments('ID');
+            $table->unsignedInteger('donorID');
             $table->enum('type',['Recibida','Realizada']);
             $table->unsignedInteger('amount');
             $table->date('date');
-            $table->unsignedInteger('user_id');
+            $table->unsignedInteger('userID');
             $table->string('classification');
         });
     }

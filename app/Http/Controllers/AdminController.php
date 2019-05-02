@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
-class LoansController extends Controller
+class AdminController extends Controller
 {
 
     public function index()
@@ -22,22 +22,22 @@ class LoansController extends Controller
         //
     }
 
-    public function show($id)
-    {
-        //
-    }
-    
-    public function edit($id)
+    public function show($ID)
     {
         //
     }
 
-    public function update(Request $request, $id)
+    public function edit($ID)
     {
         //
     }
 
-    public function destroy($id)
+    public function update(Request $request, $ID)
+    {
+        //
+    }
+
+    public function destroy($ID)
     {
         //
     }

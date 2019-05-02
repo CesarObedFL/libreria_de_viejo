@@ -9,9 +9,9 @@ class CreateClassificationsTable extends Migration
     public function up()
     {
         Schema::create('classifications', function (Blueprint $table) {
-            $table->increments('id'); // PK
+            $table->increments('ID'); // PK
             $table->string('class',40);
-            $table->string('location',25);
+            //$table->string('location',25);
             $table->enum('type',['Libros','Plantas']);
         });
     }

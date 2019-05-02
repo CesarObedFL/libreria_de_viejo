@@ -3,7 +3,7 @@
 @section('title', 'Registro de Características')
 
 @section('content-header')
-	<h1><div class="col-md-8"><strong> Registro de Características : {{ $book_id }}</strong></div></h1><hr>
+	<h1><div class="col-md-8"><strong> Registro de Características : {{ $bookID }}</strong></div></h1><hr>
 @endsection
 
 @section('content')
@@ -13,8 +13,7 @@
 	<form role="form" action="{{ route('feature.store') }}" method="POST">
 		{{ csrf_field() }}
 		<div class="box-body">
-			{{-- <input name="_method" type="hidden" value="PATCH"> --}}
-			<input type="hidden" id="book_id" name="book_id" value="{{ $book_id }}">
+			<input type="hidden" id="bookID" name="bookID" value="{{ $bookID }}">
 			<div class="form-group">
 				<div class="col-md-4">
 					<label for="edition"> Edición </label>
@@ -23,7 +22,10 @@
 				</div>
 				<div class="col-md-4">
 					<label for="price"> Precio </label>
-					<input type="text" class="form-control" id="price" name="price" value="{{ old('price') }}">
+					<div class="input-group">
+						<span class="input-group-addon"> $ </span>
+						<input class="form-control" type="text" name="price" id="price" value="{{ old('price') }}">
+					</div>
 				</div>
 				<div class="col-md-4">
 					<label for="conditions"> Condiciones </label>
@@ -61,9 +63,12 @@
 		</div>
 		<div class="box-footer">
 			<button type="submit" class="btn btn-primary btn-block"> Guardar </button>
-			<a class="btn btn-danger btn-block" href="{{ url()->previous() }}"> Cancelar </a>
+			<a class="btn btn-danger btn-block" href="{{ route('book.show', $bookID) }}"> Cancelar </a>
 		</div>
 	</form>
 		
+@endsection
 
+@section('scripts')
+	<script src="{{ asset('js/functions/typeNumber.js') }}"></script>
 @endsection

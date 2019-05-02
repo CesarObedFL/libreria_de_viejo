@@ -17,9 +17,9 @@
         <div class="box box-solid">
             <div class="box-header with-border">
                 <div class="pull-right">
-                    <a class="btn btn-success" href="{{ route('feature.newFeature', $BOOK->id) }}"> Nueva Entrada </a>
+                    <a class="btn btn-success" href="{{ route('feature.newFeature', $BOOK->ID) }}"> Nueva Entrada </a>
                 </div>
-                <h1 class="box-title"> <strong>{{ '#'.$BOOK->id }} : {{ $BOOK->title }} </strong></h1>
+                <h1 class="box-title"> <strong>{{ '#'.$BOOK->ID }} : {{ $BOOK->title }} </strong></h1>
             </div>
             <div class="box-body">
                 <div class="col-md-6">
@@ -31,7 +31,7 @@
                         <dt>Ubicación:</dt><dd>{{ $BOOK->getLocation($BOOK->classification) }}</dd>
                         <dt>Género:</dt><dd>{{ $BOOK->genre }}</dd>
                         <dt>Colección:</dt><dd>{{ $BOOK->collection }}</dd>
-                        <dt>Stock Total:</dt><dd>{{ $BOOK->getTotalStock($BOOK->id) }}</dd>
+                        <dt>Stock Total:</dt><dd>{{ $BOOK->getTotalStock($BOOK->ID) }}</dd>
                     </dl>
                 </div>
 
@@ -44,11 +44,11 @@
                             @foreach($BOOK->features as $feature)
                                 <div class="box-header with-border">
                                     <div class="pull-right">
-                                        <b><a data-toggle="collapse" data-parent="#accordion" href="#collapse{{ $feature->id }}" align="pull-right"> ver detalles </a></b>
+                                        <b><a data-toggle="collapse" data-parent="#accordion" href="#collapse{{ $feature->ID }}" align="pull-right"> ver detalles </a></b>
                                     </div>
-                                    Precio: {{ $feature->price }} &nbsp;::&nbsp; Condiciones: {{ $feature->conditions }} &nbsp;::&nbsp; Stock: {{ $feature->stock }} 
+                                    Precio: {{ "$ ".$feature->price }} &nbsp;::&nbsp; Condiciones: {{ $feature->conditions }} &nbsp;::&nbsp; Stock: {{ $feature->stock }} 
                                 </div>
-                                <div id="collapse{{ $feature->id }}" class="panel-collapse collapse">
+                                <div id="collapse{{ $feature->ID }}" class="panel-collapse collapse">
                                     <div class="box-body">
                                         <dl class="dl-horizontal">
                                             <dt>Edición:</dt><dd>{{ $feature->edition }}</dd>
@@ -59,11 +59,11 @@
                                         </dl>
                                     </div>
                                     <div class="box-footer">
-                                        <form role="form" action="{{ route('feature.destroy', $feature->id) }}" method="POST">
+                                        <form role="form" action="{{ route('feature.destroy', $feature->ID) }}" method="POST">
                                             {{ csrf_field() }}
                                             <input type="hidden" name="_method" value="DELETE">
                                             <div class="box-footer">
-                                                <a class="btn btn-success col-md-6" href="{{ route('feature.edit',$feature->id) }}"> Editar </a>
+                                                <a class="btn btn-success col-md-6" href="{{ route('feature.edit',$feature->ID) }}"> Editar </a>
                                                 <button type="submit" class="btn btn-danger col-md-6"> Eliminar </button>
                                             </div>
                                         </form>
@@ -78,12 +78,12 @@
         </div>
         <div class="col-md-13">
             <div class="box box-primary">
-                <form role="form" action="{{ route('book.destroy', $BOOK->id) }}" method="POST">
+                <form role="form" action="{{ route('book.destroy', $BOOK->ID) }}" method="POST">
                     {{ csrf_field() }}
                     <input type="hidden" name="_method" value="DELETE">
                     <div class="box-footer">
                         <a class="btn btn-primary col-md-4" href="{{ route('book.index') }}"> Aceptar </a>
-                        <a class="btn btn-success col-md-4" href="{{ route('book.edit', $BOOK->id) }}"> Editar </a>
+                        <a class="btn btn-success col-md-4" href="{{ route('book.edit', $BOOK->ID) }}"> Editar </a>
                         <button type="submit" class="btn btn-danger col-md-4"> Eliminar </button>
                     </div>
                 </form>

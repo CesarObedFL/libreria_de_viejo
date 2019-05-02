@@ -51,15 +51,15 @@
 	        <thead>
 	            <tr class="success">
 	                <th> Clase </th>
-	                <th> Ubicación </th>
+	                {{-- <th> Ubicación </th> --}}
 	                <th> Tipo </th>
 	            </tr>
 	        </thead>
 	        <tbody>
 	            @foreach($CLASSES as $class)
 	            <tr>
-	                <td><a class="btn btn-sm btn-block btn-info bg-olive" href="{{ route('classification.show', $class->id) }}">{{ $class->class }}</a></td>
-	                <td>{{ $class->location }}</td>
+	                <td><a class="btn btn-sm btn-block btn-info bg-olive" href="{{ route('classification.show', $class->ID) }}">{{ $class->class }}</a></td>
+	                {{--<td>{{ $class->location }}</td>--}}
 	                <td>{{ $class->type }}</td>
 	            </tr>
 	            @endforeach

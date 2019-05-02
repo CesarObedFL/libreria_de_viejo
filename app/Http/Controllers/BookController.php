@@ -63,7 +63,7 @@ class BookController extends Controller
         $BOOK->save();
 
         $FEATURE = new Feature ([
-            'book_id' => $BOOK->id,
+            'bookID' => $BOOK->ID,
             'edition' => $request->get('edition'),
             'stock' => $request->get('stock'),
             'price' => $request->get('price'),
@@ -77,20 +77,20 @@ class BookController extends Controller
         return redirect()->action('BookController@index')->with('success', 'El libro se ha registrado exitosamente!...');
     }
 
-    public function show($id)
+    public function show($ID)
     {
-        $BOOK = Book::findOrFail($id);
+        $BOOK = Book::findOrFail($ID);
         return view('books.info_book', compact('BOOK'));
     }
 
-    public function edit($id)
+    public function edit($ID)
     {
         $CLASSES = Classification::orderBy('class')->where('type',1)->get();
-        $BOOK = Book::findOrFail($id);
-        return view('books.edit_book', compact('BOOK','id','CLASSES'));
+        $BOOK = Book::findOrFail($ID);
+        return view('books.edit_book', compact('BOOK','ID','CLASSES'));
     }
 
-    public function update(Request $request, $id)
+    public function update(Request $request, $ID)
     {
         $validator = Validator::make($request->all(), [
             //'ISBN' => 'required|unique:books',
@@ -106,13 +106,13 @@ class BookController extends Controller
             return redirect()->back()->withErrors($validator->errors())->withInput();
         }
         
-        Book::where('id',$id)->update($request->except('_token','_method'));
-        return redirect()->action('BookController@show',$id)->with('edit','El libro se ha modificado exitosamente!...');
+        Book::where('ID',$ID)->update($request->except('_token','_method'));
+        return redirect()->action('BookController@show',$ID)->with('edit','El libro se ha modificado exitosamente!...');
     }
 
-    public function destroy($id)
+    public function destroy($ID)
     {
-        $BOOK = Book::findOrFail($id);
+        $BOOK = Book::findOrFail($ID);
         $BOOK->delete();
         return redirect()->action('BookController@index')->with('delete', 'El libro se ha eliminado exitosamente!...');
     }
@@ -122,25 +122,27 @@ class BookController extends Controller
         $validator = Validator::make($request->all(), [
             //'ISBN' => 'required|unique:books',
             'stock' => 'required|numeric|min:1',
-            'feature_id' => 'required'
+            'featureID' => 'required'
         ]);
 
         if($validator->fails()) {
             return redirect()->back()->withErrors($validator->errors())->withInput();
         }
 
-        Feature::where('id',$request->get('feature_id'))->update($request->except('_token','_method','book_id','feature_id'));
+        Feature::where('ID',$request->get('featureID'))->update($request->except('_token','_method','bookID','featureID'));
         
-        return redirect()->action('BookController@show',$request->get('book_id'))->with('edit','El libro se ha actualizado exitosamente!...');
+        return redirect()->action('BookController@show',$request->get('bookID'))->with('edit','El libro se ha actualizado exitosamente!...');
     }
 
     public function search(Request $request)
     {
-        $ISBN = $request->search_isbn;
-        $BOOK = Book::findOrFail(DB::table('books')->where('ISBN',$ISBN)->first()->id);
+        $ISBN = $request->isbn;
         $CLASSES = Classification::orderBy('class')->where('type',1)->get();
+
+        $BOOK = DB::table('books')->where('ISBN',$ISBN)->first();
         if($BOOK) {
-            return view('books.register_book', compact('BOOK','CLASSES'))->with('edit','EL libro ya se encuentra registrado!...');
+            $BOOK = Book::findOrFail($BOOK->ID);
+            return view('books.register_book', compact('BOOK','CLASSES'))->with('edit','El libro ya se encuentra registrado!...');
             
         } else { // PARA CREAR UN LIBRO NUEVO
             return view('books.create_new_book', compact('ISBN','CLASSES'));

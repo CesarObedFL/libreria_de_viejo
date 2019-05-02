@@ -16,6 +16,11 @@ class Classification extends Model
 
     public function books()
     {
-    	return $this->hasMany('App\Book', 'classification', 'id');
+    	return $this->hasMany('App\Book', 'classification', 'ID');
+    }
+
+    public function plants()
+    {
+    	return $this->hasMany('App\Plnat', 'classification', 'ID');
     }
 }

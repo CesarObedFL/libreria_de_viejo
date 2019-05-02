@@ -10,12 +10,13 @@ class CreateLoansTable extends Migration
     public function up()
     {
         Schema::create('loans', function (Blueprint $table) {
-            $table->increments('id');
+            $table->increments('ID');
             $table->unsignedInteger('amount');
-            $table->date('departureDate');
-            $table->date('returnDate');
-            $table->unsignedInteger('id_client');
-            $table->unsignedInteger('id_user');
+            $table->date('outDate');
+            $table->date('inDate');
+            $table->unsignedInteger('clientID');
+            $table->unsignedInteger('userID');
+            $table->enum('status',['Activo','Entregado'])->default('Activo');
         });
     }
 

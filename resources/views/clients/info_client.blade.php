@@ -14,7 +14,7 @@
     <div class="col-md-12">
         <div class="box box-solid">
             <div class="box-header with-border">
-                <h1 class="box-title"> {{ $CLIENT->id }} : {{ $CLIENT->name }} </h1>
+                <h1 class="box-title"> {{ $CLIENT->ID }} : {{ $CLIENT->name }} </h1>
             </div>
             <div class="box-body">
                 <dl class="dl-horizontal">
@@ -27,12 +27,12 @@
         </div>
         <div class="col-md-13">
             <div class="box box-primary">
-                <form role="form" action="{{ route('client.destroy', $CLIENT->id) }}" method="POST">
+                <form role="form" action="{{ route('client.destroy', $CLIENT->ID) }}" method="POST">
                     {{ csrf_field() }}
                     <input type="hidden" name="_method" value="DELETE">
                     <div class="box-footer">
                         <a class="btn btn-primary col-md-4" href="{{ route('client.index') }}"> Aceptar </a>
-                        <a class="btn btn-success col-md-4" href="{{ route('client.edit', $CLIENT->id) }}"> Editar </a>
+                        <a class="btn btn-success col-md-4" href="{{ route('client.edit', $CLIENT->ID) }}"> Editar </a>
                         <button type="submit" class="btn btn-danger col-md-4"> Eliminar </button>
                     </div>
                 </form>

@@ -13,4 +13,14 @@ class Client extends Model
 
     public $timestamps = false;
 
+    public function loans()
+    {
+    	return $this->hasMany('App\Loan','clientID','ID');
+    }
+
+    public function getInfo()
+    {
+    	return $this->name.' : '.$this->email;
+    }
+
 }
