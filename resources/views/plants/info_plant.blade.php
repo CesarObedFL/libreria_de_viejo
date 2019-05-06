@@ -35,12 +35,12 @@
         </div>
         <div class="col-md-13">
             <div class="box box-primary">
-                <form role="form" action="{{ route('plant.destroy', $PLANT->ID) }}" method="POST">
+                <form role="form" action="{{ route('plant.destroy', $PLANT->id) }}" method="POST">
                     {{ csrf_field() }}
                     <input type="hidden" name="_method" value="DELETE">
                     <div class="box-footer">
                         <a class="btn btn-primary col-md-4" href="{{ route('plant.index') }}"> Aceptar </a>
-                        <a class="btn btn-success col-md-4" href="{{ route('plant.edit', $PLANT->ID) }}"> Editar </a>
+                        <a class="btn btn-success col-md-4" href="{{ route('plant.edit', $PLANT->id) }}"> Editar </a>
                         <button type="submit" class="btn btn-danger col-md-4"> Eliminar </button>
                     </div>
                 </form>

@@ -19,8 +19,6 @@ class BookController extends Controller
 
     public function create()
     {
-        //$CLASSES = Classification::orderBy('class')->where('type',1)->get();
-        //return view('books.create_book', compact('CLASSES'));
         return view('books.search_book');
     }
 
@@ -28,23 +26,21 @@ class BookController extends Controller
     {
         $validator = Validator::make($request->all(), [
             // BOOK TABLE
-            'ISBN' => 'required|unique:books',
-            'title' => 'required',
-            'author' => 'required',
-            'editorial' => 'required',
+            'ISBN' => 'required|unique:books|max:15',
+            'title' => 'required|max:50',
+            'author' => 'required|max:50',
+            'editorial' => 'required|max:30',
             'classification' => 'required',
-            'genre' => 'nullable',
-            'collection' => 'nullable',
-            
-            //'register' => 'required_if:type,empresa' // requerido si el tipo es un determinado
-            
+            'genre' => 'nullable|max:20',
+            'collection' => 'nullable|max:20',
             // BOOK FEATURES
-            'edition' => 'required',
-            'stock' => 'required|min:1|numeric',
-            'price' => 'required|min:5|numeric',
-            'conditions' => 'required',
-            'place' => 'required',
-            'language' => 'required'
+            'edition' => 'required|max:20', // <--
+            'stock' => 'required|numeric|min:1', // <--
+            'price' => 'required|numeric|min:5|max:99999', // <--
+            'conditions' => 'required|max:20', // <--
+            'place' => 'required|min:0|max:13', // <--
+            'location' => 'required|numeric|min:0|max:13', // <--
+            'language' => 'required|max:20'
         ]);
 
         if ($validator->fails()) {
@@ -59,60 +55,75 @@ class BookController extends Controller
             'classification' => $request->get('classification'),
             'genre' => $request->get('genre'),
             'collection' => $request->get('collection')
+            // BOOK FEATURES
+            ,'edition' => $request->get('edition'),
+            'stock' => $request->get('stock'),
+            'price' => $request->get('price'),
+            'conditions' => $request->get('conditions'),
+            'place' => $request->get('place'),
+            'location' => $request->get('location'),
         ]);
         $BOOK->save();
 
         $FEATURE = new Feature ([
-            'bookID' => $BOOK->ID,
+            'bookID' => $BOOK->id,
             'edition' => $request->get('edition'),
             'stock' => $request->get('stock'),
             'price' => $request->get('price'),
             'conditions' => $request->get('conditions'),
             'place' => $request->get('place'),
+            'location' => $request->get('location'),
             'language' => $request->get('language')
         ]);
         $FEATURE->save();
 
-        //Book::create($request->all());
         return redirect()->action('BookController@index')->with('success', 'El libro se ha registrado exitosamente!...');
     }
 
-    public function show($ID)
+    public function show($id)
     {
-        $BOOK = Book::findOrFail($ID);
+        $BOOK = Book::findOrFail($id);
         return view('books.info_book', compact('BOOK'));
     }
 
-    public function edit($ID)
+    public function edit($id)
     {
         $CLASSES = Classification::orderBy('class')->where('type',1)->get();
-        $BOOK = Book::findOrFail($ID);
-        return view('books.edit_book', compact('BOOK','ID','CLASSES'));
+        $BOOK = Book::findOrFail($id);
+        return view('books.edit_book', compact('BOOK','id','CLASSES'));
     }
 
-    public function update(Request $request, $ID)
+    public function update(Request $request, $id)
     {
         $validator = Validator::make($request->all(), [
-            //'ISBN' => 'required|unique:books',
-            'title' => 'required',
-            'author' => 'required',
-            'editorial' => 'required',
+            // BOOK TABLE
+            'ISBN' => 'required|max:15|unique:books,ISBN,'.$id,
+            'title' => 'required|max:50',
+            'author' => 'required|max:50',
+            'editorial' => 'required|max:30',
             'classification' => 'required',
-            'genre' => 'nullable',
-            'collection' => 'nullable',
+            'genre' => 'nullable|max:20',
+            'collection' => 'nullable|max:20',
+            // BOOK FEATURES
+            'edition' => 'required|max:20', // <--
+            'stock' => 'required|numeric|min:1', // <--
+            'price' => 'required|numeric|min:5|max:99999', // <--
+            'conditions' => 'required|max:20', // <--
+            'place' => 'required|min:0|max:13', // <--
+            'location' => 'required|numeric|min:0|max:13' // <--
         ]);
 
         if($validator->fails()) {
             return redirect()->back()->withErrors($validator->errors())->withInput();
         }
         
-        Book::where('ID',$ID)->update($request->except('_token','_method'));
-        return redirect()->action('BookController@show',$ID)->with('edit','El libro se ha modificado exitosamente!...');
+        Book::where('id',$id)->update($request->except('_token','_method'));
+        return redirect()->action('BookController@show',$id)->with('edit','El libro se ha modificado exitosamente!...');
     }
 
-    public function destroy($ID)
+    public function destroy($id)
     {
-        $BOOK = Book::findOrFail($ID);
+        $BOOK = Book::findOrFail($id);
         $BOOK->delete();
         return redirect()->action('BookController@index')->with('delete', 'El libro se ha eliminado exitosamente!...');
     }
@@ -120,17 +131,17 @@ class BookController extends Controller
     public function updateStock(Request $request) 
     {
         $validator = Validator::make($request->all(), [
-            //'ISBN' => 'required|unique:books',
             'stock' => 'required|numeric|min:1',
-            'featureID' => 'required'
+            //'featureID' => 'required'
         ]);
 
         if($validator->fails()) {
             return redirect()->back()->withErrors($validator->errors())->withInput();
         }
 
-        Feature::where('ID',$request->get('featureID'))->update($request->except('_token','_method','bookID','featureID'));
-        
+        //Feature::where('id',$request->get('featureID'))->update($request->except('_token','_method','bookID','featureID'));
+        $newStock = $request->get('stock');
+        Book::where('id',$request->get('bookID'))->update(['stock' => $newStock]);
         return redirect()->action('BookController@show',$request->get('bookID'))->with('edit','El libro se ha actualizado exitosamente!...');
     }
 
@@ -141,8 +152,8 @@ class BookController extends Controller
 
         $BOOK = DB::table('books')->where('ISBN',$ISBN)->first();
         if($BOOK) {
-            $BOOK = Book::findOrFail($BOOK->ID);
-            return view('books.register_book', compact('BOOK','CLASSES'))->with('edit','El libro ya se encuentra registrado!...');
+            $BOOK = Book::findOrFail($BOOK->id);
+            return view('books.update_book', compact('BOOK','CLASSES'))->with('edit','El libro ya se encuentra registrado!...');
             
         } else { // PARA CREAR UN LIBRO NUEVO
             return view('books.create_new_book', compact('ISBN','CLASSES'));

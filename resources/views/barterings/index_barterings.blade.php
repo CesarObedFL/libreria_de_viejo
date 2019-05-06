@@ -48,7 +48,7 @@
                     <tbody>
                         @foreach($BARTERINGS as $bartering)
                             <tr>
-                                <td><a class="btn btn-sm btn-info bg-olive" href="{{ route('bartering.show', $bartering->ID) }}">{{ $bartering->ID }}</a></td>
+                                <td><a class="btn btn-sm btn-info bg-olive" href="{{ route('bartering.show', $bartering->id) }}">{{ $bartering->id }}</a></td>
                                 <td>{{ $bartering->date }}</td>
                                 <td>{{ $bartering->userID }}</td>
                                 <td>{{ $bartering->in }}</td>

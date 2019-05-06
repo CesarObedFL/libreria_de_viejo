@@ -10,7 +10,7 @@
 
 	@include('partials.errors')
 
-	<form role="form" action="{{ route('user.updateRole', $USER->ID) }}" method="POST">
+	<form role="form" action="{{ route('user.updateRole', $USER->id) }}" method="POST">
 		{{ csrf_field() }}
 		<div class="box-body">
 			<input name="_method" type="hidden" value="PATCH">
@@ -30,7 +30,7 @@
 		</div>
 		<div class="box-footer">
 			<button type="submit" class="btn btn-primary btn-block"> Guardar </button>
-			<a class="btn btn-danger btn-block" href="{{ route('user.show', $USER->ID) }}"> Cancelar </a>
+			<a class="btn btn-danger btn-block" href="{{ route('user.show', $USER->id) }}"> Cancelar </a>
 		</div>
 	</form>
 

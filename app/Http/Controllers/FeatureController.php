@@ -23,20 +23,20 @@ class FeatureController extends Controller
 
     public function newFeature($book)
     {
-        $bookID = Book::findOrFail($book)->ID;
+        $bookID = Book::findOrFail($book)->id;
         return view('features.create_feature', compact('bookID'));
     }
 
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'edition' => 'required',
-            'conditions' => 'required',
-            'place' => 'required',
-            'language' => 'required',
-            'price' => 'required|min:5|numeric',
-            //'status' => 'required',
-            'stock' => 'required|min:0|numeric',
+            'edition' => 'required|max:20', // <--
+            'stock' => 'required|numeric|min:1', // <--
+            'price' => 'required|numeric|min:5|max:99999', // <--
+            'conditions' => 'required|max:20', // <--
+            'place' => 'required|min:0|max:13', // <--
+            'location' => 'required|numeric|min:0|max:13', // <--
+            'language' => 'required|max:20'
         ]);
 
         if($validator->fails()) {
@@ -44,49 +44,47 @@ class FeatureController extends Controller
         }
         
         Feature::create($request->all());
-        //return redirect()->back()->with('success','La entrada del libro se ha creado exitosamente!...'); 
         $BOOK = Book::findOrFail($request->bookID);
         return view('books.info_book', compact('BOOK'))->with('success','La entrada del libro se ha creado exitosamente!...');
     }
 
-    public function show($ID)
+    public function show($id)
     {
-        $BOOK = Book::findOrFail(Feature::findOrFail($ID)->bookID);
+        $BOOK = Book::findOrFail(Feature::findOrFail($id)->bookID);
         return view('books.info_book', compact('BOOK'));
     }
 
-    public function edit($ID)
+    public function edit($id)
     {
-        $FEATURE = Feature::findOrFail($ID);
+        $FEATURE = Feature::findOrFail($id);
         $BOOK = Book::findOrFail($FEATURE->bookID);
-        //$BOOK = Book::findOrFail(Feature::findOrFail($ID)->book_ID);
-        return view('features.edit_feature', compact('FEATURE','ID','BOOK'));
+        return view('features.edit_feature', compact('FEATURE','id','BOOK'));
     }
 
-    public function update(Request $request, $ID)
+    public function update(Request $request, $id)
     {
         $validator = Validator::make($request->all(), [
-            'edition' => 'required',
-            'conditions' => 'required',
-            'place' => 'required',
-            'language' => 'required',
-            'price' => 'required|min:5|numeric',
-            'status' => 'required',
-            'stock' => 'required|min:0|numeric',
+            'edition' => 'required|max:20', // <--
+            'stock' => 'required|numeric|min:1', // <--
+            'price' => 'required|numeric|min:5|max:99999', // <--
+            'conditions' => 'required|max:20', // <--
+            'place' => 'required|min:0|max:13', // <--
+            'location' => 'required|numeric|min:0|max:13', // <--
+            'language' => 'required|max:20'
         ]);
 
         if($validator->fails()) {
             return redirect()->back()->withErrors($validator->errors())->withInput();
         }
         
-        Feature::where('ID',$ID)->update($request->except('_token','_method'));
-        $BOOK = Book::findOrFail(Feature::findOrFail($ID)->bookID);
-        return redirect()->action('BookController@show',$BOOK->ID)->with('edit','La entrada del libro se ha modificado exitosamente!...');
+        Feature::where('id',$id)->update($request->except('_token','_method'));
+        $BOOK = Book::findOrFail(Feature::findOrFail($id)->bookID);
+        return redirect()->action('BookController@show',$BOOK->id)->with('edit','La entrada del libro se ha modificado exitosamente!...');
     }
 
-    public function destroy($ID)
+    public function destroy($id)
     {
-        $FEATURE = Feature::findOrFail($ID)->delete();
+        $FEATURE = Feature::findOrFail($id)->delete();
         return redirect()->back()->with('delete', 'La entrada del libro se ha eliminado exitosamente!...');
     }
 }

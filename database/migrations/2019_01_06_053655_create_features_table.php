@@ -10,16 +10,17 @@ class CreateFeaturesTable extends Migration
     public function up() 
     {
         Schema::create('features', function (Blueprint $table) {
-            $table->increments('ID'); // PK
+            $table->increments('id'); // PK
             $table->unsignedInteger('bookID');
-            $table->string('edition');
-            $table->string('conditions');
+            $table->string('edition',20);
+            $table->string('conditions',20);
+            $table->unsignedInteger('location');
             $table->enum('place', ['Libreria', 'Almacén', 'Exhibición', 'Bazar']); // lugar donde se encuentra actualmente el libro
-            $table->string('language')->default('español');
-            $table->float('price');
-            $table->enum('status', ['Disponible','Prestado']);
+            $table->string('language',20)->default('español');
+            $table->unsignedDecimal('price',5,2);
+            $table->enum('status', ['Disponible','Prestado'])->default('Disponible');
             $table->unsignedInteger('stock');
-            $table->foreign('bookID')->references('ID')->on('books')->onDelete('cascade');
+            $table->foreign('bookID')->references('id')->on('books')->onDelete('cascade');
         });
     }
 

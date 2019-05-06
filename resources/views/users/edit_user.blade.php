@@ -3,14 +3,14 @@
 @section('title', 'Edición de Usuario')
 
 @section('content-header')
-	<h1><div class="col-md-8"><strong> Edición de Usuario : {{ $ID }} </strong></div></h1><hr>
+	<h1><div class="col-md-8"><strong> Edición de Usuario : {{ $id }} </strong></div></h1><hr>
 @endsection
 
 @section('content')
 
 	@include('partials.errors')
 
-	<form role="form" action="{{ route('user.update', $USER->ID) }}" method="POST">
+	<form role="form" action="{{ route('user.update', $USER->id) }}" method="POST">
 		{{ csrf_field() }}
 		<div class="box-body">
 			<input name="_method" type="hidden" value="PATCH">

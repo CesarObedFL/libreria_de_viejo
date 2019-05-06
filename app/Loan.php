@@ -23,6 +23,11 @@ class Loan extends Model
         return $this->belongsTo(User::class, 'userID');
     }
 
+    public function borrowedbooks()
+    {
+        return $this->hasMany('App\BorrowedBook','loanID','id');
+    }
+
     public function getOutDate()
     {
     	$DATE = Carbon::parse($this->outDate);

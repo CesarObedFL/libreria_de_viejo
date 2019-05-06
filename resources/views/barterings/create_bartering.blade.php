@@ -2,23 +2,24 @@
 
 @section('title', 'Registro de Trueques')
 
+<meta name="csrf-token" content="{{ csrf_token() }}">
+
 @section('content-header')
 	<h1><div class="col-md-8"><strong> Registro de Trueques </strong></div></h1><hr>
 @endsection
 
 @section('content')
 
-	<form action="#" method="get">
-		<div class="input-group">
-			<input type="text" name="q" class="form-control" placeholder="Introduce el ISBN a buscar">
-			<span class="input-group-btn">
-				<button type="submit" name="search" id="search" class="btn btn-success"><i class="fa fa-plus-square"> Entrante </i></button>
-			</span>
-			<span class="input-group-btn">
-				<button type="submit" name="search" id="search" class="btn btn-danger"><i class="fa fa-minus-square"> Saliente </i></button>
-			</span>
-		</div>
-	</form>
+	<div class="input-group">
+		<input type="hidden" name="route" id="route" value="/search/book">
+		<input class="form-control" type="text" name="isbn" id="isbn" placeholder="Introduce el ISBN a buscar...">
+		<span class="input-group-btn">
+			<button class="btn btn-success" type="submit" name="btnIn" id="btnIn"><i class="fa fa-plus-square"> Entrante </i></button>
+		</span>
+		<span class="input-group-btn">
+			<button class="btn btn-danger" type="submit" name="btnOut" id="btnOut"><i class="fa fa-minus-square"> Saliente </i></button>
+		</span>
+	</div>
 
 	@include('partials.errors')
 
@@ -26,24 +27,20 @@
 	<div class="box">
 		<div class="box-header"><h3 class="box-title">Libros Salientes</h3></div>
 		<div class="box-body no-padding">
-			<table class="table table-hover text-center">
+			<table class="table table-hover text-center" id="outProductsTable">
 		        <thead>
 		            <tr class="danger">
-		                <th> ISBN </th>
-		                <th> Título </th>
-		                <th> Cantidad </th>
-		                <th> Stock </th>
-		                <th> Precio </th>
+		            	<th style="width:5%"> </th>
+		                <th style="width:15%"> ISBN </th>
+		                <th style="width:40%"> Título </th>
+		                <th style="width:10%"> Precio </th>
+		                <th style="width:10%"> Cantidad </th>
+		                <th style="width:10%"> Stock </th>
+		                <th style="width:10%"> </th>
 		            </tr>
 		        </thead>
 		        <tbody>
-		            <!-- @ foreach($CLASSES as $class)
-		            <tr>
-		                <td><a class="btn btn-sm btn-block btn-info bg-olive" href="{ { route('classification.show', $class->id) }}">{ { $class->class }}</a></td>
-		                <td>{ { $class->location }}</td>
-		                <td>{ { $class->type }}</td>
-		            </tr>
-		            @ endforeach -->
+		            {{-- TABLA GENERADA CON JQUERY --}}
 		        </tbody>
 			</table>
 		</div>
@@ -52,28 +49,25 @@
 	<div class="box">
 		<div class="box-header"><h3 class="box-title">Libros Entrantes</h3></div>
 		<div class="box-body no-padding">
-			<table class="table table-hover text-center">
+			<table class="table table-hover text-center" id="inProductsTable">
 		        <thead>
 		            <tr class="success">
-		                <th> ISBN </th>
-		                <th> Título </th>
-		                <th> Cantidad </th>
+		            	<th style="width:5%"> </th>
+		                <th style="width:15%"> ISBN </th>
+		                <th style="width:50%"> Título </th>
+		                <th style="width:10%"> Precio </th>
+		                <th style="width:10%"> Cantidad </th>
+		                <th style="width:10%"> </th>
 		            </tr>
 		        </thead>
 		        <tbody>
-		            <!-- @ foreach($CLASSES as $class)
-		            <tr>
-		                <td><a class="btn btn-sm btn-block btn-info bg-olive" href="{ { route('classification.show', $class->id) }}">{ { $class->class }}</a></td>
-		                <td>{ { $class->location }}</td>
-		                <td>{ { $class->type }}</td>
-		            </tr>
-		            @ endforeach -->
+		        	{{-- TABLA GENERADA CON JQUERY --}}
 		        </tbody>
 			</table>
 		</div>
 	</div>
 
-	<form role="form" action="{{ route('home') }}" method="POST">
+	<form role="form" action="{{ route('bartering.store') }}" method="POST">
 		{{ csrf_field() }}
 		<div class="box-body">
 			<div class="form-group col-md-6">
@@ -86,11 +80,21 @@
 					<input class="form-control" type="text" name="pay" id="pay" value="{{ old('pay') }}">
 				</div>
 			</div>
+			<input type="hidden" name="inProducts" id="inProducts" value="">
+			<input type="hidden" name="outProducts" id="outProducts" value="">
 		</div>
 		<div class="box-footer">
-			<button type="submit" class="btn btn-primary btn-block"> Realizar </button>
+			<button class="btn btn-primary btn-block" type="submit" id="btnAccept" disabled="disabled"> Realizar </button>
 			<a class="btn btn-danger btn-block" href="{{ route('bartering.index') }}"> Cancelar </a>
 		</div>
 	</form>
 
+@endsection
+
+@section('scripts')
+	<script src="{{ asset('js/functions/typeNumber.js') }}"></script>
+	<script src="{{ asset('js/barterings/events.js') }}"></script>
+	<script src="{{ asset('js/barterings/addProduct.js') }}"></script>
+	<script src="{{ asset('js/barterings/cancelProduct.js') }}"></script>
+	<script src="{{ asset('js/barterings/validations.js') }}"></script>
 @endsection

@@ -3,14 +3,14 @@
 @section('title', 'Edición de Planta')
 
 @section('content-header')
-	<h1><div class="col-md-8"><strong> Edición de Planta : {{ $ID }} </strong></div></h1><hr>
+	<h1><div class="col-md-8"><strong> Edición de Planta : {{ $id }} </strong></div></h1><hr>
 @endsection
 
 @section('content')
 
 	@include('partials.errors')
 
-	<form role="form" action="{{ route('plant.update', $PLANT->ID) }}" method="POST">
+	<form role="form" action="{{ route('plant.update', $PLANT->id) }}" method="POST">
 		{{ csrf_field() }}
 		<div class="box-body">
 			<input name="_method" type="hidden" value="PATCH">
@@ -28,7 +28,7 @@
 					<select class="form-control select2" style="width:100%;" name="classification" id="classification" value="{{ $PLANT->classification }}">
 						<option value="{{ $PLANT->classification }}" selected="disabled"> {{ $PLANT->getClassification($PLANT->classification) }} </option>
 						@foreach($CLASSES as $CLASS)
-							<option value="{{ $CLASS->ID }}"> {{ $CLASS->class }} </option>
+							<option value="{{ $CLASS->id }}"> {{ $CLASS->class }} </option>
 						@endforeach
 					</select>
 				</div>
@@ -53,7 +53,7 @@
 		</div>
 		<div class="box-footer">
 			<button type="submit" class="btn btn-primary btn-block"> Guardar </button>
-			<a class="btn btn-danger btn-block" href="{{ route('plant.show', $ID) }}"> Cancelar </a>
+			<a class="btn btn-danger btn-block" href="{{ route('plant.show', $id) }}"> Cancelar </a>
 		</div>
 	</form>
 

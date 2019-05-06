@@ -21,6 +21,7 @@
                         <dt>Fecha de Salida:</dt><dd>{{ $LOAN->getOutDate() }}</dd>
                         <dt>Fecha de Entrada:</dt><dd>{{ $LOAN->getInDate() }}</dd>
                         <dt>Adeudo:</dt><dd>{{ '$ '.$LOAN->getOwed() }}</dd>
+                        <dt>Estatus:</dt><dd>{{ $LOAN->status }}</dd>
                         <dt>----------</dt><dd>----------</dd>
                         <dt>Usuario:</dt><dd>{{ $LOAN->user->getUser() }}</dd>
                     </dl>
@@ -30,23 +31,26 @@
                     <div class="box-group" id="accordion">
                         <div class="box-title">{{ "Libros Prestados: ".$LOAN->amount }}</div>
                         <div class="panel box box-primary">
-                            {{--@foreach($LOAN->loansBooks as $book)--}}
+                            @foreach($LOAN->borrowedbooks as $book)
                                 <div class="box-header with-border">
                                     <div class="pull-right">
-                                        <b><a data-toggle="collapse" data-parent="#accordion" href="#collapse{{-- $book->id --}}" align="pull-right"> <i>ver detalles</i> </a></b>
+                                        <b><a data-toggle="collapse" data-parent="#accordion" href="#collapse{{ $book->id }}" align="pull-right"> <i>ver detalles</i> </a></b>
                                     </div>
-                                    {{--Condiciones: {{ $book->conditions }}--}}
+                                    {{ 'ID: '.$book->bookID }}
                                 </div>
-                                <div id="collapse{{-- $book->id --}}" class="panel-collapse collapse">
+                                <div id="collapse{{ $book->id }}" class="panel-collapse collapse">
                                     <div class="box-body">
                                         <dl class="dl-horizontal">
-                                            <dt>Edición:</dt><dd>{{-- $book->edition --}}</dd>
-                                            <dt>Lenguaje:</dt><dd>{{-- $book->language --}}</dd>
+                                            <dt>Título:</dt><dd>{{-- $book->book->title --}}</dd>
+                                            <dt>Autor:</dt><dd>{{-- $book->book->author --}}</dd>
+                                            <dt>Editorial:</dt><dd>{{-- $book->book->editorial --}}</dd>
+                                            <dt>Edición:</dt><dd>{{-- $book->book->edition --}}</dd>
+                                            <dt>Clasificación:</dt><dd>{{-- 'class' --}}</dd>
                                         </dl>
                                     </div>
                                     <div class="box-footer"></div>
                                 </div>
-                            {{--@endforeach --}}
+                            @endforeach
                         </div>
                     </div>
                 </div> {{-- LIBROS PRESTADOS --}}

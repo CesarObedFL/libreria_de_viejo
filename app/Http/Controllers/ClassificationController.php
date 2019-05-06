@@ -11,8 +11,6 @@ class ClassificationController extends Controller
 {
     public function index()
     {
-        //$CLASSES = DB::table('classifications')->paginate(10);
-        //return view('classifications.index_classes', ['CLASSES' => $CLASSES]);
         $CLASSES = Classification::all();
         return view('classifications.index_classes', compact('CLASSES'));
     }
@@ -26,7 +24,7 @@ class ClassificationController extends Controller
     {
         $validator = Validator::make($request->all(), [
             'class' => 'required',
-            'location' => 'required',
+            //'location' => 'required',
             'type' => 'required',
         ]);
 
@@ -38,19 +36,19 @@ class ClassificationController extends Controller
         return redirect()->action('ClassificationController@index')->with('success','La clase se ha registrado exitosamente!...');
     }
 
-    public function show($ID)
+    public function show($id)
     {
-        $CLASS = Classification::findOrFail($ID);
-        return view('classifications.info_class', compact('CLASS','ID'));
+        $CLASS = Classification::findOrFail($id);
+        return view('classifications.info_class', compact('CLASS','id'));
     }
 
-    public function edit($ID)
+    public function edit($id)
     {
-        $CLASS = Classification::findOrFail($ID);
-        return view('classifications.edit_class', compact('CLASS','ID'));
+        $CLASS = Classification::findOrFail($id);
+        return view('classifications.edit_class', compact('CLASS','id'));
     }
 
-    public function update(Request $request, $ID)
+    public function update(Request $request, $id)
     {
         
         $validator = Validator::make($request->all(), [
@@ -63,13 +61,13 @@ class ClassificationController extends Controller
             return redirect()->back()->withErrors($validator->errors())->withInput();
         }
 
-        Classification::where('ID',$ID)->update($request->except('_token','_method'));
-        return redirect()->action('ClassificationController@show',$ID)->with('edit','El cliente se ha modificado exitosamente!...');
+        Classification::where('id',$id)->update($request->except('_token','_method'));
+        return redirect()->action('ClassificationController@show',$id)->with('edit','El cliente se ha modificado exitosamente!...');
     }
 
-    public function destroy($ID)
+    public function destroy($id)
     {
-        $CLASS = Classification::findOrFail($ID)->delete();
+        $CLASS = Classification::findOrFail($id)->delete();
         return redirect()->action('ClassificationController@index')->with('delete', 'La clase se ha eliminado exitosamente!...');
     }
 }

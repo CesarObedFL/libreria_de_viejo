@@ -9,13 +9,13 @@ class CreateDonorsTable extends Migration
     public function up()
     {
         Schema::create('donors', function (Blueprint $table) {
-            $table->increments('ID');
-            $table->string('institution')->nullable();
-            $table->string('contact');
-            $table->string('email')->unique();
-            $table->string('phone');
-            $table->string('address')->nullable();
-            $table->string('commercialBusiness')->nullable();
+            $table->increments('id');
+            $table->string('institution',30)->nullable();
+            $table->string('contact',50);
+            $table->string('email',50)->unique();
+            $table->string('phone',12);
+            $table->string('address',50)->nullable();
+            $table->string('commercialBusiness',30)->nullable();
         });
     }
 

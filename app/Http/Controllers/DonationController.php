@@ -31,7 +31,7 @@ class DonationController extends Controller
     {
         $validator = Validator::make($request->all() , [
             'donorID' => 'required',
-            'amount' => 'required|numeric',
+            'amount' => 'required|numeric|min:1',
             'classification' => 'required',
             'type' => 'required|min:1|max:2',
         ]);
@@ -45,7 +45,7 @@ class DonationController extends Controller
             'type' => $request->get('type'),
             'amount' => $request->get('amount'),
             'date' => Carbon::now()->toDateString(),
-            'userID' => Auth::ID(),
+            'userID' => Auth::id(),
             'classification' => $request->get('classification')
         ]);
         $DONATION->save();
@@ -53,13 +53,13 @@ class DonationController extends Controller
         return redirect()->action('DonationController@index')->with('success','La donación se realizó exitosamente!...');
     }
 
-    public function show($ID)
+    public function show($id)
     {
-        $DONATION = Donation::findOrFail($ID);
+        $DONATION = Donation::findOrFail($id);
         return view('donations.info_donation',compact('DONATION'));
     }
 
-    public function edit($ID)
+    public function edit($id)
     {
 
     }
@@ -69,9 +69,9 @@ class DonationController extends Controller
         //
     }
 
-    public function destroy($ID)
+    public function destroy($id)
     {
-        $DONATION = Donation::findOrFail($ID);
+        $DONATION = Donation::findOrFail($id);
         $DONATION->delete();
         return redirect('DonationController@index')->action()->with('delete','La donación se elimino exitosamente!...');
     }

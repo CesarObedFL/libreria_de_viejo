@@ -14,7 +14,7 @@
     <div class="col-md-12">
         <div class="box box-solid">
             <div class="box-header with-border">
-                <h1 class="box-title"> {{ $BARTER->ID }} </h1>
+                <h1 class="box-title"> {{ $BARTER->id }} </h1>
                 <!-- <i class="fa fa-text-width"></i> -->
             </div>
             <div class="box-body">
@@ -71,7 +71,7 @@
         </div>
         <div class="col-md-13">
             <div class="box box-primary">
-                <form role="form" action="{{ route('bartering.destroy', $BARTER->ID) }}" method="POST">
+                <form role="form" action="{{ route('bartering.destroy', $BARTER->id) }}" method="POST">
                     {{ csrf_field() }}
                     <input type="hidden" name="_method" value="DELETE">
                     <div class="box-footer">

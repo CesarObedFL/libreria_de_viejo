@@ -3,14 +3,14 @@
 @section('title', 'Edición de Contacto')
 
 @section('content-header')
-	<h1><div class="col-md-8"><strong> Edición de Contacto : {{ $DONOR->ID }} </strong></div></h1><hr>
+	<h1><div class="col-md-8"><strong> Edición de Contacto : {{ $DONOR->id }} </strong></div></h1><hr>
 @endsection
 
 @section('content')
 	
 	@include('partials.errors')
 
-	<form role="form" action="{{ route('donor.update', $DONOR->ID) }}" method="POST">
+	<form role="form" action="{{ route('donor.update', $DONOR->id) }}" method="POST">
 		{{ csrf_field() }}
 		<div class="box-body">
 			<input name="_method" type="hidden" value="PATCH">

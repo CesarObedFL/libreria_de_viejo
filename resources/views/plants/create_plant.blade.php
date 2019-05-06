@@ -29,7 +29,7 @@
 	                <select class="form-control select2" style="width:100%;" name="classification" id="classification" value="{{ old('classification') }}">
 	                  	<option value="" selected="disabled"> </option>
 	                  	@foreach($CLASSES as $CLASS)
-	                  		<option value="{{ $CLASS->ID }}"> {{ $CLASS->class }} </option>
+	                  		<option value="{{ $CLASS->id }}"> {{ $CLASS->class }} </option>
 						@endforeach
 					</select>
             	</div>

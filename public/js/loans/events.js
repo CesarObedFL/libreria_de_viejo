@@ -8,26 +8,24 @@ $(document).ready(function () {
 	$('#btnAddBook').click(function(event) {
 		event.preventDefault();
 		var isbn = $('#isbn').val();
-		var isRegister = false;
+		var isRegistered = false;
 		for(var i = 0; i < products.length; i++) {
 			product = jQuery.parseJSON(products[i]);
-			if (product.isbn == isbn) {	
-				isRegister = true; break;
+			if (product.id == isbn) {	
+				isRegistered = true; break;
 			}
 		}
-		if (isRegister)
-			alert("Ese libro ya se encuentra registrado en la tabla...");
+		if (isRegistered)
+			alert("El libro ya se encuentra registrado en la tabla...");
 		else {
 			$.ajax({
-				url: $('#route').val(),//'/searchBook'
-				method: 'POST',
-				data: {
-					'ISBN': isbn//$('#isbn').val()
-				},
+				url: $('#route').val()+'/'+isbn,
+				method: 'GET',
+				dataType: 'json',
 				success: function(jsonObject) {
 					addProduct(JSON.stringify(jsonObject));
 				},
-				error: function(data, textStatus, errorThrown) {
+				error: function(jsonObject) {
 					alert('No se encontró el ISBN...');
 				}
 			});
@@ -36,7 +34,7 @@ $(document).ready(function () {
 	});
 
 	$('#btnAccept').click(function(event) {
-		$('#products').attr('value',products);
+		$('#products').attr('value','['+products+']');
 	});
 });
 

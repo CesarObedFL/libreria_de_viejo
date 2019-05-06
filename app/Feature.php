@@ -10,18 +10,11 @@ class Feature extends Model
     public $timestamps = false; 
 
     protected $fillable = [
-        'bookID','edition','conditions','place',
-        'language','price','status','stock',
+        'bookID','edition','conditions','location',
+        'place','language','price','status','stock',
     ];
 
     protected function books() {
         return $this->belongsTo(Book::class, 'bookID');
     }
-
-    /*
-    protected function get()
-    {
-
-    }
-    */
 }

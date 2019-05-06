@@ -13,32 +13,29 @@
 	@include('partials.errors')
 
   <div class="col-md-6">
-    <!-- <form action="{ { route('SearchBook') }}" method="get"> -->
-      <div class="input-group">
-        <input class="form-control" type="text" name="isbn" id="isbn" placeholder="Introduce el ISBN a vender...">
-        <input type="hidden" name="route" id="route" value="/searchBook">
-        <span class="input-group-btn">
-          <button class="btn btn-flat" type="submit" name="btnAddBook" id="btnAddBook">
-            <i class="fa fa-search"></i>
-          </button>
-        </span>
-      </div>
-    <!-- </form> -->
+    <div class="input-group">
+      <input type="hidden" name="routeplant" id="routebook" value="/search/book">
+      <input class="form-control" type="text" name="isbn" id="isbn" placeholder="Introduce el ISBN a vender...">
+      <span class="input-group-btn">
+        <button class="btn btn-flat" type="submit" name="btnAddBook" id="btnAddBook">
+          <i class="fa fa-search"></i>
+        </button>
+      </span>
+    </div>
   </div>
   <div class="col-md-6">
-    <!-- <form action="{ { route('SearchPlant') }}" method="get"> -->
-      <div class="input-group">
-        <select class="form-control select2" style="width:100%;" name="plantID" id="plantID" value="{{ old('plantID') }}">
-          <option value="none" selected="disabled">Selecciona la planta a vender...</option>
-          @foreach($PLANTS as $plant)
-            <option value="{{ $plant->id }}">{{ $plant->getInfo() }}</option>
-          @endforeach
-        </select>
-        <span class="input-group-btn">
-          <button type="submit" class="btn btn-flat" name="btnAddPlant" id="btnAddPlant"><i class="fa fa-search"></i></button>
-        </span>
-      </div>
-    <!-- </form> -->
+    <div class="input-group">
+      <input type="hidden" name="routeplant" id="routeplant" value="/search/plant">
+      <select class="form-control select2" style="width:100%;" name="plantID" id="plantID" value="{{ old('plantID') }}">
+        <option value="none" selected="disabled">Selecciona la planta a vender...</option>
+        @foreach($PLANTS as $plant)
+          <option value="{{ $plant->id }}">{{ $plant->getInfo() }}</option>
+        @endforeach
+      </select>
+      <span class="input-group-btn">
+        <button type="submit" class="btn btn-flat" name="btnAddPlant" id="btnAddPlant"><i class="fa fa-search"></i></button>
+      </span>
+    </div>
   </div>
   <br><hr>
 
@@ -73,7 +70,7 @@
 				<label for="client"> Cliente: </label>
         <select class="form-control select2" style="width:100%;" name="clientID" id="clientID" value="{{ old('clientID') }}">
           @foreach($CLIENTS as $client)
-            <option value="{{ $client->ID }}">{{ $client->getInfo() }}</option>
+            <option value="{{ $client->id }}">{{ $client->getInfo() }}</option>
           @endforeach
 			  </select>
       </div>
@@ -110,9 +107,9 @@
 
 @section('scripts')
   <script src="{{ asset('js/functions/typeNumber.js') }}"></script>
-  <script src="{{ asset('js/actions/events.js') }}"></script>
-  <script src="{{ asset('js/actions/validations.js') }}"></script>
-  <script src="{{ asset('js/actions/addProduct.js') }}"></script>
-  <script src="{{ asset('js/actions/cancelProduct.js') }}"></script>
-  <script src="{{ asset('js/actions/calculateTotal.js') }}"></script>
+  <script src="{{ asset('js/sales/events.js') }}"></script>
+  <script src="{{ asset('js/sales/validations.js') }}"></script>
+  <script src="{{ asset('js/sales/addProduct.js') }}"></script>
+  <script src="{{ asset('js/sales/cancelProduct.js') }}"></script>
+  <script src="{{ asset('js/sales/calculateTotal.js') }}"></script>
 @endsection

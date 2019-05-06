@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 namespace App;
 
@@ -10,7 +10,7 @@ class Sale extends Model
 
     public $timestamps = false;
 
-    protected $fillable = [ 'invoiceID','product','amount','discount','price', 'type' ];
+    protected $fillable = [ 'invoiceID','productID','amount','discount','price', 'type' ];
 
     public function invoice() 
     {

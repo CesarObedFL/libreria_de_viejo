@@ -49,6 +49,7 @@
 	                <th> ID </th>
 	                <th> Fecha </th>
 	                <th> Turno </th>
+	                <th> Vendedor </th>
 	                <th> SubTotal </th>
 	                <th> Total </th>
 	                <th> Monto </th>
@@ -57,12 +58,13 @@
 	        <tbody>
 	            @foreach($INVOICES as $invoice)
 	            <tr>
-	                <td><a class="btn btn-sm btn-block btn-info bg-olive" href="{{ route('sale.show', $invoice->ID) }}">{{ $invoice->ID }}</a></td>
-	                <td>{{ 'Date' }}</td>
+	                <td><a class="btn btn-sm btn-block btn-info bg-olive" href="{{ route('sale.show', $invoice->id) }}">{{ $invoice->id }}</a></td>
+	                <td>{{ $invoice->getDate() }}</td>
 	                <td>{{ $invoice->turn }}</td>
-	                <td>{{ $invoice->subTotal }}</td>
-	                <td>{{ $invoice->total }}</td>
-	                <td>{{ $invoice->received }}</td>
+	                <td>{{ $invoice->user->name }}</td>
+	                <td>{{ '$ '.$invoice->subTotal }}</td>
+	                <td>{{ '$ '.$invoice->total }}</td>
+	                <td>{{ '$ '.$invoice->received }}</td>
 	            </tr>
 	            @endforeach
 	        </tbody>

@@ -3,6 +3,7 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Carbon\Carbon;
 
 class Invoice extends Model
 {
@@ -17,6 +18,22 @@ class Invoice extends Model
 
     public function sales() 
     {
-        return $this->hasToMany(Sale::class);
+        return $this->hasMany('App\Sale','invoiceID','id');
+    }
+
+    public function user()
+    {
+        return $this->belongsTo(User::class,'userID');
+    }
+
+    public function client()
+    {
+        return $this->belongsTo(Client::class,'clientID');
+    }
+
+    public function getDate()
+    {
+        $DATE = Carbon::parse($this->date);
+        return $DATE->format('d/m/Y');
     }
 }

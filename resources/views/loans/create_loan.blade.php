@@ -12,7 +12,7 @@
 
 	<div class="input-group">
 		<input class="form-control" type="text" name="isbn" id="isbn" placeholder="Introduce el ISBN a prestar...">
-		<input type="hidden" name="route" id="route" value="/loan/search">
+		<input type="hidden" name="route" id="route" value="/search/book">
 		<span class="input-group-btn">
 			<button class="btn btn-flat" type="submit" name="btnAddBook" id="btnAddBook">
 				<i class="fa fa-search"></i>
@@ -52,14 +52,14 @@
 				<label for="client"> Cliente: </label>
 		        <select class="form-control select2" style="width:100%;" name="clientID" id="clientID" value="{{ old('clientID') }}" required>
 		        	@foreach($CLIENTS as $client)
-		        	<option value="{{ $client->ID }}"> {{ $client->getInfo() }}</option>
+		        		<option value="{{ $client->id }}"> {{ $client->getInfo() }}</option>
 		        	@endforeach
 				</select>
 			</div>
       		<input type="hidden" name="products" id="products" value="">
 		</div>
 		<div class="box-footer">
-			<button type="submit" class="btn btn-primary btn-block" id="btnAccept" disabled="disabled"> Aceptar </button>
+			<button class="btn btn-primary btn-block" type="submit" id="btnAccept" disabled="disabled"> Aceptar </button>
 			<a class="btn btn-danger btn-block" href="{{ route('loan.index') }}"> Cancelar </a>
 		</div>
 	</form>
@@ -68,8 +68,8 @@
 
 @section('scripts')
 	<script src="{{ asset('js/functions/typeNumber.js') }}"></script>
-	<script src="{{ asset('js/loanActions/events.js') }}"></script>
-	<script src="{{ asset('js/loanActions/addProduct.js') }}"></script>
-	<script src="{{ asset('js/loanActions/cancelProduct.js') }}"></script>
-	<script src="{{ asset('js/loanActions/validations.js') }}"></script>
+	<script src="{{ asset('js/loans/events.js') }}"></script>
+	<script src="{{ asset('js/loans/addProduct.js') }}"></script>
+	<script src="{{ asset('js/loans/cancelProduct.js') }}"></script>
+	<script src="{{ asset('js/loans/validations.js') }}"></script>
 @endsection

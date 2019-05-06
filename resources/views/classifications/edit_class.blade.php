@@ -3,14 +3,14 @@
 @section('title', 'Edición de Clasificación')
 
 @section('content-header')
-    <h1><div class="col-md-8"><strong> Edición de Clase : {{ $CLASS->ID }}</strong></div></h1><hr>
+    <h1><div class="col-md-8"><strong> Edición de Clase : {{ $CLASS->id }}</strong></div></h1><hr>
 @endsection
 
 @section('content')
 
     @include('partials.errors')
 
-    <form role="form" action="{{ route('classification.update', $CLASS->ID) }}" method="POST">
+    <form role="form" action="{{ route('classification.update', $CLASS->id) }}" method="POST">
         {{ csrf_field() }}
         <div class="box-body">
             <input name="_method" type="hidden" value="PATCH">

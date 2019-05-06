@@ -8,10 +8,11 @@ use App\Classification;
 
 class Book extends Model
 {
-    //protected $primaryKey = 'ISBN';
-
     protected $fillable = ['ISBN','title','author','editorial',
-                        'classification','genre','collection'];
+                        'classification','genre','collection'//];
+                        // BOOK FEATURES
+                        ,'edition','conditions','location','place',
+                        'price','borrowedbooks','stock'];
 
     public $timestamps = false;
 
@@ -19,30 +20,33 @@ class Book extends Model
 
     public function features()
     {
-        return $this->hasMany('App\Feature','bookID','ID');
+        return $this->hasMany('App\Feature','bookID','id');
+    }
+
+    public function times()
+    {
+        return $this->hasMany('App\BorrowedBook','bookID','ISBN');
     }
 
     public function classification()
     {
-        return $this->hasOne('App\Classification','ID','classification');
-        //return $this->hasOne(Classification::class);
+        return $this->hasOne('App\Classification','id','classification');
     }
 
-    public function getClassification($ID)
+    public function getClassification($id)
     {    
-        $CLASS = Classification::findOrFail($ID);
+        $CLASS = Classification::findOrFail($id);
         return $CLASS->class;
     }
 
-    public function getLocation($ID)
-    {    
-        $CLASS = Classification::findOrFail($ID);
-        return $CLASS->location;
+    public function getLocation()
+    {
+        return ($this->location > 0) ? $this->location : 'Bodega';
     }
 
-    public function getTotalStock($ID) 
+    public function getTotalStock($id) 
     {
-        $FEATURES = Book::findOrFail($ID)->features;
+        $FEATURES = Book::findOrFail($id)->features;
         $TOTALSTOCK = 0;
         foreach($FEATURES as $feature) {
             $TOTALSTOCK += $feature->stock;

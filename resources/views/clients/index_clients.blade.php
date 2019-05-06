@@ -48,7 +48,7 @@
         </div>
     
     @else
-        <table id="clientsTable" class="table table-bordered table-striped">
+        <table id="clientsTable" class="table table-condensed">
             <thead>
                 <tr class="success">
                     <th> ID </th>
@@ -59,10 +59,10 @@
             <tbody>
                 @foreach($CLIENTS as $client)
                     <tr>
-                        @if($client->ID == 1)
-                            <td>{{ $client->ID }}</a></td>
+                        @if($client->id == 1)
+                            <td style="text-align: center">{{ $client->id }}</a></td>
                         @else
-                            <td><a class="btn btn-sm btn-info bg-olive" href="{{ route('client.show', $client->ID) }}">{{ $client->ID }}</a></td>
+                            <td><a class="btn btn-sm btn-block btn-info bg-olive" href="{{ route('client.show', $client->id) }}">{{ $client->id }}</a></td>
                         @endif
                         <td>{{ $client->name }}</td>
                         <td>{{ $client->type }}</td>

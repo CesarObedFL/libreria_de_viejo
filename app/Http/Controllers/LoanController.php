@@ -12,6 +12,7 @@ use Carbon\Carbon;
 use App\Loan;
 use App\Book;
 use App\Client;
+use App\BorrowedBook;
 
 class LoanController extends Controller
 {
@@ -32,64 +33,89 @@ class LoanController extends Controller
     {
         /*$validator = Validator::make($request->all(), [ 
             'cliendID' => 'required',
-            //'products' => 'required'
+            'products' => 'required'
         ]);
 
         if($validator->fails()) {
             return redirect()->back()->withErrors($validator->errors())->withInput();
         }*/
-
         $LOAN = new Loan([
-            'amount' => '3',
+            'amount' => 0,//$PRODUCTS.length,
             'outDate' => Carbon::now()->toDateString(),
             'inDate' => Carbon::now()->addDays(15)->toDateString(),
             'clientID' => $request->get('clientID'),
-            'userID' => Auth::ID(),
+            'userID' => Auth::id(),
         ]);
         $LOAN->save();
-        return redirect()->action('LoanController@index')->with('success','El préstamo se ha registrado exitosamente!...');
-        //return redirect()->action('LoanController@index')->with('success','El préstamo se ha registrado exitosamente!...');
+
+        $PRODUCTS = json_decode($request->get('products'));
+        $amount = 0; 
+        foreach($PRODUCTS as $product) {
+            $BORROWEDBOOK = new BorrowedBook([
+                'loanID' => $LOAN->id,
+                'bookID' => $product->id,
+                'status' => 'Activo',
+            ]);
+            $BORROWEDBOOK->save();
+            $amount++;
+            
+            //MODIFICAR STATUS incrementer libros prestados
+            //$newbb = Book::findOrFail($product->id)->borrowedbooks + $product->amount;
+            //$book = Book::where('ISBN',$product->id)->get();
+            //$newbb = $book->borrowedbooks + $product->amount;
+            //Book::where('ISBN',$product->id)->update(['borrowedbooks' => $newbb]);
+
+        }
+        $LOAN->amount = $amount;
+        $LOAN->save();
+        return redirect()->action('LoanController@show',['id' => $LOAN->id])->with('success','El préstamo se ha registrado exitosamente!...');
     }
 
-    public function show($ID)
+    public function show($id)
     {
-        $LOAN = Loan::findOrFail($ID);
+        $LOAN = Loan::findOrFail($id);
         return view('loans.info_loan',compact('LOAN'));
     }
     
-    public function edit($ID)
+    public function edit($id)
     {
         //
     }
 
-    public function update(Request $request, $ID)
+    public function update(Request $request, $id)
     {
         //
     }
 
-    public function destroy($ID)
+    public function destroy($id)
     {
         //
     }
 
-    public function searchClientLoans()
+    public function clients()
     {
+        if(!Loan::count())
+            return redirect()->action('LoanController@index');
 
-        return view('loans.clientLoans');
+        $CLIENTS = Client::all()->except('1');
+        return view('loans.search_client',compact('CLIENTS')); // loans x client
     }
 
-    public function devolution() 
+    public function devolution(Request $request)
     {
-        return view('loans.devolution');
+        $clientID = $request->clientID;
+        $LOANS = Loan::where('clientID',$clientID)->get();
+        $CLIENT = Client::findOrFail($clientID);
+        return view('loans.devolution',compact('CLIENT','LOANS'));
     }
 
-    public function search(Request $request)
+    public function searchbook($isbn)
     {
         $BOOK = DB::table('books')->where('ISBN',$request->ISBN)->first();
         return response()->json([
             'isbn' => $BOOK->ISBN,
             'title' => $BOOK->title,
-            'stock' => 5//$BOOK-> 
+            'stock' => $BOOK->stock
         ]);
     }
 }

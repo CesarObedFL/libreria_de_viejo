@@ -37,26 +37,37 @@ class BarteringController extends Controller
         return redirect()->action('BarteringController@index')->with('success', 'El trueque se ha registrado exitosamente!...');
     }
 
-    public function show($ID)
+    public function show($id)
     {
-        $BARTERING = Bartering::findOrFail($ID);
+        $BARTERING = Bartering::findOrFail($id);
         return view('bartering.info_bartering',compact('BARTERING'));
     }
 
-    public function edit($ID)
+    public function edit($id)
     {
         //
     }
 
-    public function update(Request $request, $ID)
+    public function update(Request $request, $id)
     {
         //
     }
 
-    public function destroy($ID)
+    public function destroy($id)
     {
-        $BARTERING = Bartering::findOrFail($ID);
+        $BARTERING = Bartering::findOrFail($id);
         $BARTERING->delete();
         return redirect()->action('BarteringController@index')->with('delete', 'El trueque se ha eliminado exitosamente!...');
+    }
+
+    public function searchbook($isbn)
+    {
+        $BOOK = DB::table('books')->where('ISBN',$isbn)->first();
+        return response()->json([
+            'isbn' => $BOOK->ISBN,
+            'title' => $BOOK->title,
+            'price' => $BOOK->price,
+            'stock' => $BOOK->stock
+        ]);
     }
 }

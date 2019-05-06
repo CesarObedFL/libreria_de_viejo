@@ -39,8 +39,7 @@
     
     @else
         <div class="box">
-            <div class="box-header">
-            </div>
+            {{--<div class="box-header"></div> --}}
             <div class="box-body">
                 <table id="donationsTable" class="table table-condensed text-center">
                     <thead>
@@ -55,7 +54,7 @@
                     <tbody>
                         @foreach($DONATIONS as $donation)
                             <tr id="tableRow" value="{{ $donation->type }}">
-                                <td><a class="btn btn-sm btn-block btn-info bg-olive" href="{{ route('donation.show', $donation->ID) }}">{{ $donation->ID }}</a></td>
+                                <td><a class="btn btn-sm btn-block btn-info bg-olive" href="{{ route('donation.show', $donation->id) }}">{{ $donation->id }}</a></td>
                                 <td>{{ $donation->getDate() }}</td>
                                 <td>{{ $donation->amount }}</td>
                                 <td>{{ $donation->getClass() }}</td>
@@ -88,6 +87,6 @@
 
         $('#donationsTable td:last-child:contains(Recibida)').addClass('info');
         $('#donationsTable td:last-child:contains(Realizada)').addClass('danger');
-      })
+      });
     </script>
 @endsection

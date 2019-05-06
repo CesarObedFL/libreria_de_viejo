@@ -14,7 +14,7 @@ class Donor extends Model
 
     protected function donations()
     {
-    	return $this->hasMany('App\Donation','donorID','ID');
+    	return $this->hasMany('App\Donation','donorID','id');
     }
 
     public function getDonor() 

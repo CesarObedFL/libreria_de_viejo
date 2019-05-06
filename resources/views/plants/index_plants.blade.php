@@ -48,7 +48,7 @@
         </div>
     
     @else
-        <table id="booksTable" class="table table-bordered table-striped">
+        <table id="booksTable" class="table table-condensed">
             <thead>
                 <tr class="success">
                     <th> ID </th>
@@ -59,7 +59,7 @@
             <tbody>
                 @foreach($PLANTS as $plant)
                     <tr>
-                        <td><a class="btn btn-sm btn-info bg-olive" href="{{ route('plant.show', $plant->ID) }}">{{ $plant->ID }}</a></td>
+                        <td><a class="btn btn-sm btn-block btn-info bg-olive" href="{{ route('plant.show', $plant->id) }}">{{ $plant->id }}</a></td>
                         <td>{{ $plant->name }}</td>
                         <td>{{ $plant->stock }}</td>
                     </tr>

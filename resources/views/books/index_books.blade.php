@@ -56,19 +56,19 @@
                     <th> Título </th>
                     <th> Autor </th>
                     <th> Editorial </th>
-                    <th> Ubicación </th>
+                    <th> Estante </th>
                     <th> Stock </th>
                 </tr>
             </thead>
             <tbody>
                 @foreach($BOOKS as $book)
                     <tr>
-                        <td><a class="btn btn-sm btn-info bg-olive" href="{{ route('book.show', $book->ID) }}">{{ $book->ISBN }}</a></td>
+                        <td><a class="btn btn-sm btn-info bg-olive" href="{{ route('book.show', $book->id) }}">{{ $book->ISBN }}</a></td>
                         <td>{{ $book->title }}</td>
                         <td>{{ $book->author }}</td>
                         <td>{{ $book->editorial }}</td>
-                        <td></td>
-                        <td>{{ $book->getTotalStock($book->ID) }}</td>
+                        <td>{{ $book->getLocation() }}</td>
+                        <td>{{ $book->stock }}</td>
                     </tr>
                 @endforeach
             </tbody>

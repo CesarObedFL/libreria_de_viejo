@@ -41,11 +41,11 @@ class User extends Authenticatable
 
     public function donations()
     {
-        return $this->hasMany('App\Donation','userID','ID');
+        return $this->hasMany('App\Donation','userID','id');
     }
 
     public function loans()
     {
-        return $this->hasMany('App\Loan','userID','ID');
+        return $this->hasMany('App\Loan','userID','id');
     }
 }

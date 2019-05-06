@@ -38,7 +38,7 @@
 	                <select class="form-control select2" style="width:100%;" name="classification" id="classification" value="{{ old('classification') }}">
 	                  	<option value="{{ old('classification') }} selected="disabled"> </option>
 	                  	@foreach($CLASSES as $CLASS)
-	                  		<option value="{{ $CLASS->ID }}"> {{ $CLASS->class }}</option>
+	                  		<option value="{{ $CLASS->id }}"> {{ $CLASS->class }}</option>
 						@endforeach
 					</select>
             	</div>
@@ -88,7 +88,17 @@
 					<label for="language"> Idioma </label>
 					<input class="form-control" type="text" name="language" id="language" value="{{ old('language') }}">
 				</div>
-				<input type="hidden" name="status" id="status" value="1">
+			</div>
+			<div class="form-group">
+				<div class="col-md-1">
+					<label>Estante:</label>
+				</div>
+				<div class="col-md-10">
+					@for($i = 1; $i <= 13; $i++)
+	                	<label>{{'['.$i.' '}}<input type="radio" name="location" id="location" value="{{ $i }}">{{']'}}</label>
+	                @endfor
+	                <label>[Bodega <input type="radio" name="location" id="location" value="0" checked>]</label>
+              	</div>
 			</div>
 		</div> {{-- box-body --}}
 		<div class="box-footer">

@@ -36,18 +36,18 @@ class DonorController extends Controller
         return redirect()->action('DonorController@index')->with('success','El contacto se registro correctamente...');
     }
 
-    public function show($ID)
+    public function show($id)
     {
         //
     }
     
-    public function edit($ID)
+    public function edit($id)
     {
-        $DONOR = Donor::findOrFail($ID);
+        $DONOR = Donor::findOrFail($id);
         return view('donors.edit_donor',compact('DONOR'));
     }
 
-    public function update(Request $request, $ID)
+    public function update(Request $request, $id)
     {
         $validator = Validator::make($request->all(), [
             'contact' => 'required|max:50'
@@ -56,13 +56,13 @@ class DonorController extends Controller
         if($validator->fails())
             return redirect()->back()->withErrors($validator->errors())->withInput();
 
-        Donor::where('ID',$ID)->update($request->except('_token','_method'));
+        Donor::where('id',$id)->update($request->except('_token','_method'));
         return redirect()->action('DonorController@index')->with('edit','El contacto se ha modificado exitosamente!...');
     }
 
-    public function destroy($ID)
+    public function destroy($id)
     {
-        $DONOR = Donor::findOrFail($ID);
+        $DONOR = Donor::findOrFail($id);
         $DONOR->delete();
         return redirect()->action('DonorController@index')->with('delete','El contacto se ha eliminado exitosamente!...');
     }

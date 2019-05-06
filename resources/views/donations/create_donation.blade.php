@@ -23,10 +23,10 @@
 		<div class="box-body">
 			<div class="form-group col-md-12">
 				<label for="donor"> Institucion o Contacto </label>
-				<select class="form-control select2" name="donor" id="donor" value="{{ old('donor') }}">
+				<select class="form-control select2" name="donorID" id="donorID" value="{{ old('donor') }}">
 					<option value="" selected="disabled"> </option>
 					@foreach($DONORS as $donor)
-						<option value="{{ $donor->ID }}">{{ $donor->getDonor() }}</option>
+						<option value="{{ $donor->id }}">{{ $donor->getDonor() }}</option>
 					@endforeach
 				</select>
 			</div>
@@ -40,7 +40,7 @@
 					<select class="form-control select2" name="classification" id="classification" value="{{ old('classification')}}">
 						<option value="" selected="disabled"> </option>
 						@foreach($CLASSES as $class)
-							<option value="{{ $class->ID }}">{{ $class->class }}</option>
+							<option value="{{ $class->id }}">{{ $class->class }}</option>
 						@endforeach
 					</select>
 				</div>

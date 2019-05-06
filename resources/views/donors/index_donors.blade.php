@@ -55,7 +55,7 @@
                     <tbody>
                         @foreach($DONORS as $donor)
                             <tr>
-                                <td><a class="btn btn-block btn-sm btn-info bg-olive" href="{{ route('donor.edit', $donor->ID) }}">{{ $donor->ID }}</a></td> 
+                                <td><a class="btn btn-block btn-sm btn-info bg-olive" href="{{ route('donor.edit', $donor->id) }}">{{ $donor->id }}</a></td> 
                                 <td>{{ $donor->institution }}</td>
                                 <td>{{ $donor->contact }}</td>
                                 <td>{{ $donor->email }}</td>

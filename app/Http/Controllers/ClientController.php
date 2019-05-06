@@ -24,10 +24,10 @@ class ClientController extends Controller
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'name' => 'required',
+            'name' => 'required|max:50',
             'email' => 'required|unique:clients',
-            'phone' => 'required|min:8',
-            'interests' => 'required',
+            'phone' => 'required|size:10',
+            'interests' => 'required|max:50',
             'type' => 'required',
         ]);
 
@@ -39,24 +39,24 @@ class ClientController extends Controller
         return redirect()->action('ClientController@index')->with('success', 'El cliente se ha registrado exitosamente!...');
     }
 
-    public function show($ID)
+    public function show($id)
     {
-        $CLIENT = Client::find($ID);
+        $CLIENT = Client::find($id);
         return view('clients.info_client', compact('CLIENT'));
     }
 
-    public function edit($ID)
+    public function edit($id)
     {
-        $CLIENT = Client::findOrFail($ID);
+        $CLIENT = Client::findOrFail($id);
         return view('clients.edit_client', compact('CLIENT'));
     }
 
-    public function update(Request $request, $ID)
+    public function update(Request $request, $id)
     {
         $validator = Validator::make($request->all(), [
-            'name' => 'required',
-            'email' => 'required|unique:clients',
-            'phone' => 'required|min:8',
+            'name' => 'required|max:50',
+            'email' => 'required|unique:clients,email,'.$id,
+            'phone' => 'required|size:10',
             'type' => 'required',
             'interests' => 'required'
         ]);
@@ -65,13 +65,13 @@ class ClientController extends Controller
             return redirect()->back()->withErrors($validator->errors())->withInput();
         }
 
-        Client::where('ID',$ID)->update($request->except('_token','_method'));
-        return redirect()->action('ClientController@show',$ID)->with('edit','El cliente se ha modificado exitosamente!...');
+        Client::where('id',$id)->update($request->except('_token','_method'));
+        return redirect()->action('ClientController@show',$id)->with('edit','El cliente se ha modificado exitosamente!...');
     }
 
-    public function destroy($ID)
+    public function destroy($id)
     {
-        $CLIENT = Client::findOrFail($ID)->delete();
+        $CLIENT = Client::findOrFail($id)->delete();
         return redirect()->action('ClientController@index')->with('delete', 'El cliente se ha eliminado exitosamente!...');
     }
 }

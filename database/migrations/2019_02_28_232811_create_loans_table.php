@@ -10,7 +10,7 @@ class CreateLoansTable extends Migration
     public function up()
     {
         Schema::create('loans', function (Blueprint $table) {
-            $table->increments('ID');
+            $table->increments('id');
             $table->unsignedInteger('amount');
             $table->date('outDate');
             $table->date('inDate');

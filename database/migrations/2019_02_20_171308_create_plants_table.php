@@ -10,11 +10,11 @@ class CreatePlantsTable extends Migration
     public function up()
     {
         Schema::create('plants', function (Blueprint $table) {
-            $table->increments('ID');
-            $table->string('name', 30);
-            $table->float('price');
-            $table->string('image')->nullable();
-            $table->string('tips');
+            $table->increments('id');
+            $table->string('name',30);
+            $table->unsignedDecimal('price',5,2);
+            $table->string('image',30)->nullable();
+            $table->string('tips',50);
             $table->unsignedInteger('stock');
             $table->unsignedInteger('classification');
         });

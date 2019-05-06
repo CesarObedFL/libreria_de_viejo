@@ -42,7 +42,7 @@
 
             @if(Auth::user()->isAdmin())        <!--  Admin functions   -->
             <li class="user user-menu">
-              <a href="{{ route('home') }}"><i class="fa fa-calculator"></i><span> Corte de Caja</span></a>
+              <a href="{{ route('admin.cut') }}"><i class="fa fa-calculator"></i><span> Corte de Caja</span></a>
             </l>
             <li class="user user-menu">
               <a href="{{ route('home') }}"><i class="fa fa-barcode"></i><span> Códigos de Barras</span></a>
@@ -126,7 +126,7 @@
         <li><a href="{{ route('bartering.index') }}"><i class="fa fa-refresh"></i><span>Trueques</span></a></li>
         <li><a href="{{ route('donation.index') }}"><i class="fa fa-gift"></i><span>Donaciones</span></a></li>
         <li><a href="{{ route('loan.index') }}"><i class="fa fa-mail-forward"></i><span>Préstamos</span></a></li>
-        <li><a href="{{ route('loan.devolution') }}"><i class="fa fa-mail-reply"></i><span>Devoluciones</span></a></li>
+        <li><a href="{{ route('loan.clients') }}"><i class="fa fa-mail-reply"></i><span>Devoluciones</span></a></li>
       </ul>
 
       <ul class="sidebar-menu" data-widget="tree">

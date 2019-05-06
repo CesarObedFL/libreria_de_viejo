@@ -19,7 +19,7 @@
     <nav class="navbar">
       <div class="navbar-custom-menu">
         <ul class="nav navbar-nav">
-          <li><a href="{{ route('loginform') }}">Entrar <i class="fa fa-sign-in"></i></a></li>
+          <li><a href="{{ route('login') }}">Entrar <i class="fa fa-sign-in"></i></a></li>
         </ul>
       </div>
     </nav>

@@ -15,7 +15,12 @@ class Client extends Model
 
     public function loans()
     {
-    	return $this->hasMany('App\Loan','clientID','ID');
+    	return $this->hasMany('App\Loan','clientID','id');
+    }
+
+    public function invoices()
+    {
+        return $this->hasMany('App\Invoice','clientID','id');
     }
 
     public function getInfo()

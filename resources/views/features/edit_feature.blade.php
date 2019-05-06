@@ -3,14 +3,15 @@
 @section('title', 'Edición de Libro')
 
 @section('content-header')
-	<h1><div class="col-md-8"><strong> {{ $BOOK->ID }} : {{ $BOOK->title }}</strong></div></h1><hr>
+	<h1><div class="col-md-8"><strong> {{ $BOOK->id }} : {{ $BOOK->title }}</strong></div></h1><hr>
 @endsection
 
 @section('content')
 	
 	@include('partials.errors')
+	
 	<h3>Edición de Características</h3>
-	<form role="form" action="{{ route('feature.update', $FEATURE->ID) }}" method="POST">
+	<form role="form" action="{{ route('feature.update', $FEATURE->id) }}" method="POST">
 		{{ csrf_field() }}
 		<div class="box-body">
 			<input name="_method" type="hidden" value="PATCH">
@@ -60,10 +61,21 @@
 					<input type="text" class="form-control" id="language" name="language" value="{{ $FEATURE->language }}">
 				</div>
 			</div>
+			<div class="form-group">
+				<div class="col-md-1">
+					<label>Estante:</label>
+				</div>
+				<div class="col-md-10">
+					@for($i = 1; $i <= 13; $i++)
+	                	<label>{{'['.$i.' '}}<input type="radio" name="location" id="location" value="{{ $i }}">{{']'}}</label>
+	                @endfor
+	                <label>[Bodega <input type="radio" name="location" id="location" value="0" checked>]</label>
+              	</div>
+			</div>
 		</div>
 		<div class="box-footer">
 			<button type="submit" class="btn btn-primary btn-block"> Guardar </button>
-			<a class="btn btn-danger btn-block" href="{{ route('feature.show', $FEATURE->ID) }}"> Cancelar </a>
+			<a class="btn btn-danger btn-block" href="{{ route('feature.show', $FEATURE->id) }}"> Cancelar </a>
 		</div>
 	</form>
 		

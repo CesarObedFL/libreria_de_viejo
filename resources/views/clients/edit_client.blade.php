@@ -3,14 +3,14 @@
 @section('title', 'Edición de Clientes')
 
 @section('content-header')
-	<h1><div class="col-md-8"><strong> Edición de Clientes : {{ $CLIENT->ID }} </strong></div></h1><hr>
+	<h1><div class="col-md-8"><strong> Edición de Clientes : {{ $CLIENT->id }} </strong></div></h1><hr>
 @endsection
 
 @section('content')
 	
 	@include('partials.errors')
 
-	<form role="form" action="{{ route('client.update', $CLIENT->ID) }}" method="POST">
+	<form role="form" action="{{ route('client.update', $CLIENT->id) }}" method="POST">
 		{{ csrf_field() }}
 		<div class="box-body">
 			<input name="_method" type="hidden" value="PATCH">

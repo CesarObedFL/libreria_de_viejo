@@ -14,13 +14,13 @@ class Plant extends Model
 
     public function classification() 
     {
-        return $this->hasOne('App\Classification', 'ID', 'classification');
+        return $this->hasOne('App\Classification', 'id', 'classification');
         //return $this->hasOne(Classification::class);
     }
 
-    public function getClassification($ID)
+    public function getClassification($id)
     {    
-        $CLASS = Classification::findOrFail($ID);
+        $CLASS = Classification::findOrFail($id);
         return $CLASS->class;
     }
 

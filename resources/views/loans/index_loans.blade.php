@@ -31,8 +31,7 @@
     
     @else
         <div class="box">
-            <div class="box-header">
-            </div>
+            {{--<div class="box-header"></div>--}}
             <div class="box-body">
                 <table class="table table-condensed text-center" id="loansTable">
                     <thead>
@@ -43,17 +42,19 @@
                             <th> Fecha de Devolución </th>
                             <th> Cliente </th>
                             <th> Adeudo </th>
+                            <th> Estatus </th>
                         </tr>
                     </thead>
                     <tbody>
                         @foreach($LOANS as $loan)
                             <tr>
-                                <td><a class="btn btn-sm btn-block btn-info bg-olive" href="{{ route('loan.show', $loan->ID) }}">{{ $loan->ID }}</a></td>
+                                <td><a class="btn btn-sm btn-block btn-info bg-olive" href="{{ route('loan.show', $loan->id) }}">{{ $loan->id }}</a></td>
                                 <td>{{ $loan->amount }}</td>
                                 <td>{{ $loan->getOutDate() }}</td>
                                 <td>{{ $loan->getInDate() }}</td>
                                 <td>{{ $loan->client->name }}</td>
                                 <td>{{ '$ '.$loan->getOwed() }}</td>
+                                <td class="danger">{{ $loan->status }}</td>
                             </tr>
                         @endforeach
                     </tbody>
@@ -79,6 +80,9 @@
           'info'        : true,
           'autoWidth'   : true
         })
-      })
+        //$('#loansTable td:last-child:contains(Activo)').addClass('info');
+        $('#loansTable td:last-child:contains(Activo)').attr('class','info');
+        $('#loansTable td:last-child:contains(Entregado)').addClass('success');
+      });
     </script>
 @endsection

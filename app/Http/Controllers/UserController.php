@@ -13,7 +13,7 @@ class UserController extends Controller
     {
         $USERS = User::all();
         return view('users.index_users',compact('USERS'));
-    }
+    } 
 
     public function create()
     {
@@ -23,10 +23,10 @@ class UserController extends Controller
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'name' => 'required',
+            'name' => 'required|max:50',
             'email' => 'required|email|unique:users',
-            'phone' => 'required|numeric|min:100000000|max:9999999999',
-            'password' => 'required|min:6',
+            'phone' => 'required|numeric|size:10',
+            'password' => 'required|min:6|max:20',
             'role' => 'required',
         ]);
 
@@ -46,38 +46,38 @@ class UserController extends Controller
         return redirect()->action('UserController@index')->with('success','El usuario se ha registrado exitosamente!...');
     }
 
-    public function show($ID)
+    public function show($id)
     {
-        $USER = User::findOrFail($ID);
+        $USER = User::findOrFail($id);
         return view('users.info_user', compact('USER'));
     }
 
-    public function edit($ID)
+    public function edit($id)
     {
-        $USER = User::findOrFail($ID);
-        return view('users.edit_user', compact('USER','ID'));
+        $USER = User::findOrFail($id);
+        return view('users.edit_user', compact('USER','id'));
     }
 
-    public function update(Request $request, $ID)
+    public function update(Request $request, $id)
     {
         $validator = Validator::make($request->all(), [
-            'name' => 'required',
-            'email' => 'required|email|unique:users',
-            'phone' => 'required|numeric|min:8',
+            'name' => 'required|max:50',
+            'email' => 'required|email|unique:users,email,'.$id,
+            'phone' => 'required|numeric|size:10',
             //'password' => 'required|min:6',
         ]);
 
         if ($validator->fails()) {
             return redirect()->back()->withErrors($validator->errors())->withInput();
-        } 
+        }
 
-        User::where('ID', $ID)->update($request->except('_token','_method'));
-        return redirect()->action('UserController@show', $ID)->with('edit','El usuario se ha modificado exitosamente!...');
+        User::where('id', $id)->update($request->except('_token','_method'));
+        return redirect()->action('UserController@show', $id)->with('edit','El usuario se ha modificado exitosamente!...');
     }
 
-    public function destroy($ID)
+    public function destroy($id)
     {
-        $USER = User::findOrFail($ID)->delete();
+        $USER = User::findOrFail($id)->delete();
         return redirect()->action('UserController@index')->with('delete','El usuario se ha eliminado correctamente!...');
     }
 
@@ -87,13 +87,13 @@ class UserController extends Controller
         return view('users.perfil_user',compact('USER'));
     }
 
-    public function showRole($ID)
+    public function showRole($id)
     {
-        $USER = User::findOrFail($ID);
+        $USER = User::findOrFail($id);
         return view('users.update_role_user',compact('USER'));
     }
 
-    public function updateRole(Request $request, $ID)
+    public function updateRole(Request $request, $id)
     {
         $validator = Validator::make($request->all(), [
             'role' => 'required',
@@ -103,7 +103,7 @@ class UserController extends Controller
             return redirect()->back()->withErrors($validator->errors())->withInput();
         } 
 
-        User::where('ID', $ID)->update($request->except('_token','_method'));
-        return redirect()->action('UserController@show', $ID)->with('edit','El rol del usuario se ha modificado exitosamente!...');
+        User::where('id', $id)->update($request->except('_token','_method'));
+        return redirect()->action('UserController@show', $id)->with('edit','El rol del usuario se ha modificado exitosamente!...');
     }
 }

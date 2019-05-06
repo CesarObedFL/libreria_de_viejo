@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Classification extends Model
 {
     protected $fillable = [
-        'class','location','type'
+        'class',/*'location',*/'type'
     ];
 
     protected $table = 'classifications';
@@ -16,11 +16,11 @@ class Classification extends Model
 
     public function books()
     {
-    	return $this->hasMany('App\Book', 'classification', 'ID');
+    	return $this->hasMany('App\Book', 'classification', 'id');
     }
 
     public function plants()
     {
-    	return $this->hasMany('App\Plnat', 'classification', 'ID');
+    	return $this->hasMany('App\Plnat', 'classification', 'id');
     }
 }
