@@ -13,8 +13,8 @@ class CreatePaysTable extends Migration
             $table->increments('id');
             $table->unsignedInteger('userID');
             $table->date('date');
-            $table->unsignedDecimal('amount',5,2);
-            $table->unsignedDecimal('owed',5,2);
+            $table->unsignedDecimal('amount',8,2);
+            $table->unsignedDecimal('owed',8,2);
         });
     }
 

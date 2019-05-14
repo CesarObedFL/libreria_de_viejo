@@ -11,8 +11,7 @@ class CreateClassificationsTable extends Migration
         Schema::create('classifications', function (Blueprint $table) {
             $table->increments('id'); // PK
             $table->string('class',40);
-            //$table->string('location',25);
-            $table->enum('type',['Libros','Plantas']);
+            $table->enum('type',['Libro','Planta']);
         });
     }
 

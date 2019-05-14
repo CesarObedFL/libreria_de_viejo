@@ -70,7 +70,7 @@
                 </li>
                 <li class="user-body">
                   <div class="row">
-                    <div class="text-center"><a href="{{ route('sale.index') }}">{{ (Auth::user()->isAdmin()) ? '': 'Mis' }} <i class="fa fa-archive"></i> Ventas</a></div>
+                    <div class="text-center"><a href="{{ route('sale.index') }}"><i class="fa fa-archive"></i>{{ (Auth::user()->isAdmin()) ? '': 'Mis' }} Ventas</a></div>
                   </div>
                 </li>
                 <li class="user-body">
@@ -123,10 +123,9 @@
           </ul>
         </li> 
         -->
-        <li><a href="{{ route('bartering.index') }}"><i class="fa fa-refresh"></i><span>Trueques</span></a></li>
+        <li><a href="{{ route('swap.index') }}"><i class="fa fa-refresh"></i><span>Trueques</span></a></li>
         <li><a href="{{ route('donation.index') }}"><i class="fa fa-gift"></i><span>Donaciones</span></a></li>
-        <li><a href="{{ route('loan.index') }}"><i class="fa fa-mail-forward"></i><span>Préstamos</span></a></li>
-        <li><a href="{{ route('loan.clients') }}"><i class="fa fa-mail-reply"></i><span>Devoluciones</span></a></li>
+        <li><a href="{{ route('borrow.index') }}"><i class="fa fa-mail-forward"></i><span>Préstamos</span></a></li>
       </ul>
 
       <ul class="sidebar-menu" data-widget="tree">

@@ -9,6 +9,11 @@ use App\Classification;
 
 class ClassificationController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
     public function index()
     {
         $CLASSES = Classification::all();
@@ -24,8 +29,7 @@ class ClassificationController extends Controller
     {
         $validator = Validator::make($request->all(), [
             'class' => 'required',
-            //'location' => 'required',
-            'type' => 'required',
+            'type' => 'required'
         ]);
 
         if ($validator->fails()) {
@@ -50,11 +54,8 @@ class ClassificationController extends Controller
 
     public function update(Request $request, $id)
     {
-        
         $validator = Validator::make($request->all(), [
-            'class'     => 'required',
-            'location' => 'required',
-            //'type'      => 'required',
+            'class'     => 'required'
         ]);
 
         if ($validator->fails()) {
@@ -62,7 +63,7 @@ class ClassificationController extends Controller
         }
 
         Classification::where('id',$id)->update($request->except('_token','_method'));
-        return redirect()->action('ClassificationController@show',$id)->with('edit','El cliente se ha modificado exitosamente!...');
+        return redirect()->action('ClassificationController@index')->with('edit','La clase se ha modificado exitosamente!...');
     }
 
     public function destroy($id)

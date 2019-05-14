@@ -15,9 +15,9 @@ class CreateInvoicesTable extends Migration
             $table->date('date');
             $table->enum('turn', ['M','T','S','D']);
             $table->unsignedInteger('clientID'); // FK
-            $table->unsignedDecimal('subTotal',5,2);
-            $table->unsignedDecimal('total',5,2);
-            $table->unsignedDecimal('received',5,2);
+            $table->unsignedDecimal('subTotal',8,2);
+            $table->unsignedDecimal('total',8,2);
+            $table->unsignedDecimal('received',8,2);
         });
     }
 

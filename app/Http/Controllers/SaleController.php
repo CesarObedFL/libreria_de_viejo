@@ -14,10 +14,15 @@ use App\Plant;
 use App\Book;
 use App\Invoice;
 use App\Sale;
-
+use App\Pay;
 
 class SaleController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
     public function index() 
     { 
         $INVOICES = Invoice::all();
@@ -26,7 +31,7 @@ class SaleController extends Controller
 
     public function create()
     {
-        $PLANTS = Plant::all();
+        $PLANTS = Plant::all()->where('stock','>',0);
         $CLIENTS = Client::all();
         return view('sales.realize', compact('CLIENTS','PLANTS'));
     }
@@ -35,8 +40,8 @@ class SaleController extends Controller
     {
         $validator = Validator::make($request->all(), [
             'clientID' => 'required',
-            'total' => 'required',
-            'pay'  => 'required',
+            'total' => 'required|numeric',
+            'pay'  => 'required|numeric',
             'products' => 'required'
         ]);
 
@@ -54,9 +59,10 @@ class SaleController extends Controller
             'received' => $request->get('pay')
         ]);
         $INVOICE->save();
+        $invoiceID = $INVOICE->id;
 
         $PRODUCTS = json_decode($request->get('products'));
-        $subTotal = 0; 
+        $subTotal = 0;
         $total = 0; 
         $productTotal = 0;
         foreach($PRODUCTS as $product) {
@@ -72,20 +78,27 @@ class SaleController extends Controller
             $subTotal += $productTotal = $product->price * $product->amount;
             $total += $productTotal - ($productTotal * ($product->discount/100));
             
-            if($product->type == 1) {
-                $newStock = Book::findOrFail($product->id)->stock - $product->amount;
-                Book::where('ISBN',$product->id)->update(['stock' => $newStock]);
+            if($product->type === 1) {
+                $stock = DB::table('books')->where('ISBN',$product->id)->first()->stock;
+                Book::where('ISBN',$product->id)->update(['stock' => ($stock -= $product->amount)]);
+
             } else if($product->type == 2) {
-                $newStock = Plant::findOrFail($product->id)->stock - $product->amount;
-                Plant::where('id',$product->id)->update(['stock' => $newStock]);
+                $PLANT = Plant::findOrFail($product->id);
+                $PLANT->stock -= $product->amount;
+                $PLANT->save();
             }
-
+            
         }
-        $INVOICE->subTotal = $subTotal;
-        $INVOICE->total = $total;
-        $INVOICE->save();
-
-        return redirect()->action('SaleController@show',['id' => $INVOICE->id])->with('success', 'La venta se ha realizado exitosamente!...');
+        Invoice::where('id',$invoiceID)->update(['subTotal' => $subTotal, 'total' => $total]);
+        $COMMISSION = $total/10;
+        $PAY = new Pay([
+            'userID' => Auth::id(),
+            'date' => Carbon::now()->toDateString(),
+            'amount' => 0,
+            'owed' => $COMMISSION]);
+        $PAY->save();
+        $BALANCE = $request->get('pay') - $total;
+        return redirect()->action('SaleController@show',$INVOICE->id)->with(['success' => 'La venta se ha realizado exitosamente!...', 'balancedue' => 'El cambio de la operación es: '.$BALANCE]);
     }
 
     public function show($id) 
@@ -111,7 +124,7 @@ class SaleController extends Controller
 
     public function searchbook($isbn)
     {
-        $BOOK = DB::table('books')->where('ISBN',$isbn)->first();
+        $BOOK = DB::table('books')->where('ISBN',$isbn)->where('stock','>',0)->first();
         return response()->json([
             'id' => $BOOK->ISBN, 
             'name' => $BOOK->title,
@@ -125,7 +138,7 @@ class SaleController extends Controller
 
     public function searchplant($id)
     {
-        $PLANT = DB::table('plants')->where('id',$id)->first();
+        $PLANT = DB::table('plants')->where('id',$id)->where('stock','>',0)->first();
         return response()->json([
             'id' => $PLANT->id,
             'name' => $PLANT->name,

@@ -26,6 +26,7 @@
 				<label for="phone"> Telefono </label>
 				<input type="text" class="form-control" id="phone" name="phone" value="{{ $USER->phone }}">
 			</div>
+			<a href="{{ route('user.changepass',$USER->id) }}"><i> Cambiar Password </i></a>
 		</div>
 		<div class="box-footer">
 			<button type="submit" class="btn btn-primary btn-block"> Guardar </button>

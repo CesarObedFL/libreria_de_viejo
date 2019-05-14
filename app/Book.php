@@ -20,12 +20,7 @@ class Book extends Model
 
     public function features()
     {
-        return $this->hasMany('App\Feature','bookID','id');
-    }
-
-    public function times()
-    {
-        return $this->hasMany('App\BorrowedBook','bookID','ISBN');
+        return $this->hasMany('App\Feature','bookID','id')->withDefault();
     }
 
     public function classification()
@@ -35,13 +30,15 @@ class Book extends Model
 
     public function getClassification($id)
     {    
-        $CLASS = Classification::findOrFail($id);
+        $CLASS = Classification::find($this->classification);
+        if(!$CLASS)
+            return 'eliminada';
         return $CLASS->class;
     }
 
     public function getLocation()
     {
-        return ($this->location > 0) ? $this->location : 'Bodega';
+        return (!$this->location ) ? 'Bodega' : $this->location;
     }
 
     public function getTotalStock($id) 

@@ -62,7 +62,7 @@
                         @if($client->id == 1)
                             <td style="text-align: center">{{ $client->id }}</a></td>
                         @else
-                            <td><a class="btn btn-sm btn-block btn-info bg-olive" href="{{ route('client.show', $client->id) }}">{{ $client->id }}</a></td>
+                            <td><a class="btn btn-sm btn-block bg-olive" href="{{ route('client.show', $client->id) }}">{{ $client->id }}</a></td>
                         @endif
                         <td>{{ $client->name }}</td>
                         <td>{{ $client->type }}</td>

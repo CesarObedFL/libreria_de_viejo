@@ -90,14 +90,14 @@
 				</div>
 			</div>
 			<div class="form-group">
-				<div class="col-md-1">
-					<label>Estante:</label>
-				</div>
-				<div class="col-md-10">
-					@for($i = 1; $i <= 13; $i++)
-	                	<label>{{'['.$i.' '}}<input type="radio" name="location" id="location" value="{{ $i }}">{{']'}}</label>
-	                @endfor
-	                <label>[Bodega <input type="radio" name="location" id="location" value="0" checked>]</label>
+				<div class="col-md-4">
+					<label for="location"> Estante </label>
+					<select class="form-control select2" style="width:100%;" name="location" id="location">
+						<option value="0" selected="selected"> Bodega </option>
+						@for($i = 1; $i <= 13; $i++)
+	                		<option value="{{ $i }}"> Estante {{ $i }} </option>
+	                	@endfor
+	                </select>
               	</div>
 			</div>
 		</div> {{-- box-body --}}

@@ -59,7 +59,7 @@
             <tbody>
                 @foreach($PLANTS as $plant)
                     <tr>
-                        <td><a class="btn btn-sm btn-block btn-info bg-olive" href="{{ route('plant.show', $plant->id) }}">{{ $plant->id }}</a></td>
+                        <td><a class="btn btn-sm btn-block bg-olive" href="{{ route('plant.show', $plant->id) }}">{{ $plant->id }}</a></td>
                         <td>{{ $plant->name }}</td>
                         <td>{{ $plant->stock }}</td>
                     </tr>

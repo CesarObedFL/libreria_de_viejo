@@ -25,39 +25,41 @@ Route::get('/home', 'HomeController@index')->name('home');
 // ADMINISTRACIÓN ///////////////////////////////////////////////////////////////
 Route::get('admin/cut','AdminController@cut')->name('admin.cut');
 Route::get('admin/barcodes','AdminController@barcodes')->name('admin.barcodes');
+Route::resource('admin','AdminController');
 
 // REGISTROS
-Route::get('user/perfil','UserController@perfil')->name('user.perfil')->middleware('auth');
-Route::get('user/role/{id}','UserController@showRole')->name('user.role')->middleware('auth');
-Route::patch('user/updateRole/{id}','UserController@updateRole')->name('user.updateRole')->middleware('auth');
-Route::resource('user','UserController')->middleware('auth');
+Route::get('user/perfil','UserController@perfil')->name('user.perfil');
+Route::get('user/pass/{id}','UserController@showPass')->name('user.changepass');
+Route::patch('user/updatepass/{id}','UserController@updatePass')->name('user.updatePass');
+Route::get('user/role/{id}','UserController@showRole')->name('user.role');
+Route::patch('user/updateRole/{id}','UserController@updateRole')->name('user.updateRole');
+Route::resource('user','UserController');
 
-Route::put('book/updateStock','BookController@updateStock')->name('book.updateStock')->middleware('auth');
-Route::get('book/search','BookController@search')->name('book.search')->middleware('auth');
-Route::resource('book','BookController')->middleware('auth');
-Route::get('feature/newFeature/{id}','FeatureController@newFeature')->name('feature.newFeature')->middleware('auth');
-Route::resource('feature','FeatureController')->middleware('auth');
+Route::put('book/updateStock','BookController@updateStock')->name('book.updateStock');
+Route::get('book/search','BookController@search')->name('book.search');
+Route::resource('book','BookController');
+Route::get('feature/newFeature/{id}','FeatureController@newFeature')->name('feature.newFeature');
+Route::resource('feature','FeatureController');
 
-Route::resource('classification','ClassificationController')->middleware('auth');
-Route::resource('client','ClientController')->middleware('auth');
-Route::resource('plant','PlantController')->middleware('auth');
+Route::resource('classification','ClassificationController');
+Route::resource('client','ClientController');
+Route::resource('plant','PlantController');
 
 // OPERACIONES //////////////////////////////////////////////////////////////////
-Route::get('/search/book/{isbn}','BarteringController@searchbook')->name('bartering.searchbook');
-Route::resource('bartering','BarteringController');
+Route::get('swap/search/book/{isbn}','SwapController@searchbook');
+Route::resource('swap','SwapController');
 
 Route::get('donation/donate','DonationController@donate')->name('donation.donate');
 Route::get('donation/receive','DonationController@receive')->name('donation.receive');
 Route::resource('donation','DonationController');
 Route::resource('donor','DonorController');
 
-Route::get('/loan/clients','LoanController@clients')->name('loan.clients');
-Route::get('/search/book/{isbn}','LoanController@searchbook')->name('loan.search.book');
-Route::post('loan/devolution','LoanController@devolution')->name('loan.devolution');
-Route::resource('loan','LoanController');
+Route::get('borrow/search/book/{isbn}','BorrowController@searchbook');
+Route::get('devolution/search/book/{isbn}','BorrowController@searchborrowedbook')->name('devolution.search.book');
+Route::resource('borrow','BorrowController');
 
 // VENTAS ///////////////////////////////////////////////////////////////////////
-Route::get('/search/book/{isbn}','SaleController@searchbook')->name('searchbook');
-Route::get('/search/plant/{id}','SaleController@searchplant')->name('searchplant');
+Route::get('sale/search/book/{isbn}','SaleController@searchbook')->name('searchbook');
+Route::get('sale/search/plant/{id}','SaleController@searchplant')->name('searchplant');
 Route::resource('sale','SaleController');
 /////////////////////////////////////////////////////////////////////////////////

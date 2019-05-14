@@ -58,7 +58,7 @@
 	        <tbody>
 	            @foreach($INVOICES as $invoice)
 	            <tr>
-	                <td><a class="btn btn-sm btn-block btn-info bg-olive" href="{{ route('sale.show', $invoice->id) }}">{{ $invoice->id }}</a></td>
+	                <td><a class="btn btn-sm btn-block bg-olive" href="{{ route('sale.show', $invoice->id) }}">{{ $invoice->id }}</a></td>
 	                <td>{{ $invoice->getDate() }}</td>
 	                <td>{{ $invoice->turn }}</td>
 	                <td>{{ $invoice->user->name }}</td>

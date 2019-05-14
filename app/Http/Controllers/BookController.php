@@ -11,6 +11,11 @@ use App\Classification;
 
 class BookController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+    
     public function index()
     {
         $BOOKS = Book::all();
@@ -27,7 +32,7 @@ class BookController extends Controller
         $validator = Validator::make($request->all(), [
             // BOOK TABLE
             'ISBN' => 'required|unique:books|max:15',
-            'title' => 'required|max:50',
+            'title' => 'required|max:100',
             'author' => 'required|max:50',
             'editorial' => 'required|max:30',
             'classification' => 'required',
@@ -36,7 +41,7 @@ class BookController extends Controller
             // BOOK FEATURES
             'edition' => 'required|max:20', // <--
             'stock' => 'required|numeric|min:1', // <--
-            'price' => 'required|numeric|min:5|max:99999', // <--
+            'price' => 'required|numeric|min:5|max:9999', // <--
             'conditions' => 'required|max:20', // <--
             'place' => 'required|min:0|max:13', // <--
             'location' => 'required|numeric|min:0|max:13', // <--
@@ -98,7 +103,7 @@ class BookController extends Controller
         $validator = Validator::make($request->all(), [
             // BOOK TABLE
             'ISBN' => 'required|max:15|unique:books,ISBN,'.$id,
-            'title' => 'required|max:50',
+            'title' => 'required|max:100',
             'author' => 'required|max:50',
             'editorial' => 'required|max:30',
             'classification' => 'required',
@@ -107,7 +112,7 @@ class BookController extends Controller
             // BOOK FEATURES
             'edition' => 'required|max:20', // <--
             'stock' => 'required|numeric|min:1', // <--
-            'price' => 'required|numeric|min:5|max:99999', // <--
+            'price' => 'required|numeric|min:5|max:9999', // <--
             'conditions' => 'required|max:20', // <--
             'place' => 'required|min:0|max:13', // <--
             'location' => 'required|numeric|min:0|max:13' // <--
@@ -148,14 +153,13 @@ class BookController extends Controller
     public function search(Request $request)
     {
         $ISBN = $request->isbn;
-        $CLASSES = Classification::orderBy('class')->where('type',1)->get();
-
         $BOOK = DB::table('books')->where('ISBN',$ISBN)->first();
         if($BOOK) {
             $BOOK = Book::findOrFail($BOOK->id);
-            return view('books.update_book', compact('BOOK','CLASSES'))->with('edit','El libro ya se encuentra registrado!...');
+            return view('books.update_book', compact('BOOK'))->with('edit','El libro ya se encuentra registrado!...');
             
         } else { // PARA CREAR UN LIBRO NUEVO
+            $CLASSES = Classification::orderBy('class')->where('type',1)->get();
             return view('books.create_new_book', compact('ISBN','CLASSES'));
         }
     }

@@ -38,11 +38,12 @@
 
 	@include('partials.success')
 	@include('partials.delete')
+	@include('partials.edit')
 
 	@if($CLASSES->isEmpty())
         <div class="col-md-12">
             <div class="alert alert-warning">
-                <i class="icon fa fa-warning"></i>No hay classificaciones registradas...
+                <i class="icon fa fa-warning"></i>No hay clasificaciones registradas...
             </div>
         </div>
 
@@ -50,17 +51,31 @@
         <table id="classesTable" class="table table-bordered table-striped">
 	        <thead>
 	            <tr class="success">
-	                <th> Clase </th>
-	                {{-- <th> Ubicación </th> --}}
+	                <th> Nombre </th>
 	                <th> Tipo </th>
+	                <th> Editar </th>
+	                <th> Eliminar </th>
 	            </tr>
 	        </thead>
 	        <tbody>
 	            @foreach($CLASSES as $class)
 	            <tr>
-	                <td><a class="btn btn-sm btn-block btn-info bg-olive" href="{{ route('classification.show', $class->id) }}">{{ $class->class }}</a></td>
-	                {{--<td>{{ $class->location }}</td>--}}
-	                <td>{{ $class->type }}</td>
+	                <td>{{ $class->class }}</a></td>
+	                <td style="width:20%">{{ $class->type }}</td>
+	                <td style="width:10%">
+	                	<a class="btn btn-sm btn-block btn-info" href="{{ route('classification.edit', $class->id) }}">  
+	                	
+	                	<i class="icon fa fa-pencil"></i></a>
+	                </td>
+	                <td style="width:10%">
+	                	<form role="form" action="{{ route('classification.destroy', $class->id) }}" method="POST">
+		                    {{ csrf_field() }}
+		                    <input type="hidden" name="_method" value="DELETE">
+		                    <button type="submit" class="btn btn-sm btn-block btn-danger">
+		                    	<i class="icon fa fa-trash"></i>
+		                    </button>
+		                </form>
+	                </td>
 	            </tr>
 	            @endforeach
 	        </tbody>

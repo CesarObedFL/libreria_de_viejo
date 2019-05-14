@@ -58,7 +58,7 @@
 	        <tbody>
 	            @foreach($USERS as $user)
 	            <tr>
-	                <td><a class="btn btn-sm btn-block btn-info bg-olive" href="{{ route('user.show', $user->id) }}">{{ $user->id }}</a></td>
+	                <td><a class="btn btn-sm btn-block bg-olive" href="{{ route('user.show', $user->id) }}">{{ $user->id }}</a></td>
 	                <td>{{ $user->name }}</td>
 	                <td>{{ $user->role }}</td>
 	            </tr>

@@ -20,30 +20,22 @@
                 <div class="col-md-6">
                     <dl class="dl-horizontal">
                         <dt>Precio:</dt><dd>{{ "$ ".$PLANT->price }}</dd>
-                        <dt>Imagen:</dt><dd>{{ $PLANT->image }}</dd>
-                        <dt>Clase:</dt><dd>{{ $PLANT->getClassification($PLANT->classification) }}</dd>
+                        <dt>Clasificación:</dt><dd>{{ $PLANT->getClassification($PLANT->classification) }}</dd>
                         <dt>Recomendaciones:</dt><dd>{{ $PLANT->tips }}</dd>
-                        <dt>Cantidad:</dt><dd>{{ $PLANT->stock }}</dd>
+                        <dt>Stock:</dt><dd>{{ $PLANT->stock }}</dd>
                     </dl>
                 </div>
                 <div class="col-md-6">
-
-                    IMAGEN
                     <!-- <img src="{ { Storage::url($plant->image) }}" width="50%"></a>-->
                 </div>
             </div>
         </div>
         <div class="col-md-13">
             <div class="box box-primary">
-                <form role="form" action="{{ route('plant.destroy', $PLANT->id) }}" method="POST">
-                    {{ csrf_field() }}
-                    <input type="hidden" name="_method" value="DELETE">
-                    <div class="box-footer">
-                        <a class="btn btn-primary col-md-4" href="{{ route('plant.index') }}"> Aceptar </a>
-                        <a class="btn btn-success col-md-4" href="{{ route('plant.edit', $PLANT->id) }}"> Editar </a>
-                        <button type="submit" class="btn btn-danger col-md-4"> Eliminar </button>
-                    </div>
-                </form>
+                <div class="box-footer">
+                    <a class="btn btn-primary col-md-6" href="{{ route('plant.index') }}"> Aceptar </a>
+                    <a class="btn btn-success col-md-6" href="{{ route('plant.edit', $PLANT->id) }}"> Editar </a>
+                </div>
             </div>
         </div>
     </div>

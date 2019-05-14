@@ -10,10 +10,15 @@
 	
 	@include('partials.errors')
 
-	<form role="form" action="{{ route('book.update', $BOOK->id) }}" method="POST">
+	<form role="form" action="{{ route('book.update',$BOOK->id) }}" method="POST">
 		{{ csrf_field() }}
 		<div class="box-body">
 			<input name="_method" type="hidden" value="PATCH">
+			<div class="form-group col-md-12">
+				<label for="ISBN"> ISBN </label>
+				<input type="text" class="form-control" id="ISBN" name="ISBN" 
+				value="{{ $BOOK->ISBN }}">
+			</div>
 			<div class="form-group col-md-12">
 				<label for="title"> Título </label>
 				<input type="text" class="form-control" id="title" name="title" 
@@ -68,11 +73,11 @@
 				</div>
 			</div>
 			<div class="form-group">
-				<div class="col-md-3">
+				<div class="col-md-4">
 					<label for="stock"> Stock </label>
 					<input type="text" class="form-control" id="stock" name="stock" value="{{ $BOOK->stock }}">
 				</div>
-				<div class="col-md-3">
+				<div class="col-md-4">
 					<label for="place"> Lugar </label>
 					<select class="form-control select2" style="width:100%;" name="place" id="place">
 						<option value="{{ $BOOK->place }}">{{ $BOOK->place }}</option>
@@ -83,17 +88,19 @@
 	                </select>
 				</div>
 			</div>
+
 			<div class="form-group">
-				<div class="col-md-1">
-					<label>Estante:</label>
-				</div>
-				<div class="col-md-10">
-					@for($i = 1; $i <= 13; $i++)
-	                	<label>{{'['.$i.' '}}<input type="radio" name="location" id="location" value="{{ $i }}">{{']'}}</label>
-	                @endfor
-	                <label>[Bodega <input type="radio" name="location" id="location" value="0">]</label>
+				<div class="col-md-4">
+					<label for="location"> Estante </label>
+					<select class="form-control select2" style="width:100%;" name="location" id="location">
+						<option value="0" selected="selected"> Bodega </option>
+						@for($i = 1; $i <= 13; $i++)
+	                		<option value="{{ $i }}"> Estante {{ $i }} </option>
+	                	@endfor
+	                </select>
               	</div>
 			</div>
+
 			{{-- /BOOK FEATURES --}}
 
 		</div>

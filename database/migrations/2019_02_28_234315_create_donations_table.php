@@ -16,7 +16,7 @@ class CreateDonationsTable extends Migration
             $table->unsignedInteger('amount');
             $table->date('date');
             $table->unsignedInteger('userID');
-            $table->string('classification',30);
+            $table->unsignedInteger('classification');
         });
     }
 

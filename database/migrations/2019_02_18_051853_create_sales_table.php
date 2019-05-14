@@ -15,7 +15,7 @@ class CreateSalesTable extends Migration
             $table->unsignedInteger('productID'); // plantID or ISBN
             $table->unsignedInteger('amount'); 
             $table->unsignedInteger('discount');
-            $table->unsignedDecimal('price',5,2);
+            $table->unsignedDecimal('price',6,2);
             $table->enum('type',['Libro', 'Planta']);
         });
     }

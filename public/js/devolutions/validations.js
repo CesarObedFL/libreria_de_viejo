@@ -8,14 +8,6 @@ function validateAmount(index) {
 	}
 }
 
-function validateDiscount(index) {
-	var discount = $('#discount'+index).val();
-	if(discount < 0 || discount > 20) {
-		alert("El descuento debe ser mayor a 0 y menor al 20%...");
-		$('#discount'+index).val('0');
-	}
-}
-
 function validatePay() {
 	var total = $('#total').val();
 	var pay = $('#pay').val();

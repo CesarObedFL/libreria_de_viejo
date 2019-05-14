@@ -45,10 +45,12 @@
 						<input class="form-control" type="text" name="price" id="price" value="{{ $PLANT->price }}">
 					</div>
 				</div>
+				{{--
 				<div class="col-md-4">
 					<label for="image"> Imagen </label>
 					<input class="form-control" type="text" name="image" id="image" value="{{ $PLANT->image }}">
 				</div>
+				--}}
 			</div>
 		</div>
 		<div class="box-footer">

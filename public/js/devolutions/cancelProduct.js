@@ -13,9 +13,8 @@ function reOrder() {
 	var index = 0;
 	$('#returnsTable tbody tr').each(function() {
 		$(this).attr('id','row'+(++index));
-		//$(this).find('td').eq(0).text(index);
-		//$(this).find('td').eq(3).find('input').attr('id','amount'+index);
-		//$(this).find('td').eq(3).find('input').attr('onblur','validateAmount('+index+');');
-		$(this).find('td').eq(1).find('button').attr('onclick','cancelProduct('+index+');');
+		$(this).find('td').eq(1).find('input').attr('id','amount'+index);
+		$(this).find('td').eq(1).find('input').attr('onblur','validateAmount('+index+');');
+		$(this).find('td').eq(2).find('button').attr('onclick','cancelProduct('+index+');');
 	});
 }

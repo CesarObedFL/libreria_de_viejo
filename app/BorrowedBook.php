@@ -8,13 +8,13 @@ class BorrowedBook extends Model
 {
 	protected $table = 'borrowed_books';
 
-    protected $fillable = ['loanID','bookID', /*'featureID',*/ 'status'];
+    protected $fillable = ['borrowID','bookID', /*'featureID',*/ 'amount','status'];
 
     public $timestamps = false;
 
-    protected function loans()
+    protected function borrows()
     {
-    	return $this->belongsTo(Loan::class,'loanID');
+    	return $this->belongsTo(Borrow::class,'borrowID');
     }
 
     protected function book()

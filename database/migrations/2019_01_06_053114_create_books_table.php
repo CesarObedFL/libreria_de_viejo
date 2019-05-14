@@ -6,26 +6,24 @@ use Illuminate\Database\Migrations\Migration;
 
 class CreateBooksTable extends Migration
 {
-
     public function up()
     {
         Schema::create('books', function (Blueprint $table) {
             $table->increments('id');
-            $table->char('ISBN', 15)->unique(); // PK necesita
+            $table->char('ISBN', 20)->unique(); // PK necesita
             $table->string('title',100);
             $table->string('author',50);
             $table->string('editorial',50);
+            $table->string('edition',20); // FEATURE
+            $table->string('conditions',20); // FEATURE
             $table->unsignedInteger('classification'); // FK
+            $table->unsignedInteger('location'); // FEATURE
+            $table->unsignedInteger('stock'); // FEATURE
+            $table->unsignedDecimal('price',6,2); // FEATURE
+            $table->unsignedInteger('borrowedbooks')->default(0); // FEATURE
             $table->string('genre',20)->nullable();
             $table->string('collection',20)->nullable();
-            // BOOK FEATURES
-            $table->string('edition',20);
-            $table->string('conditions',20);
-            $table->unsignedInteger('location');
-            $table->enum('place', ['Libreria', 'Almacén', 'Exhibición', 'Bazar']); // lugar donde se encuentra actualmente el libro
-            $table->unsignedDecimal('price',5,2);
-            $table->unsignedInteger('borrowedbooks')->default(0); // <-- ADDED
-            $table->unsignedInteger('stock');
+            $table->enum('place', ['Libreria', 'Almacén', 'Exhibición', 'Bazar']); // FEATURE : lugar donde se encuentra actualmente el libro
         });
     }
 

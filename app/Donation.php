@@ -34,7 +34,9 @@ class Donation extends Model
 
     public function getClass()
     {
-    	$CLASS = Classification::findOrFail($this->classification);
+    	$CLASS = Classification::find($this->classification);
+        if(!$CLASS)
+            return 'eliminada';
         return $CLASS->class;
     }
 

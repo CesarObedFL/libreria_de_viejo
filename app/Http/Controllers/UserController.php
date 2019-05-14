@@ -9,6 +9,11 @@ use App\User;
 
 class UserController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
     public function index()
     {
         $USERS = User::all();
@@ -25,8 +30,8 @@ class UserController extends Controller
         $validator = Validator::make($request->all(), [
             'name' => 'required|max:50',
             'email' => 'required|email|unique:users',
-            'phone' => 'required|numeric|size:10',
-            'password' => 'required|min:6|max:20',
+            'phone' => 'required|numeric|digits:10',
+            'password' => 'required|max:20',
             'role' => 'required',
         ]);
 
@@ -63,8 +68,7 @@ class UserController extends Controller
         $validator = Validator::make($request->all(), [
             'name' => 'required|max:50',
             'email' => 'required|email|unique:users,email,'.$id,
-            'phone' => 'required|numeric|size:10',
-            //'password' => 'required|min:6',
+            'phone' => 'required|numeric|digits:10',
         ]);
 
         if ($validator->fails()) {
@@ -77,8 +81,8 @@ class UserController extends Controller
 
     public function destroy($id)
     {
-        $USER = User::findOrFail($id)->delete();
-        return redirect()->action('UserController@index')->with('delete','El usuario se ha eliminado correctamente!...');
+        User::findOrFail($id)->delete();
+        return redirect()->action('UserController@index')->with('delete','El usuario se ha correctamente!...');
     }
 
     public function perfil() 
@@ -89,21 +93,47 @@ class UserController extends Controller
 
     public function showRole($id)
     {
-        $USER = User::findOrFail($id);
-        return view('users.update_role_user',compact('USER'));
+        if(Auth::user()->isAdmin()) {
+            $USER = User::findOrFail($id);
+            return view('users.update_role_user',compact('USER'));
+        } else 
+            return redirect()->action('UserController@show',$id)->with('delete','Se necesitan permisos de administrador...');
+
     }
 
     public function updateRole(Request $request, $id)
     {
         $validator = Validator::make($request->all(), [
-            'role' => 'required',
+            'role' => 'required'
         ]);
 
         if ($validator->fails()) {
             return redirect()->back()->withErrors($validator->errors())->withInput();
-        } 
+        }
 
         User::where('id', $id)->update($request->except('_token','_method'));
         return redirect()->action('UserController@show', $id)->with('edit','El rol del usuario se ha modificado exitosamente!...');
+    }
+
+    public function showPass($id)
+    {
+        $USER = User::findOrFail($id);
+        return view('users.change_pass',compact('USER'));
+    }
+
+    public function updatePass(Request $request, $id)
+    {
+        $validator = Validator::make($request->all(), [
+            'password' => 'required|max:20'
+        ]);
+
+        if ($validator->fails()) {
+            return redirect()->back()->withErrors($validator->errors())->withInput();
+        }
+        $USER = User::findOrFail($id);
+        $USER->password = bcrypt($request->get('password'));
+        $USER->save();
+        //User::where('id', $id)->update($request->except('_token','_method'));
+        return redirect()->action('UserController@show', $id)->with('edit','La contraseña del usuario se ha modificado exitosamente!...');
     }
 }

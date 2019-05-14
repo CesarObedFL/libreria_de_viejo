@@ -30,9 +30,10 @@
                     {{ csrf_field() }}
                     <input type="hidden" name="_method" value="DELETE">
                     <div class="box-footer">
-                        <a class="btn btn-primary col-md-4" href="{{ route('user.index') }}"> Aceptar </a>
-                        <a class="btn btn-warning col-md-4" href="{{ route('user.role', $USER->id) }}"> Cambiar Privilegios </a>
-                        <button type="submit" class="btn btn-danger col-md-4"> Eliminar </button>
+                        <a class="btn btn-primary col-md-3" href="{{ route('user.index') }}"> Aceptar </a>
+                        <a class="btn btn-success col-md-3" href="{{ route('user.edit',$USER->id) }}"> Editar </a>
+                        <a class="btn btn-warning col-md-3" href="{{ route('user.role',$USER->id) }}"> Privilegios </a>
+                        <button type="submit" class="btn btn-danger col-md-3"> Eliminar </button>
                     </div>
                 </form>
             </div>

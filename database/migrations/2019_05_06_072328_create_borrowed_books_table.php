@@ -10,9 +10,10 @@ class CreateBorrowedBooksTable extends Migration
     {
         Schema::create('borrowed_books', function (Blueprint $table) {
             $table->increments('id');
-            $table->unsignedInteger('loanID');
+            $table->unsignedInteger('borrowID');
             $table->unsignedInteger('bookID');
             //$table->unsignedInteger('featureID');
+            $table->unsignedInteger('amount');
             $table->enum('status',['Activo','Entregado']);
         });
     }

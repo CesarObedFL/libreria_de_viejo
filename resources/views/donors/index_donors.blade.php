@@ -55,22 +55,13 @@
                     <tbody>
                         @foreach($DONORS as $donor)
                             <tr>
-                                <td><a class="btn btn-block btn-sm btn-info bg-olive" href="{{ route('donor.edit', $donor->id) }}">{{ $donor->id }}</a></td> 
+                                <td><a class="btn btn-block btn-sm bg-olive" href="{{ route('donor.edit', $donor->id) }}">{{ $donor->id }}</a></td> 
                                 <td>{{ $donor->institution }}</td>
                                 <td>{{ $donor->contact }}</td>
                                 <td>{{ $donor->email }}</td>
                                 <td>{{ $donor->phone }}</td>
                                 <td>{{ $donor->address }}</td>
                                 <td>{{ $donor->commercialBusiness }}</td>
-                                <!--
-                                <td>
-                                    <form role="form"  action="{ { route('donor.destroy',$donor->id) }}" method="POST">
-                                        { { csrf_field() }}
-                                        <input type="hidden" name="_method" value="DELETE">
-                                        <button type="submit" class="btn btn-sm btn-danger">X</button>
-                                    </form>
-                                </td> 
-                                -->
                             </tr>
                         @endforeach
                     </tbody>

@@ -63,7 +63,7 @@
             <tbody>
                 @foreach($BOOKS as $book)
                     <tr>
-                        <td><a class="btn btn-sm btn-info bg-olive" href="{{ route('book.show', $book->id) }}">{{ $book->ISBN }}</a></td>
+                        <td><a class="btn btn-sm btn-block bg-olive" href="{{ route('book.show', $book->id) }}">{{ $book->ISBN }}</a></td>
                         <td>{{ $book->title }}</td>
                         <td>{{ $book->author }}</td>
                         <td>{{ $book->editorial }}</td>

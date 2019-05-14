@@ -1,19 +1,34 @@
 $(document).ready(function () {
+	$.ajaxSetup({
+		headers: {
+			'X-CSRF-TOKEN' : $('meta[name="csrf-token"]').attr('content')
+		}
+	});
 
 	$('#btnAddBook').click(function(event) {
 		event.preventDefault();
 		var isbn = $('#isbn').val();
-		var isRegister = false;
+		var isRegistered = false;
 		for(var i = 0; i < products.length; i++) {
 			product = jQuery.parseJSON(products[i]);
 			if (product.isbn == isbn) {	
-				isRegister = true; break;
+				isRegistered = true; break;
 			}
 		}
-		if (isRegister)
+		if (isRegistered)
 			alert("El libro ya se encuentra registrado en la tabla...");
 		else {
-			addProduct(isbn);
+			$.ajax({
+				url: $('#route').val()+'/'+isbn,//+':'+$('#borrowID').val(),
+				method: 'GET',
+				dataType: 'json',
+				success: function(jsonObject) {
+					addProduct(JSON.stringify(jsonObject));
+				},
+				error: function(jsonObject) {
+					alert('No se encontró el ISBN buscado...');
+				}
+			});
 		}
 		$('#isbn').val('');
 	});

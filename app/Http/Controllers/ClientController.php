@@ -9,6 +9,10 @@ use App\Client;
 
 class ClientController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
 
     public function index()
     {
@@ -25,9 +29,9 @@ class ClientController extends Controller
     {
         $validator = Validator::make($request->all(), [
             'name' => 'required|max:50',
-            'email' => 'required|unique:clients',
-            'phone' => 'required|size:10',
-            'interests' => 'required|max:50',
+            //'email' => 'required|unique:clients',
+            //'phone' => 'required|digits:10',
+            //'interests' => 'required|max:50',
             'type' => 'required',
         ]);
 

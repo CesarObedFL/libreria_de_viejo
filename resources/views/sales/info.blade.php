@@ -8,22 +8,22 @@
 
 @section('content')
 
+    @include('partials.success')
+    @include('partials.balancedue')
+
     <div class="col-md-12">
         <div class="box box-solid">
-            {{--<div class="box-header with-border">
-                <h1 class="box-title"> </h1>
-            </div> --}}
             <div class="box-body">
                 <div class="col-md-6">
                     <dl class="dl-horizontal">
-                        <dt> Fecha : </dt><dd>{{ $INVOICE->date }}</dd>
+                        <dt> Fecha : </dt><dd>{{ $INVOICE->getDate() }}</dd>
                         <dt> Turno : </dt><dd>{{ $INVOICE->turn }}</dd>
                         <dt> Cliente : </dt><dd>{{ $INVOICE->client->getInfo() }}</dd>
                         <dt> Usuario : </dt><dd>{{ $INVOICE->user->getUser() }}</dd>
                         <dt> ---------- </dt><dd> ---------- </dd>
-                        <dt> SubTotal : </dt><dd>{{ $INVOICE->subTotal }}</dd>
-                        <dt> Total : </dt><dd>{{ $INVOICE->total }}</dd>
-                        <dt> Monto Recibido : </dt><dd>{{ $INVOICE->received }}</dd>
+                        <dt> SubTotal : </dt><dd>{{ '$ '.$INVOICE->subTotal }}</dd>
+                        <dt> Total : </dt><dd>{{ '$ '.$INVOICE->total }}</dd>
+                        <dt> Monto Recibido : </dt><dd>{{ '$ '.$INVOICE->received }}</dd>
                     </dl>
                 </div>
 
@@ -37,8 +37,7 @@
                                     <div class="pull-right">
                                         <b><a data-toggle="collapse" data-parent="#accordion" href="#collapse{{ $sale->id }}" align="pull-right"><i> ver detalles </i></a></b>
                                     </div>
-                                    {{ 'Producto: '.$sale->productID }} &nbsp;::&nbsp; 
-                                    {{ $sale->type }}
+                                    {{ $sale->type.' : '.$sale->productID }}
                                 </div>
                                 <div id="collapse{{ $sale->id }}" class="panel-collapse collapse">
                                     <div class="box-body">
@@ -63,17 +62,5 @@
                 </div>
             </div>
         </div>
-        {{--<div class="col-md-13">
-            <div class="box box-primary">
-                <form role="form" action="{{ route('sale.destroy', $INVOICE->id) }}" method="POST">
-                    {{ csrf_field() }}
-                    <input type="hidden" name="_method" value="DELETE">
-                    <div class="box-footer">
-                        <a class="btn btn-primary col-md-4" href="{{ route('sale.index') }}"> Aceptar </a>
-                        <button type="submit" class="btn btn-danger col-md-4"> Eliminar </button>
-                    </div>
-                </form>
-            </div>
-        </div> --}}
     </div>
 @endsection

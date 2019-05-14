@@ -15,7 +15,6 @@
         <div class="box box-solid">
             <div class="box-header with-border">
                 <h1 class="box-title"> {{ $DONATION->id.' :: Donación '. $DONATION->type }} </h1>
-                <!-- <i class="fa fa-text-width"></i> -->
             </div>
             <div class="box-body">
                 <div class="col-md-6">
@@ -57,17 +56,6 @@
         </div>
         <div class="col-md-12">
             <div class="box box-primary">
-                {{--
-                <form role="form" action="{ { route('donation.destroy', $DONATION->id) }}" method="POST">
-                    { { csrf_field() }}
-                    <input type="hidden" name="_method" value="DELETE">
-                    <div class="box-footer">
-                        <a class="btn btn-primary col-md-4" href="{ { route('donation.index') }}"> Aceptar </a>
-                        <a class="btn btn-success col-md-4" href="{ { route('book.edit', $BOOK->id) }}"> Editar </a> - ->
-                        <button type="submit" class="btn btn-danger col-md-4"> Eliminar </button>
-                    </div>
-                </form> 
-                --}}
                 <div class="box-footer">
                     <a class="btn btn-primary col-md-4" href="{{ route('donation.index') }}"> Aceptar </a>
                 </div>

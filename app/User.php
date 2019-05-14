@@ -13,16 +13,27 @@ class User extends Authenticatable
     protected $table = "users";
 
     protected $fillable = [
-        'name', 'email', 'password', 'phone', 'role',
+        'name', 'email', 'password', 'phone', 'role', 'status'
     ];
-
-    /*protected $casts = [
-        'created_at' => 'datetime:d-m-Y'
-    ];*/
 
     protected $hidden = [
         'password', 'remember_token',
     ];
+
+    public function donations()
+    {
+        return $this->hasMany('App\Donation','userID','id');
+    }
+
+    public function loans()
+    {
+        return $this->hasMany('App\Loan','userID','id');
+    }
+
+    public function swaps()
+    {
+        return $this->hasMany('App\Swap','userID','id');
+    }
 
     public function getUserRoleAttribute()
     {
@@ -37,15 +48,5 @@ class User extends Authenticatable
     public function getUser()
     {
         return $this->name . ' : ' . $this->email;
-    }
-
-    public function donations()
-    {
-        return $this->hasMany('App\Donation','userID','id');
-    }
-
-    public function loans()
-    {
-        return $this->hasMany('App\Loan','userID','id');
     }
 }

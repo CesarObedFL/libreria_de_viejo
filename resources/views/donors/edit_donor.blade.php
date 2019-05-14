@@ -28,7 +28,7 @@
 			</div>
 			<div class="form-group col-md-6">
 				<label for="phone"> Teléfono </label>
-				<input class="form-control" type="number" min=10000000 max=9999999999 name="phone" id="phone" value="{{ $DONOR->phone }}">
+				<input class="form-control" type="number" name="phone" id="phone" value="{{ $DONOR->phone }}">
 			</div>
 			<div class="form-group col-md-6">
 				<label for="address"> Dirección </label>

@@ -87,15 +87,10 @@
         </div>
         <div class="col-md-13">
             <div class="box box-primary">
-                <form role="form" action="{{ route('book.destroy', $BOOK->id) }}" method="POST">
-                    {{ csrf_field() }}
-                    <input type="hidden" name="_method" value="DELETE">
-                    <div class="box-footer">
-                        <a class="btn btn-primary col-md-4" href="{{ route('book.index') }}"> Aceptar </a>
-                        <a class="btn btn-success col-md-4" href="{{ route('book.edit', $BOOK->id) }}"> Editar </a>
-                        <button type="submit" class="btn btn-danger col-md-4"> Eliminar </button>
-                    </div>
-                </form>
+                <div class="box-footer">
+                    <a class="btn btn-primary col-md-6" href="{{ route('book.index') }}"> Aceptar </a>
+                    <a class="btn btn-success col-md-6" href="{{ route('book.edit', $BOOK->id) }}"> Editar </a>
+                </div>
             </div>
         </div>
     </div>

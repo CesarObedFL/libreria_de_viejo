@@ -4,6 +4,10 @@
 
 @section('styles')
     <link rel="stylesheet" href="{{ asset('bower_components/datatables.net-bs/css/dataTables.bootstrap.min.css') }}">
+    <style>
+        td.Recibida { background-color: rgba(0,188,212,0.5); }
+        td.Realizada { background-color: rgba(244,67,54,0.5); }
+    </style>
 @endsection
 
 @section('content-header')
@@ -54,11 +58,11 @@
                     <tbody>
                         @foreach($DONATIONS as $donation)
                             <tr id="tableRow" value="{{ $donation->type }}">
-                                <td><a class="btn btn-sm btn-block btn-info bg-olive" href="{{ route('donation.show', $donation->id) }}">{{ $donation->id }}</a></td>
+                                <td><a class="btn btn-sm btn-block bg-olive" href="{{ route('donation.show', $donation->id) }}">{{ $donation->id }}</a></td>
                                 <td>{{ $donation->getDate() }}</td>
                                 <td>{{ $donation->amount }}</td>
                                 <td>{{ $donation->getClass() }}</td>
-                                <td>{{ $donation->type }}</td>
+                                <td class="{{ $donation->type }}">{{ $donation->type }}</td>
                             </tr>
                         @endforeach
                     </tbody>
@@ -84,9 +88,6 @@
           'info'        : true,
           'autoWidth'   : true
         });
-
-        $('#donationsTable td:last-child:contains(Recibida)').addClass('info');
-        $('#donationsTable td:last-child:contains(Realizada)').addClass('danger');
       });
     </script>
 @endsection

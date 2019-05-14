@@ -3,7 +3,7 @@
 @section('title', 'Registro de Clasificaciones')
 
 @section('content-header')
-	<h1><div class="col-md-8"><strong> Registro de Clasificaciones </strong></div></h1><hr>
+	<h1><div class="col-md-8"><strong> Registro de Clasificación </strong></div></h1><hr>
 @endsection
 
 @section('content')
@@ -14,17 +14,11 @@
 		{{ csrf_field() }}
 		<div class="box-body">
 			<div class="form-group col-md-12">
-				<label for="class"> Clase </label>
+				<label for="class"> Clase: </label>
 				<input type="text" class="form-control" id="class" name="class">
 			</div>
-			{{--
 			<div class="form-group col-md-12">
-				<label for="location"> Ubicación </label>
-				<input type="text" class="form-control" id="location" name="location">
-			</div>
-			--}}
-			<div class="form-group col-md-12">
-				<p> Cuál es el tipo de la clase? &nbsp&nbsp&nbsp
+				<p> Tipo: &nbsp&nbsp&nbsp
 					<input type="radio" name="type" value="1" class="flat-red">
 					<label for="type"> Libro &nbsp&nbsp</label>
 					<input type="radio" name="type" value="0" class="flat-red">

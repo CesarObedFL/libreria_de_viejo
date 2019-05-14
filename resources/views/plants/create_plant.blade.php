@@ -34,7 +34,7 @@
 					</select>
             	</div>
             	<div class="col-md-3">
-					<label for="stock"> Cantidad: </label>
+					<label for="stock"> Stock: </label>
 					<input class="form-control" type="text" name="stock" id="stock" value="{{ old('stock') }}">
 				</div>
 				<div class="col-md-3">
@@ -45,12 +45,14 @@
 					</div>
 				</div>
 			</div>
+			{{--
 			<div class="form-group">
 				<div class="col-md-6">
 					<label for="image"> Imagen: </label>
 					<input class="form-control" type="file" name="image" id="image" value="{{ old('image') }}">
 				</div>
-			</div>
+			</div> 
+			--}}
 		</div>
 		<div class="box-footer">
 			<button type="submit" class="btn btn-primary btn-block"> Registrar </button>
