@@ -40,11 +40,11 @@ class BookController extends Controller
             'collection' => 'nullable|max:20',
             // BOOK FEATURES
             'edition' => 'required|max:20', // <--
-            'stock' => 'required|numeric|min:1', // <--
+            'stock' => 'required|integer|min:1', // <--
             'price' => 'required|numeric|min:5|max:9999', // <--
             'conditions' => 'required|max:20', // <--
             'place' => 'required|min:0|max:13', // <--
-            'location' => 'required|numeric|min:0|max:13', // <--
+            'location' => 'required|integer|min:0|max:13', // <--
             'language' => 'required|max:20'
         ]);
 
@@ -158,7 +158,7 @@ class BookController extends Controller
             $BOOK = Book::findOrFail($BOOK->id);
             return view('books.update_book', compact('BOOK'))->with('edit','El libro ya se encuentra registrado!...');
             
-        } else { // PARA CREAR UN LIBRO NUEVO
+        } else { // CREATE NEW BOOK
             $CLASSES = Classification::orderBy('class')->where('type',1)->get();
             return view('books.create_new_book', compact('ISBN','CLASSES'));
         }

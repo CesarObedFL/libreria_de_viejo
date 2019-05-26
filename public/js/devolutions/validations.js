@@ -4,8 +4,12 @@ function validateAmount(index) {
 	if (amount <= 0 || amount > stock) {
 		alert("La cantidad debe ser mayor a 0 y menor al stock ("+stock+") de ese producto...");
 		$('#amount'+index).val('1');
-		calculateTotal();
-	}
+	} else {
+        object = jQuery.parseJSON(products[index-1]);
+        object.amount = parseInt($('#amount'+index).val());
+        products[index-1] = JSON.stringify(object);
+    }
+    calculateTotal();
 }
 
 function validatePay() {
@@ -17,25 +21,3 @@ function validatePay() {
 		return false;
 	} else return true;
 }
-
-/*$(document).ready(function() {
-	$("#amount").blur(function() {
-        //if($(this).val()!='') {
-            var cantidad = parseInt($(this).val());
-            //if(cantidad <= 5/*parseInt($(this).attr('data-stock')) * ) {
-                alert(/*parseInt($(this).attr('data-index'))+":"+* /parseInt($(this).val()));
-                /*$.post('cambiarDato.php',{
-                    Caso:'modificarCantidad',
-                    valorNuevo:cantidad,
-                    Indice:$(this).attr('data-index')
-                },function(e){  
-                    // do nothing
-                });* /
-            //} else {
-            //    alert("Cantidad insuficiente en stock...");
-            //    $(this).val(1);
-            //}
-        //}
-    });
-});*/
-

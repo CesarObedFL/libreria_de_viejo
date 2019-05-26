@@ -85,7 +85,7 @@
 				<label for="pay"> Pago: </label>
         		<div class="input-group">
           			<span class="input-group-addon"> $ </span>
-				  	<input class="form-control" type="text" name="pay" id="pay" value="{{ old('pay') }}" onblur="validatePay();" required>
+				  	<input class="form-control" type="text" name="pay" id="pay" value="0" onblur="validatePay();" required>
         		</div>
 			</div>
 		</div>

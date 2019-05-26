@@ -27,7 +27,7 @@ function addOutProduct(jsonObject) {
 
 
 function addInProduct(isbn) {
-	var json = '{"isbn":"'+isbn+'","title":"title","price":"1","amount":"1"}';
+	var json = '{"isbn":"'+isbn+'","title":"title","price":"0","amount":"1"}';
 	inProducts.push(json);
 	var product = jQuery.parseJSON(json);
 	var row = '<tr id="inrow'+(++inCounter)+'">'+

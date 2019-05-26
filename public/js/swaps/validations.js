@@ -4,8 +4,12 @@ function validateAmount(index) {
 	if (amount <= 0 || amount > stock) {
 		alert("La cantidad debe ser mayor a 0 y menor al stock ("+stock+") de ese producto...");
 		$('#amount'+index).val('1');
-		calculateTotal();
+	} else {
+		object = jQuery.parseJSON(outProducts[index-1]);
+		object.amount = parseInt($('#amount'+index).val());
+		outProducts[index-1] = JSON.stringify(object);
 	}
+	calculateTotal();
 }
 
 function validatePay() {

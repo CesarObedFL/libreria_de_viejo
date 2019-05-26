@@ -52,11 +52,28 @@
             <div class="alert alert-warning">
                 <i class="icon fa fa-warning"></i> No hay préstamos registrados...
             </div>
+            <center><a class="btn btn-sm btn-success" href="{{ route('borrow.index') }}">Aceptar</a></center>
         </div>
     
     @else
         <div class="box">
-            {{--<div class="box-header"></div>--}}
+            <div class="box-header">
+                <form role="form" action="{{ route('borrow.index') }}" method="GET">
+                    {{ csrf_field() }}
+                    <div class="box-body">
+                        <div class="form-group col-md-4">
+                            <label>Periodo: {{ date("d-m-Y",strtotime($initDate)) .' / '.date("d-m-Y",strtotime($endDate)) }}</label>
+                        </div>
+                        <div class="form-group col-md-8">
+                            <label for="initDate"> Fecha Inicial: </label>
+                            <input type="date" name="initDate" id="initDate">
+                            <label for="endDate"> Fecha Final: </label>
+                            <input type="date" name="endDate" id="endDate">
+                            <button type="submit" class="btn btn-primary btn-sm"> Buscar </button>
+                        </div>
+                    </div>
+                </form>
+            </div>
             <div class="box-body">
                 <table class="table table-condensed text-center" id="borrowsTable">
                     <thead>
@@ -66,6 +83,7 @@
                             <th> Fecha de Salida </th>
                             <th> Fecha de Entrega </th>
                             <th> Cliente </th>
+                            <th> Días Restantes </th>
                             <th> Adeudo </th>
                             <th> Estatus </th>
                         </tr>
@@ -78,6 +96,7 @@
                                 <td>{{ $borrow->getOutDate() }}</td>
                                 <td>{{ $borrow->getInDate() }}</td>
                                 <td>{{ $borrow->client->name }}</td>
+                                <td>{{ $borrow->getDays() }}</td>
                                 <td>{{ '$ '.$borrow->getOwed() }}</td>
                                 <td class="{{ $borrow->getCondition() }}">{{ $borrow->getCondition() }}</td>
                             </tr>

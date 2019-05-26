@@ -45,7 +45,7 @@
               <a href="{{ route('admin.cut') }}"><i class="fa fa-calculator"></i><span> Corte de Caja</span></a>
             </l>
             <li class="user user-menu">
-              <a href="{{ route('home') }}"><i class="fa fa-barcode"></i><span> Códigos de Barras</span></a>
+              <a href="{{ route('admin.barcodes') }}"><i class="fa fa-barcode"></i><span> Códigos de Barras</span></a>
             </li>
             <li>
               <a href="{{ route('user.index') }}"><i class="fa fa-user-plus"></i><span> Usuarios</span></a>
@@ -64,13 +64,13 @@
               <ul class="dropdown-menu" style="border-color: black">
                 <li class="user-body">
                   <div class="row">
-                    <div class="text-center"><a href="{{ route('user.perfil') }}">
+                    <div class="text-center"><a href="{{ route('user.show',Auth::id()) }}">
                       <i class="fa fa-user"></i> Perfil</a></div>
                   </div>
                 </li>
                 <li class="user-body">
                   <div class="row">
-                    <div class="text-center"><a href="{{ route('sale.index') }}"><i class="fa fa-archive"></i>{{ (Auth::user()->isAdmin()) ? '': 'Mis' }} Ventas</a></div>
+                    <div class="text-center"><a href="{{ route('sale.index') }}"><i class="fa fa-archive"></i>{{-- (Auth::user()->isAdmin()) ? '': 'Mis' --}} Ventas</a></div>
                   </div>
                 </li>
                 <li class="user-body">
@@ -108,21 +108,6 @@
 
       <ul class="sidebar-menu" data-widget="tree">
         <li class="header"><i class="fa fa-chevron-right"></i> OPERACIONES</li>
-        <!--
-        <li class="treeview">
-          <a href="#">
-            <i class="fa fa-money"></i>
-            <span> Ventas </span>
-            <span class="pull-right-container">
-              <i class="fa fa-angle-left pull-right"></i>
-            </span>
-          </a>
-          <ul class="treeview-menu">
-            <li><a href="{ { route('BookSale') }}"><i class="fa fa-circle-o"></i> Libros</a></li>
-            <li><a href="{ { route('PlantSale') }}"><i class="fa fa-circle-o"></i> Plantas</a></li>
-          </ul>
-        </li> 
-        -->
         <li><a href="{{ route('swap.index') }}"><i class="fa fa-refresh"></i><span>Trueques</span></a></li>
         <li><a href="{{ route('donation.index') }}"><i class="fa fa-gift"></i><span>Donaciones</span></a></li>
         <li><a href="{{ route('borrow.index') }}"><i class="fa fa-mail-forward"></i><span>Préstamos</span></a></li>

@@ -15,12 +15,17 @@ function reOrder() {
 	var index = 0;
 	$('#productsTable tbody tr').each(function() {
 		$(this).attr('id','row'+(++index));
-		$(this).find('td').eq(0).text(index);
+		$(this).find('td').eq(0).text(index);		
 		$(this).find('td').eq(3).find('input').attr('id','price'+index);
+
 		$(this).find('td').eq(4).find('input').attr('id','amount'+index);
 		$(this).find('td').eq(4).find('input').attr('onblur','validateAmount('+index+');');
+		
 		$(this).find('td').eq(5).find('input').attr('id','discount'+index);
 		$(this).find('td').eq(5).find('input').attr('onblur','validateDiscount('+index+');');
+
+		$(this).find('td').eq(6).find('input').attr('id','stock'+index);
+		
 		$(this).find('td').eq(7).find('button').attr('onclick','cancelProduct('+index+');');
 	});
 }

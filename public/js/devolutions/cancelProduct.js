@@ -1,5 +1,5 @@
 function cancelProduct(index) {
-	if(confirm("Seguro de cancelar el producto "+index+" de la venta?...")) {
+	if(confirm("Seguro de cancelar el libro "+index+" de la devolución?...")) {
 		$('#row'+index).remove();
 		reOrder();
 		counter--;

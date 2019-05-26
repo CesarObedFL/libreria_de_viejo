@@ -29,7 +29,7 @@ class Donation extends Model
     public function getDate()
     {
     	$DATE = Carbon::parse($this->date);
-    	return $DATE->format('d/m/Y');
+    	return $DATE->format('d-m-Y');
     }
 
     public function getClass()

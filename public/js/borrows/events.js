@@ -5,9 +5,26 @@ $(document).ready(function () {
 		}
 	});
 
+	$('#isbn').keypress(function(event) { // enter keycode = 13
+		if(event.keyCode == 13) addBook();
+	});
+
 	$('#btnAddBook').click(function(event) {
 		event.preventDefault();
-		var isbn = $('#isbn').val();
+		addBook();
+	});
+
+	$('#btnAccept').click(function(event) {
+		$('#products').attr('value','['+products+']');
+	});
+});
+
+var counter = 0;
+var products = [];
+
+function addBook() {
+	var isbn = $('#isbn').val();
+	if(isbn != '') {
 		var isRegistered = false;
 		for(var i = 0; i < products.length; i++) {
 			product = jQuery.parseJSON(products[i]);
@@ -23,7 +40,11 @@ $(document).ready(function () {
 				method: 'GET',
 				dataType: 'json',
 				success: function(jsonObject) {
-					addProduct(JSON.stringify(jsonObject));
+					var object = JSON.stringify(jsonObject);
+					if(jQuery.parseJSON(object).stock <= 0)
+						alert('Stock en cero de ese producto...');
+					else
+						addProduct(object);
 				},
 				error: function(jsonObject) {
 					alert('No se encontró el ISBN...');
@@ -31,12 +52,7 @@ $(document).ready(function () {
 			});
 		}
 		$('#isbn').val('');
-	});
-
-	$('#btnAccept').click(function(event) {
-		$('#products').attr('value','['+products+']');
-	});
-});
-
-var counter = 0;
-var products = [];
+	} else {
+		alert('Ingrese un ISBN a buscar...');
+	}
+}

@@ -4,6 +4,12 @@
 
 @section('styles')
     <link rel="stylesheet" href="{{ asset('bower_components/datatables.net-bs/css/dataTables.bootstrap.min.css') }}">
+
+    <style>
+        td.empty { background-color: rgba(244,67,54,0.5); }
+        td.full { background-color: rgba(76,175,80,0.5); }
+    </style>
+
 @endsection
 
 @section('scripts')
@@ -52,6 +58,7 @@
         <table id="booksTable" class="table table-bordered table-striped">
             <thead>
                 <tr class="success">
+                    <th> ID </th>
                     <th> ISBN </th>
                     <th> Título </th>
                     <th> Autor </th>
@@ -63,12 +70,13 @@
             <tbody>
                 @foreach($BOOKS as $book)
                     <tr>
-                        <td><a class="btn btn-sm btn-block bg-olive" href="{{ route('book.show', $book->id) }}">{{ $book->ISBN }}</a></td>
+                        <td><a class="btn btn-sm btn-block bg-olive" href="{{ route('book.show', $book->id) }}">{{ $book->id }}</a></td>
+                        <td>{{ $book->ISBN }}</td>
                         <td>{{ $book->title }}</td>
                         <td>{{ $book->author }}</td>
                         <td>{{ $book->editorial }}</td>
                         <td>{{ $book->getLocation() }}</td>
-                        <td>{{ $book->stock }}</td>
+                        <td class="{{ $book->getStockState() }}">{{ $book->stock }}</td>
                     </tr>
                 @endforeach
             </tbody>

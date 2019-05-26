@@ -23,10 +23,20 @@ class SaleController extends Controller
         $this->middleware('auth');
     }
 
-    public function index() 
-    { 
+    public function index(Request $request)
+    {
+        $initDate = '2019-05-14';
+        $endDate = Carbon::now()->toDateString();
+
         $INVOICES = Invoice::all();
-        return view('sales.index',compact('INVOICES'));
+
+        if(!is_null($request->initDate) && !empty($request->initDate) &&
+            !is_null($request->endDate) && !empty($request->endDate)) {
+            $initDate = $request->initDate;
+            $endDate = $request->endDate;
+            $INVOICES = Invoice::whereBetween('date',[$initDate,$endDate])->get();
+        }
+        return view('sales.index',compact('INVOICES','initDate','endDate'));
     }
 
     public function create()
@@ -87,18 +97,23 @@ class SaleController extends Controller
                 $PLANT->stock -= $product->amount;
                 $PLANT->save();
             }
-            
         }
         Invoice::where('id',$invoiceID)->update(['subTotal' => $subTotal, 'total' => $total]);
         $COMMISSION = $total/10;
+        /*
         $PAY = new Pay([
             'userID' => Auth::id(),
             'date' => Carbon::now()->toDateString(),
             'amount' => 0,
             'owed' => $COMMISSION]);
         $PAY->save();
+        */
+        DB::table('pays')->updateOrInsert(
+            ['userID' => Auth::id()],
+            ['date' => Carbon::now()->toDateString(), 'owed' => $COMMISSION]
+        );
         $BALANCE = $request->get('pay') - $total;
-        return redirect()->action('SaleController@show',$INVOICE->id)->with(['success' => 'La venta se ha realizado exitosamente!...', 'balancedue' => 'El cambio de la operación es: '.$BALANCE]);
+        return redirect()->action('SaleController@show',$INVOICE->id)->with(['success' => 'La venta se ha realizado exitosamente!...', 'balancedue' => 'El cambio de la operación es: $'.$BALANCE]);
     }
 
     public function show($id) 
@@ -124,7 +139,8 @@ class SaleController extends Controller
 
     public function searchbook($isbn)
     {
-        $BOOK = DB::table('books')->where('ISBN',$isbn)->where('stock','>',0)->first();
+        //$BOOK = DB::table('books')->where('ISBN',$isbn)->where('stock','>',0)->first();
+        $BOOK = DB::table('books')->where('ISBN',$isbn)->first();
         return response()->json([
             'id' => $BOOK->ISBN, 
             'name' => $BOOK->title,
@@ -138,7 +154,8 @@ class SaleController extends Controller
 
     public function searchplant($id)
     {
-        $PLANT = DB::table('plants')->where('id',$id)->where('stock','>',0)->first();
+        //$PLANT = DB::table('plants')->where('id',$id)->where('stock','>',0)->first();
+        $PLANT = DB::table('plants')->where('id',$id)->first();
         return response()->json([
             'id' => $PLANT->id,
             'name' => $PLANT->name,
@@ -160,6 +177,6 @@ class SaleController extends Controller
         else if($today->hour < 14) // morning
             return 'M';
         else if($today->hour >= 14) // evening
-            return 'T';
+            return 'V';
     }   
 } 

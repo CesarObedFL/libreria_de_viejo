@@ -27,6 +27,9 @@ function reOrder(table,id,type) {
 		$(this).find('td').eq(3).find('input').attr('id','price'+index);
 		$(this).find('td').eq(4).find('input').attr('id','amount'+index);
 		$(this).find('td').eq(4).find('input').attr('onblur','validateAmount('+index+');');
+		if(id == 'out') {
+			$(this).find('td').eq(5).find('input').attr('id','stock'+index);
+		}
 		$(this).find('td:last-child').find('button').attr('onclick','cancelProduct('+index+','+type+');');
 	});
 }

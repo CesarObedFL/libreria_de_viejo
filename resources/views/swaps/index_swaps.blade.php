@@ -33,9 +33,25 @@
                 <i class="icon fa fa-warning"></i> No hay trueques registrados...
             </div>
         </div>
+        <center><a class="btn btn-sm btn-success" href="{{ route('swap.index') }}">Aceptar</a></center>
     @else
         <div class="box">
             <div class="box-header">
+                <form role="form" action="{{ route('swap.index') }}" method="GET">
+                    {{ csrf_field() }}
+                    <div class="box-body">
+                        <div class="form-group col-md-4">
+                            <label>Periodo: {{ date("d-m-Y",strtotime($initDate)) .' / '.date("d-m-Y",strtotime($endDate)) }}</label>
+                        </div>
+                        <div class="form-group col-md-8">
+                            <label for="initDate"> Fecha Inicial: </label>
+                            <input type="date" name="initDate" id="initDate">
+                            <label for="endDate"> Fecha Final: </label>
+                            <input type="date" name="endDate" id="endDate">
+                            <button type="submit" class="btn btn-primary btn-sm"> Buscar </button>
+                        </div>
+                    </div>
+                </form>
             </div>
             <div class="box-body">
                 <table id="booksTable" class="table table-bordered table-striped">

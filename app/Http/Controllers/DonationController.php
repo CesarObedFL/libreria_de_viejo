@@ -20,10 +20,21 @@ class DonationController extends Controller
         $this->middleware('auth');
     }
 
-    public function index()
+    public function index(Request $request)
     {
+        $initDate = '2019-05-14';
+        $endDate = Carbon::now()->toDateString();
+
         $DONATIONS = Donation::all();
-        return view('donations.index_donations',compact('DONATIONS'));
+
+        if(!is_null($request->initDate) && !empty($request->initDate) &&
+            !is_null($request->endDate) && !empty($request->endDate)) {
+            $initDate = $request->initDate;
+            $endDate = $request->endDate;
+            $DONATIONS = Donation::whereBetween('date',[$initDate,$endDate])->get();
+        }
+            
+        return view('donations.index_donations',compact('DONATIONS','initDate','endDate'));
     }
 
     public function create()
@@ -35,9 +46,9 @@ class DonationController extends Controller
     {
         $validator = Validator::make($request->all() , [
             'donorID' => 'required',
-            'amount' => 'required|numeric|min:1',
+            'amount' => 'required|integer|min:1',
             'classification' => 'required',
-            'type' => 'required|min:1|max:2',
+            'type' => 'required|integer|min:1|max:2',
         ]);
 
         if($validator->fails()) {

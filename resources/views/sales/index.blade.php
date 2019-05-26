@@ -40,34 +40,56 @@
             <div class="alert alert-warning">
                 <i class="icon fa fa-warning"></i>No hay ventas realizadas...
             </div>
+            <center><a class="btn btn-sm btn-success" href="{{ route('swap.index') }}">Aceptar</a></center>
         </div>
 
 	@else
-        <table id="ventasTable" class="table table-bordered table-striped">
-	        <thead>
-	            <tr class="success">
-	                <th> ID </th>
-	                <th> Fecha </th>
-	                <th> Turno </th>
-	                <th> Vendedor </th>
-	                <th> SubTotal </th>
-	                <th> Total </th>
-	                <th> Monto </th>
-	            </tr>
-	        </thead>
-	        <tbody>
-	            @foreach($INVOICES as $invoice)
-	            <tr>
-	                <td><a class="btn btn-sm btn-block bg-olive" href="{{ route('sale.show', $invoice->id) }}">{{ $invoice->id }}</a></td>
-	                <td>{{ $invoice->getDate() }}</td>
-	                <td>{{ $invoice->turn }}</td>
-	                <td>{{ $invoice->user->name }}</td>
-	                <td>{{ '$ '.$invoice->subTotal }}</td>
-	                <td>{{ '$ '.$invoice->total }}</td>
-	                <td>{{ '$ '.$invoice->received }}</td>
-	            </tr>
-	            @endforeach
-	        </tbody>
-		</table>
+		<div class="box">
+            <div class="box-header">
+                <form role="form" action="{{ route('sale.index') }}" method="GET">
+                    {{ csrf_field() }}
+                    <div class="box-body">
+                        <div class="form-group col-md-4">
+                            <label>Periodo: {{ date("d-m-Y",strtotime($initDate)) .' / '.date("d-m-Y",strtotime($endDate)) }}</label>
+                        </div>
+                        <div class="form-group col-md-8">
+                            <label for="initDate"> Fecha Inicial: </label>
+                            <input type="date" name="initDate" id="initDate">
+                            <label for="endDate"> Fecha Final: </label>
+                            <input type="date" name="endDate" id="endDate">
+                            <button type="submit" class="btn btn-primary btn-sm"> Buscar </button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="box-body">
+		        <table id="ventasTable" class="table table-bordered table-striped">
+			        <thead>
+			            <tr class="success">
+			                <th> ID </th>
+			                <th> Fecha </th>
+			                <th> Turno </th>
+			                <th> Vendedor </th>
+			                <th> SubTotal </th>
+			                <th> Total </th>
+			                <th> Monto </th>
+			            </tr>
+			        </thead>
+			        <tbody>
+			            @foreach($INVOICES as $invoice)
+			            <tr>
+			                <td><a class="btn btn-sm btn-block bg-olive" href="{{ route('sale.show', $invoice->id) }}">{{ $invoice->id }}</a></td>
+			                <td>{{ $invoice->getDate() }}</td>
+			                <td>{{ $invoice->turn }}</td>
+			                <td>{{ $invoice->user->name }}</td>
+			                <td>{{ '$ '.$invoice->subTotal }}</td>
+			                <td>{{ '$ '.$invoice->total }}</td>
+			                <td>{{ '$ '.$invoice->received }}</td>
+			            </tr>
+			            @endforeach
+			        </tbody>
+				</table>
+			</div>
+		</div>
 	@endif
 @endsection

@@ -21,15 +21,27 @@ class BorrowController extends Controller
         $this->middleware('auth');
     }
 
-    public function index()
+    public function index(Request $request)
     {
+        $initDate = '2019-05-14';
+        $endDate = Carbon::now()->toDateString();
+
         $BORROWS = Borrow::all();
-        return view('borrows.index_borrows', compact('BORROWS'));
+
+        if(!is_null($request->initDate) && !empty($request->initDate) &&
+            !is_null($request->endDate) && !empty($request->endDate)) {
+            $initDate = $request->initDate;
+            $endDate = $request->endDate;
+            $BORROWS = Borrow::whereBetween('outDate',[$initDate,$endDate])
+                                ->orWhereBetween('inDate',[$initDate,$endDate])
+                                ->get();
+        }
+        return view('borrows.index_borrows', compact('BORROWS','initDate','endDate'));
     }
 
     public function create()
     {
-        $CLIENTS = Client::all()->except(1);
+        $CLIENTS = Client::all()->where('type','Interno');
         return view('borrows.create_borrow',compact('CLIENTS'));
     }
 
@@ -76,7 +88,7 @@ class BorrowController extends Controller
         }
         $BORROW->amountbooks = $TOTALBORROWEDBOOKS;
         $BORROW->save();
-        return redirect()->action('BorrowController@show',['id' => $BORROW->id])->with('success','El préstamo se ha registrado exitosamente!...');
+        return redirect()->action('BorrowController@show',$BORROW->id)->with('success','El préstamo se ha registrado exitosamente!...');
     }
 
     public function show($id)
@@ -121,7 +133,7 @@ class BorrowController extends Controller
             }
         }
         $BORROW->save();
-        return redirect()->action('BorrowController@show',['id' => $BORROW->id])->with(['success' => 'La devolución se ha registrado exitosamente!...', 'balancedue' => 'El cambio de la operación es: '.$BALANCE]);
+        return redirect()->action('BorrowController@show',$BORROW->id)->with(['success' => 'La devolución se ha registrado exitosamente!...', 'balancedue' => 'El cambio de la operación es: $'.$BALANCE]);
     }
 
     public function destroy($id)
@@ -131,7 +143,8 @@ class BorrowController extends Controller
 
     public function searchbook($isbn)
     {
-        $BOOK = DB::table('books')->where('ISBN',$isbn)->where('stock','>',0)->first();
+        $BOOK = DB::table('books')->where('ISBN',$isbn)->where('stock','>=',0)->first();
+        //$BOOK = DB::table('books')->where('ISBN',$isbn);
         return response()->json([
             'id' => $BOOK->id,
             'isbn' => $BOOK->ISBN,

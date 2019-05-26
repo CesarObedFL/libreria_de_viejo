@@ -19,16 +19,16 @@ $this->post('password/email', 'Auth\ForgotPasswordController@sendResetLinkEmail'
 $this->get('password/reset/{token}', 'Auth\ResetPasswordController@showResetForm');
 $this->post('password/reset', 'Auth\ResetPasswordController@reset');
 
-
 Route::get('/home', 'HomeController@index')->name('home');
 
 // ADMINISTRACIÓN ///////////////////////////////////////////////////////////////
 Route::get('admin/cut','AdminController@cut')->name('admin.cut');
 Route::get('admin/barcodes','AdminController@barcodes')->name('admin.barcodes');
+Route::post('admin/pdf','AdminController@pdf')->name('admin.pdf');
+Route::get('admin/search/book/{title}','AdminController@searchbook');
 Route::resource('admin','AdminController');
 
 // REGISTROS
-Route::get('user/perfil','UserController@perfil')->name('user.perfil');
 Route::get('user/pass/{id}','UserController@showPass')->name('user.changepass');
 Route::patch('user/updatepass/{id}','UserController@updatePass')->name('user.updatePass');
 Route::get('user/role/{id}','UserController@showRole')->name('user.role');

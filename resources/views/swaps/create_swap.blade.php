@@ -77,7 +77,7 @@
 			<div class="form-group">
 				<div class="col-md-6">
 					<label for="pay"> Pago: </label>
-					<input class="form-control" type="text" name="pay" id="pay" value="" onblur="validatePay();" required>
+					<input class="form-control" type="text" name="pay" id="pay" value="0" onblur="validatePay();" required>
 				</div>
 			</div>
 			<input type="hidden" name="inProducts" id="inProducts" value="">

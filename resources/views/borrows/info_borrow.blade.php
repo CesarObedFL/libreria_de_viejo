@@ -22,6 +22,7 @@
                         <dt>Fecha de Préstamo:</dt><dd>{{ $BORROW->getOutDate() }}</dd>
                         <dt>Fecha de Entrega:</dt><dd>{{ $BORROW->getInDate() }}</dd>
                         <dt>Estatus:</dt><dd>{{ $BORROW->status }}</dd>
+                        <dt>Días Restantes:</dt><dd>{{ $BORROW->getDays() }}</dd>
                         <dt>Adeudo:</dt><dd>{{ '$ '.$BORROW->getOwed() }}</dd>
                         <dt>Pago:</dt><dd>{{ '$ '.$BORROW->amount }}</dd>
                         <dt>----------</dt><dd>----------</dd>

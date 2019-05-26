@@ -44,6 +44,14 @@ class Borrow extends Model
     	return $DATE->format('d/m/Y');
     }
 
+    public function getDays()
+    {
+        if($this->status == 'Activo')
+            return Carbon::now()->diffInDays(Carbon::parse($this->inDate))+1;
+        else
+            return 0;
+    }
+
     public function getOwed()
     {
         if($this->status == 'Activo') {

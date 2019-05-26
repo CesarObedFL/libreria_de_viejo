@@ -73,7 +73,7 @@
 
             <div class="col-md-6">
             	<input name="bookID" type="hidden" value="{{ $BOOK->id }}">
-            	<label for="stock"> Nueva Cantidad </label>
+            	<label for="stock"> Nuevo Stock </label>
 				<input class="form-control" type="text" name="stock" id="stock" value="{{ $BOOK->stock + 1 }}" required="required">
             </div>
 

@@ -16,13 +16,20 @@ class UserController extends Controller
 
     public function index()
     {
-        $USERS = User::all();
-        return view('users.index_users',compact('USERS'));
-    } 
+        if(Auth::user()->isAdmin()) {
+            $USERS = User::all();
+            return view('users.index_users',compact('USERS'));
+        }
+        return redirect()->action('HomeController@index');
+    }
 
     public function create()
     {
-        return view('users.create_user');
+        if(Auth::user()->isAdmin()) {
+            return view('users.create_user');
+        }
+        return redirect()->action('HomeController@index');
+        
     }
 
     public function store(Request $request)
@@ -53,8 +60,14 @@ class UserController extends Controller
 
     public function show($id)
     {
-        $USER = User::findOrFail($id);
-        return view('users.info_user', compact('USER'));
+        if(Auth::user()->isAdmin()) {
+            $USER = User::findOrFail($id);
+            return view('users.info_user', compact('USER'));
+        } else if(Auth::id() == $id) {
+            $USER = User::findOrFail($id);
+            return view('users.info_user', compact('USER'));
+        }
+        return redirect()->action('HomeController@index');
     }
 
     public function edit($id)
@@ -81,14 +94,11 @@ class UserController extends Controller
 
     public function destroy($id)
     {
-        User::findOrFail($id)->delete();
-        return redirect()->action('UserController@index')->with('delete','El usuario se ha correctamente!...');
-    }
-
-    public function perfil() 
-    {
-        $USER = User::findOrFail(Auth::id());
-        return view('users.perfil_user',compact('USER'));
+        if(Auth::user()->isAdmin()) {
+            User::findOrFail($id)->delete();
+            return redirect()->action('UserController@index')->with('delete','El usuario se ha correctamente!...');
+        } 
+        return redirect()->action('UserController@show',$id)->with('delete','Se necesitan permisos de administrador...');
     }
 
     public function showRole($id)
@@ -96,8 +106,8 @@ class UserController extends Controller
         if(Auth::user()->isAdmin()) {
             $USER = User::findOrFail($id);
             return view('users.update_role_user',compact('USER'));
-        } else 
-            return redirect()->action('UserController@show',$id)->with('delete','Se necesitan permisos de administrador...');
+        } 
+        return redirect()->action('UserController@show',$id)->with('delete','Se necesitan permisos de administrador...');
 
     }
 
@@ -117,8 +127,14 @@ class UserController extends Controller
 
     public function showPass($id)
     {
-        $USER = User::findOrFail($id);
-        return view('users.change_pass',compact('USER'));
+        if(Auth::user()->isAdmin()) {
+            $USER = User::findOrFail($id);
+            return view('users.change_pass',compact('USER'));
+        } else if(Auth::id() == $id) {
+            $USER = User::findOrFail($id);
+            return view('users.change_pass',compact('USER'));
+        }
+        return redirect()->action('UserController@show',$id)->with('delete','Ocurrio un error... ID de usuario incorrecto...');
     }
 
     public function updatePass(Request $request, $id)
@@ -133,7 +149,7 @@ class UserController extends Controller
         $USER = User::findOrFail($id);
         $USER->password = bcrypt($request->get('password'));
         $USER->save();
-        //User::where('id', $id)->update($request->except('_token','_method'));
-        return redirect()->action('UserController@show', $id)->with('edit','La contraseña del usuario se ha modificado exitosamente!...');
+
+        return redirect()->action('UserController@show', $id)->with('edit','La contraseña de usuario se ha modificado exitosamente!...');
     }
 }

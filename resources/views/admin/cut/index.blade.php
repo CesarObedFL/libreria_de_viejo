@@ -27,7 +27,23 @@
     
     @else
         <div class="box">
-            {{--<div class="box-header"></div> --}}
+            <div class="box-header">
+                <form role="form" action="{{ route('admin.cut') }}" method="GET">
+                    {{ csrf_field() }}
+                    <div class="box-body">
+                        <div class="form-group col-md-4">
+                            <label>Periodo: {{ $initDate .' / '.$endDate }}</label>
+                        </div>
+                        <div class="form-group col-md-8">
+                            <label for="initDate"> Fecha Inicial: </label>
+                            <input type="date" name="initDate" id="initDate">
+                            <label for="endDate"> Fecha Final: </label>
+                            <input type="date" name="endDate" id="endDate">
+                            <button type="submit" class="btn btn-primary btn-sm"> Buscar </button>
+                        </div>
+                    </div>
+                </form>
+            </div>
             <div class="box-body">
                 <table id="salesTable" class="table table-condensed text-center">
                     <thead>
@@ -56,13 +72,13 @@
                                 <td>{{ $data->librosVendidos }}</td>
                                 <td>{{ $data->plantasVendidas }}</td>
                                 <td>{{ $data->CantidadVentas }}</td>
-                                <td>{{ $data->FechaInicial.'::'.$data->FechaFinal }}</td>
-                                <td>{{ round($data->Monto,2) }}</td>
-                                <td>{{ round($data->montoDeTrueques,2) }}</td>
-                                <td>{{ round($data->Comision,2) }}</td>
-                                <td>{{ round($data->montoPagado,2) }}</td>
+                                <td>{{ $data->FechaInicial.'   '.$data->FechaFinal }}</td>
+                                <td>{{ '$ '.round($data->Monto,2) }}</td>
+                                <td>{{ '$ '.round($data->montoDeTrueques,2) }}</td>
+                                <td>{{ '$ '.round($data->Comision,2) }}</td>
+                                <td>{{ '$ '.round($data->montoPagado,2) }}</td>
                                 <td>
-                                    <a class="btn btn-sm btn-block bg-olive" href="{{ route('admin.edit', $data->userID) }}">{{ round($data->adeudo,2) }}
+                                    <a class="btn btn-sm btn-block bg-olive" href="{{ route('admin.edit', $data->userID) }}">{{ '$ '.round($data->adeudo,2) }}
                                     </a>
                                 </td>
                             </tr>
@@ -88,20 +104,21 @@
                         </tr>
                     </thead>
                     <tbody>
-                        {{--<tr>
-                            <td width="10%">=$totalLibrosVendidos?></td>
-                            <td width="10%">=$totalPlantasVendidas?></td>
-                            <td width="10%">=$ventasRealizadas?></td>
-                            <td width="10%">="$".round($recaudadoEnTrueques,2)?></td>
-                            <td width="10%">="$".round($recaudadoEnPrestamos,2)?></td>
-                            <td width="10%">="$".round($totalEnVentas,2)?></td>
-                            <td width="10%">="$".round(($totalEnVentas+$recaudadoEnTrueques),2)?></td>
-                            <td width="15%">="$".round(($totalEnVentas+$recaudadoEnTrueques+$recaudadoEnPrestamos),2)?></td>
-                            <td width="10%">="$".round((($totalEnVentas+$recaudadoEnTrueques)/10),2)?></td> <!-- COMISIONES -->
-                        </tr>--}}
+                        <tr>
+                            <td width="10%">{{ $TOTALS['saledBooks'] }}</td>
+                            <td width="10%">{{ $TOTALS['saledPlants'] }}</td>
+                            <td width="10%">{{ $TOTALS['totalSales'] }}</td>
+                            <td width="10%">{{ '$ '.$TOTALS['swapsTotal'] }}</td>
+                            <td width="10%">{{ '$ '.$TOTALS['borrowsTotal'] }}</td>
+                            <td width="10%">{{ '$ '.$TOTALS['total'] }}</td>
+                            <td width="10%">{{ '$ '.$TOTALS['subtotal'] }}</td>
+                            <td width="15%">{{ '$ '.$TOTALS['ttotal'] }}</td>
+                            <td width="10%">{{ '$ '.$TOTALS['comissions'] }}</td> <!-- COMISIONES -->
+                        </tr>
                     </tbody>
                 </table>
-            </div>
+            </div> {{-- /BODY --}}
+            <div class="box-footer"> </div>
         </div>
     @endif
 @endsection

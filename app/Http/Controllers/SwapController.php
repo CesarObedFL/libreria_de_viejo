@@ -20,10 +20,21 @@ class SwapController extends Controller
         $this->middleware('auth');
     }
 
-    public function index()
+    public function index(Request $request)
     {
+        $initDate = '2019-05-14';
+        $endDate = Carbon::now()->toDateString();
+
         $SWAPS = Swap::all();
-        return view('swaps.index_swaps', compact('SWAPS'));
+
+        if(!is_null($request->initDate) && !empty($request->initDate) &&
+            !is_null($request->endDate) && !empty($request->endDate)) {
+            $initDate = $request->initDate;
+            $endDate = $request->endDate;
+            $SWAPS = Swap::whereBetween('date',[$initDate,$endDate])->get();
+        }
+        
+        return view('swaps.index_swaps', compact('SWAPS','initDate','endDate'));
     }
 
     public function create()
@@ -72,11 +83,13 @@ class SwapController extends Controller
 
         $PRODUCTS = json_decode($request->get('inProducts'));
         $INBOOKS = 0; 
+        $STATUS;
         foreach($PRODUCTS as $product) {
             $BOOK = DB::table('books')->where('ISBN',$product->isbn)->first();
             if($BOOK) {
-                $BOOK->stock += $product->amount;
-                $Book->save();
+                $NEWSTOCK = $BOOK->stock + $product->amount;
+                Book::where('ISBN',$product->isbn)->update(['stock' => $NEWSTOCK]);
+                $STATUS = 'Registrado';
             } else {
                 $BOOK = new BOOK([
                     'ISBN' => $product->isbn,
@@ -92,13 +105,14 @@ class SwapController extends Controller
                     'location' => 1
                 ]);
                 $BOOK->save();
+                $STATUS = 'Sin Registro';
             }
             
             $SWAPBOOK = new SwapBook([
                 'swapID' => $SWAP->id,
                 'bookID' => $BOOK->id,
                 'type' => 'Entrante',
-                'status' => 'Sin Registro'
+                'status' => $STATUS
             ]);
             $SWAPBOOK->save();
             $INBOOKS += $product->amount;
@@ -108,7 +122,7 @@ class SwapController extends Controller
         $SWAP->outcoming = $OUTBOOKS;
         $SWAP->save();
         $BALANCE = $request->get('pay') - $request->get('total');
-        return redirect()->action('SwapController@show',['id' => $SWAP->id])->with(['success' => 'El trueque se ha registrado exitosamente!...', 'balancedue' => 'El cambio de la operación es: '.$BALANCE]);
+        return redirect()->action('SwapController@show',['id' => $SWAP->id])->with(['success' => 'El trueque se ha registrado exitosamente!...', 'balancedue' => 'El cambio de la operación es: $'.$BALANCE]);
 
     }
 
@@ -161,9 +175,10 @@ class SwapController extends Controller
         return redirect()->action('SwapController@index')->with('delete', 'El trueque se ha eliminado exitosamente!...');
     }
 
-    public function searchbook($isbn)
+    public function searchbook($isbn) // out books
     {
-        $BOOK = DB::table('books')->where('ISBN',$isbn)->where('stock','>',0)->first();
+        //$BOOK = DB::table('books')->where('ISBN',$isbn)->where('stock','>',0)->first();
+        $BOOK = DB::table('books')->where('ISBN',$isbn)->first();
         return response()->json([
             'id' => $BOOK->id,
             'isbn' => $BOOK->ISBN,
@@ -173,4 +188,33 @@ class SwapController extends Controller
             'amount' => 1
         ]);
     }
+
+    /*
+    public function searchinbook($isbn)
+    {
+        $BOOK = DB::table('books')->where('ISBN',$isbn)->first()
+                ->withDefault([
+                    'ISBN' => $isbn,
+                    'title' => 'title',
+                    'author' => 'author',
+                    'editorial' => 'editorial',
+                    'classification' => 0,
+                    // BOOK FEATURES
+                    ,'edition' => 'edition',
+                    'stock' => 0,
+                    'price' => 5.0,
+                    'conditions' => 'conditions',
+                    'place' => 'Libreria',
+                    'location' => 0 // bodega
+                ]);
+        return response()->json([
+            'id' => $BOOK->id,
+            'isbn' => $BOOK->ISBN,
+            'title' => $BOOK->title,
+            'price' => $BOOK->price,
+            'stock' => $BOOK->stock,
+            'amount' => 1
+        ]);
+    }
+    */
 }

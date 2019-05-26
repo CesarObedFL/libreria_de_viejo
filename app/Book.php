@@ -50,5 +50,10 @@ class Book extends Model
         }
         return $TOTALSTOCK;
     }
+
+    public function getStockState()
+    {
+        return (!$this->stock) ? 'empty' : 'full';
+    }
 }
 

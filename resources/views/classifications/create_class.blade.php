@@ -14,7 +14,7 @@
 		{{ csrf_field() }}
 		<div class="box-body">
 			<div class="form-group col-md-12">
-				<label for="class"> Clase: </label>
+				<label for="class"> Clasificación: </label>
 				<input type="text" class="form-control" id="class" name="class">
 			</div>
 			<div class="form-group col-md-12">

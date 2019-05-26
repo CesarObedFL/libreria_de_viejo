@@ -59,7 +59,7 @@
 					<input class="form-control" type="text" name="edition" id="edition" value="{{ old('edition') }}">
 				</div>
 	        	<div class="col-md-4">
-					<label for="stock"> Cantidad </label>
+					<label for="stock"> Stock </label>
 					<input class="form-control" type="number" min="1" name="stock" id="stock" value="{{ old('stock') }}">
 				</div>
 				<div class="col-md-4">

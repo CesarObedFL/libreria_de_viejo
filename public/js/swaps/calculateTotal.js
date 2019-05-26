@@ -4,13 +4,11 @@ function calculateTotal() {
 	for (i = 0; i < outProducts.length; i++) {
 		var product = jQuery.parseJSON(outProducts[i]);
 		total += parseFloat(product.price) * parseFloat(product.amount);
-		console.log('out:'+total+' '+parseFloat(product.price)+' '+parseFloat(product.amount));
 	}
 	
 	for(i = 0; i < inProducts.length; i++){
 		var product = jQuery.parseJSON(inProducts[i]);
 		total -= parseFloat(product.price) * parseFloat(product.amount);
-		console.log('in:'+total+' '+parseFloat(product.price)+' '+parseFloat(product.amount));
 	}
 
 	if (total > 0)
