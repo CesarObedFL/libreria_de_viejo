@@ -24,7 +24,7 @@ function addProduct(jsonObject) {
 					'"style="width:90%;height:90%;" readonly></td>'+
 
 				'<td><button class="btn btn-danger btn-block" id="btnCancelProduct"'+
-					' onclick="cancelProduct('+counter+');" style="width:90%;height:80%;">X</button></td>'+
+					' onclick="cancelProduct('+counter+');" style="width:90%;height:80%;">&times;</button></td>'+
 			'</tr>';
 	$('#productsTable').append(row);
 	calculateTotal();

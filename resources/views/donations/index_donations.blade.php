@@ -39,7 +39,6 @@
             <div class="alert alert-warning">
                 <i class="icon fa fa-warning"></i> No hay donaciones registradas...
             </div>
-            <center><a class="btn btn-sm btn-success" href="{{ route('donation.index') }}">Aceptar</a></center>
         </div>
     
     @else

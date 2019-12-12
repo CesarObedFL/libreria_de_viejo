@@ -12,7 +12,7 @@ function addProduct(jsonObject) {
 					' id="amount'+counter+'" value="'+book.amount+'" style="width:90%;height:90%;" required></td>'+
 
 				'<td><button class="btn btn-danger btn-block" id="btnCancelProduct"'+
-					' onclick="cancelProduct('+counter+');" style="width:90%;height:80%;">X</button></td>'+
+					' onclick="cancelProduct('+counter+');" style="width:90%;height:80%;">&times;</button></td>'+
 			'</tr>';
 	$('#codesTable').append(row);
 }

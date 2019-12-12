@@ -19,7 +19,7 @@ function addOutProduct(jsonObject) {
 					' style="width:90%;height:90%;" readonly></td>'+
 				
 				'<td><button class="btn btn-danger btn-block" id="btnCancelProduct"'+
-					' onclick="cancelProduct('+outCounter+',1);" style="width:90%;height:80%;">X</button></td>'+
+					' onclick="cancelProduct('+outCounter+',1);" style="width:90%;height:80%;">&times;</button></td>'+
 			'</tr>';
 	$('#outProductsTable').append(row);
 	calculateTotal();

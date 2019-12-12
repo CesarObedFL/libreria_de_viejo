@@ -12,6 +12,7 @@
         "barryvdh/laravel-dompdf": "^0.8.4",
         "doctrine/dbal": "^2.9",
         "fideloper/proxy": "^4.0",
+        "jan-drda/laravel-google-custom-search-engine": "^1.0",
         "laravel/framework": "5.7.*",
         "laravel/tinker": "^1.0",
         "milon/barcode": "^5.3"

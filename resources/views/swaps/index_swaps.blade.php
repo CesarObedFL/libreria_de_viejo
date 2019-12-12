@@ -33,7 +33,6 @@
                 <i class="icon fa fa-warning"></i> No hay trueques registrados...
             </div>
         </div>
-        <center><a class="btn btn-sm btn-success" href="{{ route('swap.index') }}">Aceptar</a></center>
     @else
         <div class="box">
             <div class="box-header">

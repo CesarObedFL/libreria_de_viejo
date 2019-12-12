@@ -10,7 +10,7 @@ function addProduct(jsonObject) {
 					' name="amount" id="amount'+counter+'" value="1" required></td>'+
 
 				'<td><button class="btn btn-danger btn-block" id="btnCancelProduct"'+
-					' onclick="cancelProduct('+counter+');">X</button></td>'+
+					' onclick="cancelProduct('+counter+');">&times;</button></td>'+
 			'</tr>';
 	$('#returnsTable').append(row);
 }

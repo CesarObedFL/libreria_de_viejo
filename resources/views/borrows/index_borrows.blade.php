@@ -36,7 +36,7 @@
         <div class="col-md-8"><strong>Préstamos Realizados</strong></div>
         <div class="col-md-4">
             <a class="btn btn-success btn-block pull-right" href="{{ route('borrow.create') }}">
-            <i class="fa  fa-pencil-square-o"></i> REALIZAR PRÉSTAMO </a>
+            <i class="fa fa-pencil-square-o"></i> REALIZAR PRÉSTAMO </a>
         </div>
     </h1>
     <hr>
@@ -52,7 +52,6 @@
             <div class="alert alert-warning">
                 <i class="icon fa fa-warning"></i> No hay préstamos registrados...
             </div>
-            <center><a class="btn btn-sm btn-success" href="{{ route('borrow.index') }}">Aceptar</a></center>
         </div>
     
     @else

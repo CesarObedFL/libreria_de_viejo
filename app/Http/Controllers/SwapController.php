@@ -165,7 +165,7 @@ class SwapController extends Controller
         }
         SwapBook::where('swapID',$id)->where('bookID',$request->get('bookID'))->update(['status' => 'Registrado']);
         Book::where('ISBN',$request->get('ISBN'))->update($request->except('_token','_method','bookID'));
-        return redirect()->action('SwapController@show',$id)->with('edit','El libro pediente se ha registrado exitosamente!...');
+        return redirect()->action('SwapController@show',$id)->with('edit','El libro pendiente se ha registrado exitosamente!...');
     }
 
     public function destroy($id)
