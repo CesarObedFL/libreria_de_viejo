@@ -12,10 +12,11 @@ class CreateSalesTable extends Migration
         Schema::create('sales', function (Blueprint $table) {
             $table->increments('id');
             $table->unsignedInteger('invoiceID'); // FK
-            $table->unsignedInteger('productID'); // plantID or ISBN
+            //$table->unsignedInteger('product'); // plantID or ISBN
+            $table->char('product', 20);
             $table->unsignedInteger('amount'); 
-            $table->unsignedInteger('discount');
             $table->unsignedDecimal('price',6,2);
+            $table->unsignedInteger('discount');
             $table->enum('type',['Libro', 'Planta']);
         });
     }

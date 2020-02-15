@@ -37,7 +37,7 @@
                     <dl class="dl-horizontal">
                         <dt>Precio:</dt><dd>{{ '$ '.$BOOK->price }}</dd>
                         <dt>Edición:</dt><dd>{{ $BOOK->edition }}</dd>
-                        <dt>Condiciones:</dt><dd>{{ $BOOK->author }}</dd>
+                        <dt>Condiciones:</dt><dd>{{ $BOOK->conditions }}</dd>
                         <dt>Género:</dt><dd>{{ $BOOK->genre }}</dd>
                         <dt>Colección:</dt><dd>{{ $BOOK->collection }}</dd>
                         <dt>Prestados:</dt><dd>{{ $BOOK->borrowedbooks }}</dd>

@@ -11,7 +11,7 @@ class CreateSwapedBooksTable extends Migration
         Schema::create('swaped_books', function (Blueprint $table) {
             $table->increments('id');
             $table->unsignedInteger('swapID');
-            $table->unsignedInteger('bookID');
+            $table->char('book', 20);
             //$table->unsignedInteger('featureID');
             $table->enum('type',['Entrante','Saliente']);
             $table->enum('status',['Sin Registro','Registrado']);

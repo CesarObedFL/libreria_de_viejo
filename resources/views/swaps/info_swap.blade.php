@@ -42,7 +42,7 @@
                                 <div class="box-body">
                                     <dl class="dl-horizontal">
                                         @foreach($SWAP->inbooks as $bbook)
-                                            <dt>Título: </dt><dd>{{ $bbook->book->title ?? $bbook->status }}</dd>
+                                            <dt>Título: </dt><dd>{{ $bbook->book->title }} - {{ $bbook->status }}</dd>
                                         @endforeach
                                     </dl>
                                 </div>

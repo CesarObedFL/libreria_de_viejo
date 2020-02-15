@@ -10,9 +10,9 @@ class SwapBook extends Model
 
     protected $fillable = [
         'swapID', 
-        'bookID', 
+        'bookID', // ISBN
         //'featureID',
-        'type',     // [Enbtrante | Saliente]
+        'type',     // [Entrante | Saliente]
         'status'    // [Sin Registro | Registrado]
     ];
 
@@ -25,6 +25,7 @@ class SwapBook extends Model
 
     protected function book()
     {
-    	return $this->belongsTo(Book::class,'bookID');
+    	//return $this->belongsTo(Book::class,'bookID');
+        return $this->belongsTo(Book::class,'bookID','ISBN');
     }
 }

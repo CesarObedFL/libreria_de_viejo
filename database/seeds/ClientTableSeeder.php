@@ -16,6 +16,6 @@ class ClientTableSeeder extends Seeder
             'type' => '2'
         ]);
 
-        factory(Client::class,5)->create();
+        //factory(Client::class,5)->create();
     }
 }

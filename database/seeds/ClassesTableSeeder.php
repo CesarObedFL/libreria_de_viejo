@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Database\Seeder;
+use App\Classification;
 
 class ClassesTableSeeder extends Seeder
 {
@@ -11,6 +12,6 @@ class ClassesTableSeeder extends Seeder
             'ubicacion' => str_random(10),
             'tipo' => 1,
         ]);*/
-    	factory(App\Classification::class, 15)->create();
+    	factory(Classification::class, 15)->create();
     }
 }

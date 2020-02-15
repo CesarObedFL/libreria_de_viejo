@@ -1,11 +1,12 @@
 <?php
 
 use Illuminate\Database\Seeder;
+use App\Book;
 
 class BooksTableSeeder extends Seeder
 {
     public function run()
     {
-		factory(App\Book::class, 50)->create();
+		factory(Book::class, 50)->create();
     }
 }

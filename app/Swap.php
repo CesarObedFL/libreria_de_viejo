@@ -28,6 +28,7 @@ class Swap extends Model
     public function inbooks()
     {
         return $this->hasMany('App\SwapBook','swapID','id')->where('type','Entrante');
+        //return $this->hasMany('App\SwapBook', 'swapID', )->where('type','Entrante');
     }
 
     public function outbooks()

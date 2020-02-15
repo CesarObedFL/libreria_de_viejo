@@ -56,10 +56,10 @@ class AdminController extends Controller
         return redirect()->action('AdminController@cut')->with('success','El pago se ha realizado exitosamente!...');
     }
 
-    public function cut(Request $request)
+    public function cut(Request $request) 
     {
         if(Auth::user()->isAdmin()) {
-            $initDate = '2019-05-14';
+            $initDate = '2018-11-14';
             $endDate = Carbon::now()->toDateString();
 
             if(!is_null($request->initDate) && !empty($request->initDate) &&

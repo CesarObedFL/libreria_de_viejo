@@ -80,7 +80,7 @@
 			                <td><a class="btn btn-sm btn-block bg-olive" href="{{ route('sale.show', $invoice->id) }}">{{ $invoice->id }}</a></td>
 			                <td>{{ $invoice->getDate() }}</td>
 			                <td>{{ $invoice->turn }}</td>
-			                <td>{{ $invoice->user->name }}</td>
+			                <td>{{ $invoice->user['name'] }}</td>
 			                <td>{{ '$ '.$invoice->subTotal }}</td>
 			                <td>{{ '$ '.$invoice->total }}</td>
 			                <td>{{ '$ '.$invoice->received }}</td>

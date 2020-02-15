@@ -26,7 +26,7 @@
           'info'        : true,
           'autoWidth'   : true
         });
-        $('#booksTable td:last-child:contains(0)').addClass('bg-orange- color-palette');
+        //$('#booksTable td:last-child:contains(0)').addClass('bg-orange- color-palette');
       });
     </script>
 @endsection
