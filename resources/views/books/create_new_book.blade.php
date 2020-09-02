@@ -15,23 +15,23 @@
 		{{ csrf_field() }}
 		<div class="box-body">
 			<div class="form-group col-md-12">
-				<label for="ISBN"> ISBN:  {{ ($ISBN) ? $ISBN : old('ISBN') }} </label>
-				<input type="hidden" name="ISBN" id="ISBN" value="{{ ($ISBN) ? $ISBN : old('ISBN') }}"
+				<label for="ISBN"> ISBN:  {{ ($ISBN) ? $ISBN : old('ISBN') . $TITLE }} </label>
+				<input type="hidden" name="ISBN" id="ISBN" value="{{ ($ISBN) ? $ISBN : old('ISBN') }}">
 			</div>
 			<div class="form-group">
 				<div class="col-md-6">
 					<label for="title"> Título </label>
-					<input class="form-control" type="text" name="title" id="title" value="{{ old('title') }}" required>
+					<input class="form-control" type="text" name="title" id="title" value="{{ ($TITLE) ? $TITLE : old('title') }}" required>
 				</div>
 				<div class="col-md-6">
 					<label for="author"> Autor </label>
-					<input class="form-control" type="text" name="author" id="author" value="{{ old('author') }}" required>
+					<input class="form-control" type="text" name="author" id="author" value="{{ ($author) ? $author : old('author') }}" required>
 				</div>
 			</div>
 			<div class="form-group">
 				<div class="col-md-3">
 					<label for="editorial"> Editorial </label>
-					<input class="form-control" type="text" name="editorial" id="editorial" value="{{ old('editorial') }}">
+					<input class="form-control" type="text" name="editorial" id="editorial" value="{{ ($editorial) ? $editorial : old('editorial') }}">
 				</div>
 				<div class="col-md-3">
 					<label for="classification"> Clasificación </label>

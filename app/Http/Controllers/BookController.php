@@ -5,6 +5,10 @@ namespace App\Http\Controllers;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\Request;
+
+use JanDrda\LaravelGoogleCustomSearchEngine\LaravelGoogleCustomSearchEngine;
+use Goutte\Client;
+
 use App\Book;
 use App\Feature;
 use App\Classification;
@@ -152,15 +156,52 @@ class BookController extends Controller
 
     public function search(Request $request)
     {
-        $ISBN = $request->isbn;
+        $ISBN = $request->isbn; 
+        $book_characteristics;
+        $client = new Client();       
+        //$crawler = $client->request('GET', 'https://www.elsotano.com/busqueda/listaLibros.php?tipoBus=full&tipoArticulo=&palabrasBusqueda=ISBN');
+        $crawler = $client->request('GET', 'https://www.iberlibro.com/servlet/SearchResults?cm_sp=SearchF-_-topnav-_-Results&ds=20&kn='.$ISBN.'&sts=t');
+
+        //$book = $crawler->filter("[class='so-postbookcontent']");
+        //$booktitle = $crawler->filter("[class='so-booktitle']");
+        //$booktitle = $crawler->filter("[class='product-name']");
+        $book_characteristics = $crawler->filter('[id="book-1"]')->each(function ($book) {
+            $title = $book->filter('[itemprop="url"]')->first();
+            $author = $book->filter('[class="author"]')->first();
+            $editorial = $book->filter('[id="publisher"]')->first();
+            //$editorial = str_replace('Publicado por ', '', $editorial->text());
+            return array($title->text(), $author->text(), $editorial->text());
+        });
+        //$crawler->filter("[class='so-postbookcontent']")->each(function ($book) {
+        //    $booktitle = $book->filter("[class='so-booktitle']")->first();
+        //    echo $booktitle->text().'<br>'; 
+        //});
+
+        //9789500426404 - EL PRINCIPITO
+        //9789875453104 - LA NOCHE
+
+
+        //$fulltext = new LaravelGoogleCustomSearchEngine(); // initialize
+        //$result = $fulltext->getResults('El principito'); // get first 10 results for query 'some phrase' 
+        //dd($fulltext->getSearchInformation());
+
+        /*
         $BOOK = DB::table('books')->where('ISBN',$ISBN)->first();
         if($BOOK) {
             $BOOK = Book::findOrFail($BOOK->id);
             return view('books.update_book', compact('BOOK'))->with('edit','El libro ya se encuentra registrado!...');
             
         } else { // CREATE NEW BOOK
+        //*/    
+            $book_characteristics = $book_characteristics[0];
+            $TITLE = $book_characteristics[0];
+            $author = $book_characteristics[1];
+            $ESPACIOS_AL_FRENTE_DE_LA_EDITORIAL = 43;
+            $editorial = substr($book_characteristics[2],$ESPACIOS_AL_FRENTE_DE_LA_EDITORIAL);
+            //var_dump($TITLE);
+            //echo $TITLE;
             $CLASSES = Classification::orderBy('class')->where('type',1)->get();
-            return view('books.create_new_book', compact('ISBN','CLASSES'));
-        }
+            return view('books.create_new_book', compact('ISBN','TITLE','author','editorial','CLASSES'));
+        //} */
     }
 }

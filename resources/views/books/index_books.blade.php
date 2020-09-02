@@ -24,7 +24,30 @@
           'searching'   : true,
           'ordering'    : true,
           'info'        : true,
-          'autoWidth'   : true
+          'autoWidth'   : true,
+          'language': {
+                    "emptyTable":           "No hay registros disponibles en la tabla...",
+                    "info":                 "Mostrando del _START_ al _END_ de _TOTAL_ ",
+                    "infoEmpty":            "Mostrando 0 registros de un total de 0.",
+                    "infoFiltered":         "(filtrados de un total de _MAX_ registros)",
+                    "infoPostFix":          "registros",
+                    "lengthMenu":           "Mostrar _MENU_ registros",
+                    "loadingRecords":       "Cargando...",
+                    "processing":           "Procesando...",
+                    "search":               "Buscar:",
+                    "searchPlaceholder":    "Libro a buscar",
+                    "zeroRecords":          "No se han encontrado coincidencias.",
+                    "paginate": {
+                        "first":            "Primera",
+                        "last":             "Última",
+                        "next":             "Siguiente",
+                        "previous":         "Anterior"
+                    },
+                    "aria": {
+                        "sortAscending":    "Ordenación ascendente",
+                        "sortDescending":   "Ordenación descendente"
+                    }
+                },
         });
         //$('#booksTable td:last-child:contains(0)').addClass('bg-orange- color-palette');
       });
