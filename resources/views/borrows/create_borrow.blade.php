@@ -10,7 +10,7 @@
 
 @section('content')
 
-	@include('partials.errors')
+	@include('partials.errors') 
 
 	<div class="input-group">
 		<input class="form-control" type="text" name="isbn" id="isbn" placeholder="Introduce el ISBN a prestar...">
@@ -47,7 +47,7 @@
 	</div>
 
 	<hr>
-	<form role="form" action="{{ route('borrow.store') }}" method="POST">
+	<form role="form" action="{{ route('borrows.store') }}" method="POST">
 		{{ csrf_field() }}
 		<div class="box-body">
 			<div class="col-md-6">
@@ -62,7 +62,7 @@
 		</div>
 		<div class="box-footer">
 			<button class="btn btn-primary btn-block" type="submit" id="btnAccept" disabled="disabled"> Aceptar </button>
-			<a class="btn btn-danger btn-block" href="{{ route('borrow.index') }}"> Cancelar </a>
+			<a class="btn btn-danger btn-block" href="{{ route('borrows.index') }}"> Cancelar </a>
 		</div>
 	</form>
 

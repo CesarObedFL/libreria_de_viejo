@@ -10,7 +10,7 @@
 	
 	@include('partials.errors')
 
-	<form role="form" action="{{ route('feature.store') }}" method="POST">
+	<form role="form" action="{{ route('features.store') }}" method="POST">
 		{{ csrf_field() }}
 		<div class="box-body">
 			<input type="hidden" id="bookID" name="bookID" value="{{ $bookID }}">
@@ -63,7 +63,7 @@
 		</div>
 		<div class="box-footer">
 			<button type="submit" class="btn btn-primary btn-block"> Guardar </button>
-			<a class="btn btn-danger btn-block" href="{{ route('book.show', $bookID) }}"> Cancelar </a>
+			<a class="btn btn-danger btn-block" href="{{ route('books.show', $bookID) }}"> Cancelar </a>
 		</div>
 	</form>
 		

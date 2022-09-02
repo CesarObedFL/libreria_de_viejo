@@ -10,7 +10,7 @@
 
 @section('content')
 
-	<div class="input-group">
+	<div class="input-group"> 
 		<input class="form-control" type="text" name="isbn" id="isbn" placeholder="Introduce el ISBN del libro a devolver...">
 		<input type="hidden" name="route" id="route" value="/devolution/search/book">
 		<input type="hidden" name="borrowID" id="borrowID" value="{{ $BORROW->id }}">
@@ -69,7 +69,7 @@
 
 	<hr>
 	<div class="col-md-12">
-	<form role="form" action="{{ route('borrow.update',$BORROW->id) }}" method="POST">
+	<form role="form" action="{{ route('borrows.update',$BORROW->id) }}" method="POST">
 		{{ csrf_field() }}
 		<div class="box-body">
 			<input name="_method" type="hidden" value="PATCH">
@@ -91,7 +91,7 @@
 		</div>
 		<div class="box-footer">
 			<button type="submit" class="btn btn-primary btn-block" id="btnAccept" disabled="disabled"> Aceptar </button>
-			<a class="btn btn-danger btn-block" href="{{ route('borrow.show',$BORROW->id) }}"> Cancelar </a>
+			<a class="btn btn-danger btn-block" href="{{ route('borrows.show',$BORROW->id) }}"> Cancelar </a>
 		</div>
 	</form>
 	</div>

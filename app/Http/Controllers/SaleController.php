@@ -9,12 +9,12 @@ use Illuminate\Support\Facades\Auth;
 
 use Carbon\Carbon;
 
-use App\Client;
-use App\Plant;
-use App\Book;
-use App\Invoice;
-use App\Sale;
-use App\Pay;
+use App\Models\Client;
+use App\Models\Plant;
+use App\Models\Book;
+use App\Models\Invoice;
+use App\Models\Sale;
+use App\Models\Pay;
 
 class SaleController extends Controller
 {
@@ -25,25 +25,23 @@ class SaleController extends Controller
 
     public function index(Request $request)
     {
-        $initDate = '2019-05-14';
-        $endDate = Carbon::now()->toDateString();
+        $start_date = '2019-05-14';
+        $end_date = Carbon::now()->toDateString();
 
         $INVOICES = Invoice::all();
 
-        if(!is_null($request->initDate) && !empty($request->initDate) &&
-            !is_null($request->endDate) && !empty($request->endDate)) {
-            $initDate = $request->initDate;
-            $endDate = $request->endDate;
-            $INVOICES = Invoice::whereBetween('date',[$initDate,$endDate])->get();
+        if(!is_null($request->start_date) && !empty($request->start_date) &&
+            !is_null($request->end_date) && !empty($request->end_date)) {
+            $start_date = $request->start_date;
+            $end_date = $request->end_date;
+            $INVOICES = Invoice::whereBetween('date',[ $start_date, $end_date ])->get();
         }
-        return view('sales.index',compact('INVOICES','initDate','endDate'));
+        return view('sales.index', [ 'INVOICES' => $INVOICES, 'initDate' => $start_date, 'end_date' => $end_date ]);
     }
 
     public function create()
     {
-        $PLANTS = Plant::all()->where('stock','>',0);
-        $CLIENTS = Client::all();
-        return view('sales.realize', compact('CLIENTS','PLANTS'));
+        return view('sales.realize', [ 'CLIENTS' => Client::all(),'PLANTS' => Plant::all()->where('stock','>',0) ]);
     }
     
     public function store(Request $request)
@@ -113,33 +111,16 @@ class SaleController extends Controller
             ['date' => Carbon::now()->toDateString(), 'owed' => $COMMISSION]
         );
         $BALANCE = $request->get('pay') - $total;
-        return redirect()->action('SaleController@show',$INVOICE->id)->with(['success' => 'La venta se ha realizado exitosamente!...', 'balancedue' => 'El cambio de la operación es: $'.$BALANCE]);
+        return redirect()->action([ SaleController::class, 'show' ], $INVOICE->id)->with(['success' => 'La venta se ha realizado exitosamente!...', 'balancedue' => 'El cambio de la operación es: $'.$BALANCE]);
     }
 
     public function show($id) 
     { 
-        $INVOICE = Invoice::findOrFail($id);
-        return view('sales.info',compact('INVOICE'));
-    }
-
-    public function edit($id)
-    { 
-        //
-    }
-
-    public function update(Request $request, $id)
-    { 
-        //
-    }
-
-    public function destroy($id) 
-    { 
-        //
+        return view('sales.info', [ 'INVOICE' => Invoice::findOrFail($id) ]);
     }
 
     public function searchbook($isbn)
     {
-        //$BOOK = DB::table('books')->where('ISBN',$isbn)->where('stock','>',0)->first();
         $BOOK = DB::table('books')->where('ISBN',$isbn)->first();
         return response()->json([
             'id' => $BOOK->ISBN, 
@@ -154,7 +135,6 @@ class SaleController extends Controller
 
     public function searchplant($id)
     {
-        //$PLANT = DB::table('plants')->where('id',$id)->where('stock','>',0)->first();
         $PLANT = DB::table('plants')->where('id',$id)->first();
         return response()->json([
             'id' => $PLANT->id,
@@ -167,6 +147,7 @@ class SaleController extends Controller
         ]);
     }
 
+    // turno laboral
     private function turn()
     {
         $today = Carbon::now();

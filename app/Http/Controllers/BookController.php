@@ -9,9 +9,9 @@ use Illuminate\Http\Request;
 use JanDrda\LaravelGoogleCustomSearchEngine\LaravelGoogleCustomSearchEngine;
 use Goutte\Client;
 
-use App\Book;
-use App\Feature;
-use App\Classification;
+use App\Models\Book;
+use App\Models\Feature;
+use App\Models\Classification;
 
 class BookController extends Controller
 {
@@ -22,8 +22,7 @@ class BookController extends Controller
     
     public function index()
     {
-        $BOOKS = Book::all();
-        return view('books.index_books', compact('BOOKS'));
+        return view('books.index_books', [ 'BOOKS' =>  Book::all() ] );
     }
 
     public function create()
@@ -35,7 +34,7 @@ class BookController extends Controller
     {
         $validator = Validator::make($request->all(), [
             // BOOK TABLE
-            'ISBN' => 'required|unique:books|max:15',
+            'ISBN' => 'required|unique:books',
             'title' => 'required|max:100',
             'author' => 'required|max:50',
             'editorial' => 'required|max:30',
@@ -86,27 +85,24 @@ class BookController extends Controller
         ]);
         $FEATURE->save();
 
-        return redirect()->action('BookController@index')->with('success', 'El libro se ha registrado exitosamente!...');
+        return redirect()->action([ BookController::class, 'index' ])->with('success', 'El libro se ha registrado exitosamente!...');
     }
 
     public function show($id)
     {
-        $BOOK = Book::findOrFail($id);
-        return view('books.info_book', compact('BOOK'));
+        return view('books.show_book', [ 'BOOK' => Book::findOrFail($id) ]);
     }
 
     public function edit($id)
     {
-        $CLASSES = Classification::orderBy('class')->where('type',1)->get();
-        $BOOK = Book::findOrFail($id);
-        return view('books.edit_book', compact('BOOK','id','CLASSES'));
+        return view('books.edit_book', [ 'BOOK' => Book::findOrFail($id) ,'CLASSES' => Classification::orderBy('class')->where('type','Libro')->get() ]);
     }
 
     public function update(Request $request, $id)
     {
         $validator = Validator::make($request->all(), [
             // BOOK TABLE
-            'ISBN' => 'required|max:15|unique:books,ISBN,'.$id,
+            'ISBN' => 'required|unique:books,ISBN,'.$id,
             'title' => 'required|max:100',
             'author' => 'required|max:50',
             'editorial' => 'required|max:30',
@@ -127,14 +123,14 @@ class BookController extends Controller
         }
         
         Book::where('id',$id)->update($request->except('_token','_method'));
-        return redirect()->action('BookController@show',$id)->with('edit','El libro se ha modificado exitosamente!...');
+        return redirect()->action([ BookController::class, 'show' ], $id)->with('edit','El libro se ha modificado exitosamente!...');
     }
 
     public function destroy($id)
     {
         $BOOK = Book::findOrFail($id);
         $BOOK->delete();
-        return redirect()->action('BookController@index')->with('delete', 'El libro se ha eliminado exitosamente!...');
+        return redirect()->action([ BookController::class, 'index' ])->with('delete', 'El libro se ha eliminado exitosamente!...');
     }
 
     public function updateStock(Request $request) 
@@ -149,13 +145,28 @@ class BookController extends Controller
         }
 
         //Feature::where('id',$request->get('featureID'))->update($request->except('_token','_method','bookID','featureID'));
-        $newStock = $request->get('stock');
-        Book::where('id',$request->get('bookID'))->update(['stock' => $newStock]);
-        return redirect()->action('BookController@show',$request->get('bookID'))->with('edit','El libro se ha actualizado exitosamente!...');
+        $new_stock = $request->get('stock');
+        Book::where('id',$request->get('bookID'))->update(['stock' => $new_stock]);
+        return redirect()->action([ BookController::class, 'show'] , $request->get('bookID'))->with('edit','El libro se ha actualizado exitosamente!...');
     }
 
     public function search(Request $request)
     {
+        return view('books.create_new_book', [ 
+            'ISBN' => $request->get('isbn'),
+            'TITLE' => '', 
+            'author' => '', 
+            'editorial' => '', 
+            'CLASSES' =>  Classification::orderBy('class')->where('type','Libro')->get() 
+        ]);
+
+
+        /**
+         * 
+         * Aquí se pretende extraer los datos del libro de internet através de una API... 
+         * 
+         */ 
+
         $ISBN = $request->isbn; 
         $book_characteristics;
         $client = new Client();       
@@ -200,7 +211,7 @@ class BookController extends Controller
             $editorial = substr($book_characteristics[2],$ESPACIOS_AL_FRENTE_DE_LA_EDITORIAL);
             //var_dump($TITLE);
             //echo $TITLE;
-            $CLASSES = Classification::orderBy('class')->where('type',1)->get();
+            $CLASSES = Classification::orderBy('class')->where('type','Libro')->get();
             return view('books.create_new_book', compact('ISBN','TITLE','author','editorial','CLASSES'));
         //} */
     }

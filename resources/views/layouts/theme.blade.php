@@ -37,7 +37,7 @@
         <ul class="nav navbar-nav">
           @if(Auth::check())
             <li class="user user-menu">
-              <a href="{{ route('sale.create') }}"><i class="fa fa-money"></i> Realizar Venta</a>
+              <a href="{{ route('sales.create') }}"><i class="fa fa-money"></i> Realizar Venta</a>
             </li>
 
             @if(Auth::user()->isAdmin())        <!--  Admin functions   -->
@@ -48,7 +48,7 @@
               <a href="{{ route('admin.barcodes') }}"><i class="fa fa-barcode"></i><span> Códigos de Barras</span></a>
             </li>
             <li>
-              <a href="{{ route('user.index') }}"><i class="fa fa-user-plus"></i><span> Usuarios</span></a>
+              <a href="{{ route('users.index') }}"><i class="fa fa-user-plus"></i><span> Usuarios</span></a>
             </li>
             @endif
 
@@ -64,13 +64,13 @@
               <ul class="dropdown-menu" style="border-color: black">
                 <li class="user-body">
                   <div class="row">
-                    <div class="text-center"><a href="{{ route('user.show',Auth::id()) }}">
+                    <div class="text-center"><a href="{{ route('users.show',Auth::id()) }}">
                       <i class="fa fa-user"></i> Perfil</a></div>
                   </div>
                 </li>
                 <li class="user-body">
                   <div class="row">
-                    <div class="text-center"><a href="{{ route('sale.index') }}"><i class="fa fa-archive"></i>{{-- (Auth::user()->isAdmin()) ? '': 'Mis' --}} Ventas</a></div>
+                    <div class="text-center"><a href="{{ route('sales.index') }}"><i class="fa fa-archive"></i>{{-- (Auth::user()->isAdmin()) ? '': 'Mis' --}} Ventas</a></div>
                   </div>
                 </li>
                 <li class="user-body">
@@ -108,18 +108,17 @@
 
       <ul class="sidebar-menu" data-widget="tree">
         <li class="header"><i class="fa fa-chevron-right"></i> OPERACIONES</li>
-        <li><a href="{{ route('swap.index') }}"><i class="fa fa-refresh"></i><span>Trueques</span></a></li>
-        <li><a href="{{ route('donation.index') }}"><i class="fa fa-gift"></i><span>Donaciones</span></a></li>
-        <li><a href="{{ route('borrow.index') }}"><i class="fa fa-mail-forward"></i><span>Préstamos</span></a></li>
+        <li><a href="{{ route('swaps.index') }}"><i class="fa fa-refresh"></i><span>Trueques</span></a></li>
+        <li><a href="{{ route('donations.index') }}"><i class="fa fa-gift"></i><span>Donaciones</span></a></li>
+        <li><a href="{{ route('borrows.index') }}"><i class="fa fa-mail-forward"></i><span>Préstamos</span></a></li>
       </ul>
 
       <ul class="sidebar-menu" data-widget="tree">
         <li class="header"><i class="fa fa-chevron-right"></i> REGISTROS </li>
-        <li><a href="{{ route('book.index') }}"><i class="fa fa-book"></i><span> Libros </span></a></li>
-        <li><a href="{{ route('plant.index') }}"><i class="fa fa-pagelines"></i><span> Plantas </span></a></li>
-        <li><a href="{{ route('client.index') }}"><i class="fa fa-users"></i><span> Clientes </span></a>
-        </li>
-        <li><a href="{{ route('classification.index') }}"><i class="fa fa-tags"></i><span> Clasificaciones</span></a></li>
+        <li><a href="{{ route('books.index') }}"><i class="fa fa-book"></i><span> Libros </span></a></li>
+        <li><a href="{{ route('plants.index') }}"><i class="fa fa-pagelines"></i><span> Plantas </span></a></li>
+        <li><a href="{{ route('clients.index') }}"><i class="fa fa-users"></i><span> Clientes </span></a></li>
+        <li><a href="{{ route('classifications.index') }}"><i class="fa fa-tags"></i><span> Clasificaciones</span></a></li>
       </ul>
       {{--
       <ul class="sidebar-menu" data-widget="tree">

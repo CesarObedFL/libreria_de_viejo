@@ -18,7 +18,7 @@
     <script src="{{ asset('bower_components/jquery-slimscroll/jquery.slimscroll.min.js') }}"></script>
     <script>
       $(function () {
-        $('#booksTable').DataTable({
+        $('#books_table').DataTable({
           'paging'      : true,
           'lengthChange': true,
           'searching'   : true,
@@ -58,7 +58,7 @@
     <h1>
         <div class="col-md-8"><strong>Lista de Libros</strong></div>
         <div class="col-md-4">
-            <a class="btn btn-success btn-block pull-right" href="{{ route('book.create') }}">
+            <a class="btn btn-success btn-block pull-right" href="{{ route('books.create') }}">
             <i class="fa fa-pencil-square-o"></i> NUEVO REGISTRO </a>
         </div>
     </h1>
@@ -78,7 +78,7 @@
         </div>
     
     @else
-        <table id="booksTable" class="table table-bordered table-striped">
+        <table id="books_table" class="table table-bordered table-striped">
             <thead>
                 <tr class="success">
                     <th> ID </th>
@@ -93,7 +93,7 @@
             <tbody>
                 @foreach($BOOKS as $book)
                     <tr>
-                        <td><a class="btn btn-sm btn-block bg-olive" href="{{ route('book.show', $book->id) }}">{{ $book->id }}</a></td>
+                        <td><a class="btn btn-sm btn-block bg-olive" href="{{ route('books.show', $book->id) }}">{{ $book->id }}</a></td>
                         <td>{{ $book->ISBN }}</td>
                         <td>{{ $book->title }}</td>
                         <td>{{ $book->author }}</td>

@@ -11,7 +11,7 @@
 	
 	@include('partials.errors')
 
-	<form role="form" action="{{ route('swap.update',$id) }}" method="POST">
+	<form role="form" action="{{ route('swaps.update', $id) }}" method="POST">
 		{{ csrf_field() }}
 		<div class="box-body">
 			<input name="_method" type="hidden" value="PATCH">
@@ -107,7 +107,7 @@
 		</div>
 		<div class="box-footer">
 			<button type="submit" class="btn btn-primary btn-block"> Guardar </button>
-			<a class="btn btn-danger btn-block" href="{{ route('swap.show', $id) }}"> Cancelar </a>
+			<a class="btn btn-danger btn-block" href="{{ route('swaps.show', $id) }}"> Cancelar </a>
 		</div>
 	</form>
 		

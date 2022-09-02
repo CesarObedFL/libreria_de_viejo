@@ -28,7 +28,7 @@
 	<h1>
 		<div class="col-md-8"><strong>Lista de Clasificaciones</strong></div>
 		<div class="col-md-4">
-			<a class="btn btn-success btn-block pull-right" href="{{ route('classification.create') }}">
+			<a class="btn btn-success btn-block pull-right" href="{{ route('classifications.create') }}">
 			<i class="fa fa-pencil-square-o"></i> NUEVO REGISTRO </a>
 		</div>
 	</h1> <hr>
@@ -63,12 +63,12 @@
 	                <td>{{ $class->class }}</a></td>
 	                <td style="width:20%">{{ $class->type }}</td>
 	                <td style="width:10%">
-	                	<a class="btn btn-sm btn-block btn-info" href="{{ route('classification.edit', $class->id) }}">  
+	                	<a class="btn btn-sm btn-block btn-info" href="{{ route('classifications.edit', $class->id) }}">  
 	                	
 	                	<i class="icon fa fa-pencil"></i></a>
 	                </td>
 	                <td style="width:10%">
-	                	<form role="form" action="{{ route('classification.destroy', $class->id) }}" method="POST">
+	                	<form role="form" action="{{ route('classifications.destroy', $class->id) }}" method="POST">
 		                    {{ csrf_field() }}
 		                    <input type="hidden" name="_method" value="DELETE">
 		                    <button type="submit" class="btn btn-sm btn-block btn-danger">

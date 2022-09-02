@@ -21,7 +21,7 @@
 		</div>
 		<div class="box-footer">
 			<button type="submit" class="btn btn-primary btn-block"> Guardar </button>
-			<a class="btn btn-danger btn-block" href="{{ route('user.show', $USER->id) }}"> Cancelar </a>
+			<a class="btn btn-danger btn-block" href="{{ route('users.show', $USER->id) }}"> Cancelar </a>
 		</div>
 	</form>
 

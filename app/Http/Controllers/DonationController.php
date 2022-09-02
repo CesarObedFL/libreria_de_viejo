@@ -9,9 +9,9 @@ use Illuminate\Http\Request;
 
 use Carbon\Carbon;
 
-use App\Donation;
-use App\Donor;
-use App\Classification;
+use App\Models\Donation;
+use App\Models\Donor;
+use App\Models\Classification;
 
 class DonationController extends Controller
 {
@@ -22,24 +22,19 @@ class DonationController extends Controller
 
     public function index(Request $request)
     {
-        $initDate = '2019-05-14';
-        $endDate = Carbon::now()->toDateString();
+        $start_date = '2019-05-14';
+        $end_date = Carbon::now()->toDateString();
 
         $DONATIONS = Donation::all();
 
-        if(!is_null($request->initDate) && !empty($request->initDate) &&
-            !is_null($request->endDate) && !empty($request->endDate)) {
-            $initDate = $request->initDate;
-            $endDate = $request->endDate;
-            $DONATIONS = Donation::whereBetween('date',[$initDate,$endDate])->get();
+        if(!is_null($request->start_date) && !empty($request->start_date) &&
+            !is_null($request->end_date) && !empty($request->end_date)) {
+            $start_date = $request->start_date;
+            $end_date = $request->end_date;
+            $DONATIONS = Donation::whereBetween('date',[$start_date, $end_date])->get();
         }
             
-        return view('donations.index_donations',compact('DONATIONS','initDate','endDate'));
-    }
-
-    public function create()
-    {
-        //
+        return view('donations.index_donations', [ 'DONATIONS' => $DONATIONS,'start_date' => $start_date,'end_date' => $end_date ]);
     }
 
     public function store(Request $request)
@@ -65,47 +60,31 @@ class DonationController extends Controller
         ]);
         $DONATION->save();
         //Donation::create($request->all());
-        return redirect()->action('DonationController@index')->with('success','La donación se realizó exitosamente!...');
+        return redirect()->action([ DonationController::class, 'index' ])->with('success','La donación se realizó exitosamente!...');
     }
 
     public function show($id)
     {
-        $DONATION = Donation::findOrFail($id);
-        return view('donations.info_donation',compact('DONATION'));
-    }
-
-    public function edit($id)
-    {
-
-    }
-
-    public function update(Request $request, Donation $donations)
-    {
-        //
+        return view('donations.show_donation', [ 'DONATION' => Donation::findOrFail($id) ]);
     }
 
     public function destroy($id)
     {
-        $DONATION = Donation::findOrFail($id);
-        $DONATION->delete();
-        return redirect('DonationController@index')->action()->with('delete','La donación se elimino exitosamente!...');
+        Donation::findOrFail($id)->delete();
+        return redirect()->action([ DonationController::class, 'index' ])->with('delete','La donación se elimino exitosamente!...');
     }
 
     public function receive()
     {
         $TITLE = "Recibir Donación";
         $TYPE = 1;
-        $DONORS = Donor::all();
-        $CLASSES = Classification::orderBy('class')->where('type',1)->get();
-        return view('donations.create_donation',compact('TITLE','TYPE','DONORS','CLASSES'));
+        return view('donations.create_donation', [ 'TITLE' => $TITLE, 'TYPE' => $TYPE, 'DONORS' => Donor::all(), 'CLASSES' => Classification::orderBy('class')->where('type','Libro')->get() ]);
     }
 
     public function donate()
     {
         $TITLE = "Realizar Donación";
         $TYPE = 2;
-        $DONORS = Donor::all();
-        $CLASSES = Classification::orderBy('class')->where('type',1)->get();
-        return view('donations.create_donation',compact('TITLE','TYPE','DONORS','CLASSES'));
+        return view('donations.create_donation', [ 'TITLE' => $TITLE, 'TYPE' => $TYPE, 'DONORS' => Donor::all(), 'CLASSES' => Classification::orderBy('class')->where('type',1)->get() ]);
     }
 }

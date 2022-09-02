@@ -3,14 +3,14 @@
 @section('title', 'Edición de Planta')
 
 @section('content-header')
-	<h1><div class="col-md-8"><strong> Edición de Planta : {{ $id }} </strong></div></h1><hr>
+	<h1><div class="col-md-8"><strong> Edición de Planta : {{ $PLANT->id }} </strong></div></h1><hr>
 @endsection
 
 @section('content')
 
 	@include('partials.errors')
 
-	<form role="form" action="{{ route('plant.update', $PLANT->id) }}" method="POST">
+	<form role="form" action="{{ route('plants.update', $PLANT->id) }}" method="POST">
 		{{ csrf_field() }}
 		<div class="box-body">
 			<input name="_method" type="hidden" value="PATCH">
@@ -55,7 +55,7 @@
 		</div>
 		<div class="box-footer">
 			<button type="submit" class="btn btn-primary btn-block"> Guardar </button>
-			<a class="btn btn-danger btn-block" href="{{ route('plant.show', $id) }}"> Cancelar </a>
+			<a class="btn btn-danger btn-block" href="{{ route('plants.show', $PLANT->id) }}"> Cancelar </a>
 		</div>
 	</form>
 

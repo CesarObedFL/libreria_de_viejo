@@ -10,7 +10,7 @@
 
 	@include('partials.errors')
 
-	<form role="form" action="{{ route('classification.store') }}" method="POST" enctype="multipart/form-data">
+	<form role="form" action="{{ route('classifications.store') }}" method="POST" enctype="multipart/form-data">
 		{{ csrf_field() }}
 		<div class="box-body">
 			<div class="form-group col-md-12">
@@ -19,16 +19,16 @@
 			</div>
 			<div class="form-group col-md-12">
 				<p> Tipo: &nbsp&nbsp&nbsp
-					<input type="radio" name="type" value="1" class="flat-red">
+					<input type="radio" name="type" value="Libro" class="flat-red">
 					<label for="type"> Libro &nbsp&nbsp</label>
-					<input type="radio" name="type" value="0" class="flat-red">
+					<input type="radio" name="type" value="Planta" class="flat-red">
 					<label for="type"> Planta </label>
 				</p>
 			</div>
 		</div>
 		<div class="box-footer">
 			<button type="submit" class="btn btn-primary btn-block"> Registrar </button>
-			<a class="btn btn-danger btn-block" href="{{ route('classification.index') }}"> Cancel </a>
+			<a class="btn btn-danger btn-block" href="{{ route('classifications.index') }}"> Cancel </a>
 		</div>
 	</form>
 

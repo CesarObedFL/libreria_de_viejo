@@ -5,8 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
-use App\Donor;
-use App\Classification;
+use App\Models\Donor;
+use App\Models\Classification;
 
 class DonorController extends Controller
 {
@@ -17,14 +17,12 @@ class DonorController extends Controller
 
     public function index()
     {
-        $DONORS = Donor::all();
-        return view('donors.index_donors',compact('DONORS'));
+        return view('donors.index_donors', [ 'DONORS' => Donor::all() ]);
     }
 
     public function create()
     {
-        $CLASSES = Classification::orderBy('class')->where('type',1)->get();
-        return view('donors.create_donor',compact('CLASSES'));
+        return view('donors.create_donor', [ 'CLASSES' => Classification::orderBy('class')->where('type', 'Libro')->get() ]);
     }
 
     public function store(Request $request)
@@ -37,18 +35,12 @@ class DonorController extends Controller
             return redirect()->back()->withErrors($validator->errors())->withInput();
         }
         Donor::create($request->all());
-        return redirect()->action('DonorController@index')->with('success','El contacto se registro correctamente...');
-    }
-
-    public function show($id)
-    {
-        //
+        return redirect()->action([ DonorController::class, 'index' ])->with('success','El contacto se registro correctamente...');
     }
     
     public function edit($id)
     {
-        $DONOR = Donor::findOrFail($id);
-        return view('donors.edit_donor',compact('DONOR'));
+        return view('donors.edit_donor', [ 'DONOR' => Donor::findOrFail($id) ]);
     }
 
     public function update(Request $request, $id)
@@ -61,13 +53,12 @@ class DonorController extends Controller
             return redirect()->back()->withErrors($validator->errors())->withInput();
 
         Donor::where('id',$id)->update($request->except('_token','_method'));
-        return redirect()->action('DonorController@index')->with('edit','El contacto se ha modificado exitosamente!...');
+        return redirect()->action([ DonorController::class, 'index' ])->with('edit','El contacto se ha modificado exitosamente!...');
     }
 
     public function destroy($id)
     {
-        $DONOR = Donor::findOrFail($id);
-        $DONOR->delete();
-        return redirect()->action('DonorController@index')->with('delete','El contacto se ha eliminado exitosamente!...');
+        Donor::findOrFail($id)->delete();
+        return redirect()->action([ DonorController::class, 'index' ])->with('delete','El contacto se ha eliminado exitosamente!...');
     }
 }

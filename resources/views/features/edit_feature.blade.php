@@ -11,7 +11,7 @@
 	@include('partials.errors')
 	
 	<h3>Edición de Características</h3>
-	<form role="form" action="{{ route('feature.update', $FEATURE->id) }}" method="POST">
+	<form role="form" action="{{ route('features.update', $FEATURE->id) }}" method="POST">
 		{{ csrf_field() }}
 		<div class="box-body">
 			<input name="_method" type="hidden" value="PATCH">
@@ -75,7 +75,7 @@
 		</div>
 		<div class="box-footer">
 			<button type="submit" class="btn btn-primary btn-block"> Guardar </button>
-			<a class="btn btn-danger btn-block" href="{{ route('feature.show', $FEATURE->id) }}"> Cancelar </a>
+			<a class="btn btn-danger btn-block" href="{{ route('features.show', $FEATURE->id) }}"> Cancelar </a>
 		</div>
 	</form>
 		

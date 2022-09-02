@@ -67,7 +67,7 @@
 		</div>
 	</div>
 
-	<form role="form" action="{{ route('swap.store') }}" method="POST">
+	<form role="form" action="{{ route('swaps.store') }}" method="POST">
 		{{ csrf_field() }}
 		<div class="box-body">
 			<div class="form-group col-md-6">
@@ -85,7 +85,7 @@
 		</div>
 		<div class="box-footer">
 			<button class="btn btn-primary btn-block" type="submit" id="btnAccept"> Realizar </button>
-			<a class="btn btn-danger btn-block" href="{{ route('swap.index') }}"> Cancelar </a>
+			<a class="btn btn-danger btn-block" href="{{ route('swaps.index') }}"> Cancelar </a>
 		</div>
 	</form>
 

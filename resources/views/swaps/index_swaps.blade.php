@@ -15,7 +15,7 @@
     <h1>
         <div class="col-md-8"><strong>Trueques Realizados</strong></div>
         <div class="col-md-4">
-            <a class="btn btn-success btn-block pull-right" href="{{ route('swap.create') }}">
+            <a class="btn btn-success btn-block pull-right" href="{{ route('swaps.create') }}">
             <i class="fa  fa-pencil-square-o"></i> REALIZAR TRUEQUE </a>
         </div>
     </h1>
@@ -36,24 +36,24 @@
     @else
         <div class="box">
             <div class="box-header">
-                <form role="form" action="{{ route('swap.index') }}" method="GET">
+                <form role="form" action="{{ route('swaps.index') }}" method="GET">
                     {{ csrf_field() }}
                     <div class="box-body">
                         <div class="form-group col-md-4">
-                            <label>Periodo: {{ date("d-m-Y",strtotime($initDate)) .' / '.date("d-m-Y",strtotime($endDate)) }}</label>
+                            <label>Periodo: {{ date("d-m-Y",strtotime($start_date)) .' / '.date("d-m-Y",strtotime($end_date)) }}</label>
                         </div>
                         <div class="form-group col-md-8">
-                            <label for="initDate"> Fecha Inicial: </label>
-                            <input type="date" name="initDate" id="initDate">
-                            <label for="endDate"> Fecha Final: </label>
-                            <input type="date" name="endDate" id="endDate">
+                            <label for="start_date"> Fecha Inicial: </label>
+                            <input type="date" name="start_date" id="start_date">
+                            <label for="end_date"> Fecha Final: </label>
+                            <input type="date" name="end_date" id="end_date">
                             <button type="submit" class="btn btn-primary btn-sm"> Buscar </button>
                         </div>
                     </div>
                 </form>
             </div>
             <div class="box-body">
-                <table id="booksTable" class="table table-bordered table-striped">
+                <table id="books_table" class="table table-bordered table-striped">
                     <thead>
                         <tr class="success">
                             <th> ID </th>
@@ -68,7 +68,7 @@
                     <tbody>
                         @foreach($SWAPS as $swap)
                             <tr>
-                                <td><a class="btn btn-sm btn-block bg-olive" href="{{ route('swap.show', $swap->id) }}">{{ $swap->id }}</a></td>
+                                <td><a class="btn btn-sm btn-block bg-olive" href="{{ route('swaps.show', $swap->id) }}">{{ $swap->id }}</a></td>
                                 <td>{{ $swap->getDate() }}</td>
                                 <td>{{ $swap->user->name }}</td>
                                 <td>{{ $swap->incoming }}</td>
@@ -90,7 +90,7 @@
     <script src="{{ asset('bower_components/jquery-slimscroll/jquery.slimscroll.min.js') }}"></script>
     <script>
       $(function () {
-        $('#booksTable').DataTable({
+        $('#books_table').DataTable({
           'paging'      : true,
           'lengthChange': true,
           'searching'   : true,

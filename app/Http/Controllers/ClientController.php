@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\Request;
-use App\Client;
+use App\Models\Client;
 
 class ClientController extends Controller
 {
@@ -16,8 +16,7 @@ class ClientController extends Controller
 
     public function index()
     {
-        $CLIENTS = Client::all();
-        return view('clients.index_clients',compact('CLIENTS'));
+        return view('clients.index_clients', [ 'CLIENTS' => Client::all() ]);
     }
 
     public function create()
@@ -40,19 +39,17 @@ class ClientController extends Controller
         }
 
         Client::create($request->all());
-        return redirect()->action('ClientController@index')->with('success', 'El cliente se ha registrado exitosamente!...');
+        return redirect()->action([ ClientController::class, 'index' ])->with('success', 'El cliente se ha registrado exitosamente!...');
     }
 
     public function show($id)
     {
-        $CLIENT = Client::find($id);
-        return view('clients.info_client', compact('CLIENT'));
+        return view('clients.show_client', [ 'CLIENT'=> Client::findOrFail($id) ]);
     }
 
     public function edit($id)
     {
-        $CLIENT = Client::findOrFail($id);
-        return view('clients.edit_client', compact('CLIENT'));
+        return view('clients.edit_client', [ 'CLIENT' => Client::findOrFail($id) ]);
     }
 
     public function update(Request $request, $id)
@@ -70,12 +67,12 @@ class ClientController extends Controller
         }
 
         Client::where('id',$id)->update($request->except('_token','_method'));
-        return redirect()->action('ClientController@show',$id)->with('edit','El cliente se ha modificado exitosamente!...');
+        return redirect()->action([ ClientController::class, 'show' ], $id)->with('edit', 'El cliente se ha modificado exitosamente!...');
     }
 
     public function destroy($id)
     {
         $CLIENT = Client::findOrFail($id)->delete();
-        return redirect()->action('ClientController@index')->with('delete', 'El cliente se ha eliminado exitosamente!...');
+        return redirect()->action([ ClientController::class, 'index' ])->with('delete', 'El cliente se ha eliminado exitosamente!...');
     }
 }

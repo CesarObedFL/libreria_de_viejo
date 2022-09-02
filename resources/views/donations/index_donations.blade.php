@@ -14,7 +14,7 @@
     <h1>
         <div class="col-md-6"><strong>Donaciones Realizadas</strong></div>
         <div class="col-md-2">
-            <a class="btn btn-block pull-right" href="{{ route('donor.index') }}">
+            <a class="btn btn-block pull-right" href="{{ route('donors.index') }}">
             <i class="fa fa-institution"></i> INSTITUCIONES </a>
         </div>
         <div class="col-md-2">
@@ -48,20 +48,20 @@
                     {{ csrf_field() }}
                     <div class="box-body">
                         <div class="form-group col-md-4">
-                            <label>Periodo: {{ date("d-m-Y",strtotime($initDate)) .' / '.date("d-m-Y",strtotime($endDate)) }}</label>
+                            <label>Periodo: {{ date("d-m-Y",strtotime($start_date)) .' / '.date("d-m-Y",strtotime($end_date)) }}</label>
                         </div>
                         <div class="form-group col-md-8">
-                            <label for="initDate"> Fecha Inicial: </label>
-                            <input type="date" name="initDate" id="initDate">
-                            <label for="endDate"> Fecha Final: </label>
-                            <input type="date" name="endDate" id="endDate">
+                            <label for="start_date"> Fecha Inicial: </label>
+                            <input type="date" name="start_date" id="start_date">
+                            <label for="end_date"> Fecha Final: </label>
+                            <input type="date" name="end_date" id="end_date">
                             <button type="submit" class="btn btn-primary btn-sm"> Buscar </button>
                         </div>
                     </div>
                 </form>
             </div>
             <div class="box-body">
-                <table id="donationsTable" class="table table-condensed text-center">
+                <table id="donations_table" class="table table-condensed text-center">
                     <thead>
                         <tr class="success">
                             <th> ID </th>
@@ -96,7 +96,7 @@
     <script src="{{ asset('bower_components/jquery-slimscroll/jquery.slimscroll.min.js') }}"></script>
     <script>
       $(function () {
-        $('#donationsTable').DataTable({
+        $('#donations_table').DataTable({
           'paging'      : true,
           'lengthChange': true,
           'searching'   : true,

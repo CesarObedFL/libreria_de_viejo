@@ -13,13 +13,13 @@
 
 @endsection
 
-@section('scripts')
+@section('scripts') 
     <script src="{{ asset('bower_components/datatables.net/js/jquery.dataTables.min.js') }}"></script>
     <script src="{{ asset('bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js') }}"></script>
     <script src="{{ asset('bower_components/jquery-slimscroll/jquery.slimscroll.min.js') }}"></script>
     <script>
       $(function () {
-        $('#borrowsTable').DataTable({
+        $('#borrows_table').DataTable({
           'paging'      : true,
           'lengthChange': true,
           'searching'   : true,
@@ -35,7 +35,7 @@
     <h1>
         <div class="col-md-8"><strong>Préstamos Realizados</strong></div>
         <div class="col-md-4">
-            <a class="btn btn-success btn-block pull-right" href="{{ route('borrow.create') }}">
+            <a class="btn btn-success btn-block pull-right" href="{{ route('borrows.create') }}">
             <i class="fa fa-pencil-square-o"></i> REALIZAR PRÉSTAMO </a>
         </div>
     </h1>
@@ -57,24 +57,24 @@
     @else
         <div class="box">
             <div class="box-header">
-                <form role="form" action="{{ route('borrow.index') }}" method="GET">
+                <form role="form" action="{{ route('borrows.index') }}" method="GET">
                     {{ csrf_field() }}
                     <div class="box-body">
                         <div class="form-group col-md-4">
-                            <label>Periodo: {{ date("d-m-Y",strtotime($initDate)) .' / '.date("d-m-Y",strtotime($endDate)) }}</label>
+                            <label>Periodo: {{ date("d-m-Y",strtotime($start_date)) .' / '.date("d-m-Y",strtotime($end_date)) }}</label>
                         </div>
                         <div class="form-group col-md-8">
-                            <label for="initDate"> Fecha Inicial: </label>
-                            <input type="date" name="initDate" id="initDate">
-                            <label for="endDate"> Fecha Final: </label>
-                            <input type="date" name="endDate" id="endDate">
+                            <label for="start_date"> Fecha Inicial: </label>
+                            <input type="date" name="start_date" id="start_date">
+                            <label for="end_date"> Fecha Final: </label>
+                            <input type="date" name="end_date" id="end_date">
                             <button type="submit" class="btn btn-primary btn-sm"> Buscar </button>
                         </div>
                     </div>
                 </form>
             </div>
             <div class="box-body">
-                <table class="table table-condensed text-center" id="borrowsTable">
+                <table class="table table-condensed text-center" id="borrows_table">
                     <thead>
                         <tr class="success">
                             <th> ID </th>
@@ -90,7 +90,7 @@
                     <tbody>
                         @foreach($BORROWS as $borrow)
                             <tr>
-                                <td><a class="btn btn-sm btn-block bg-olive" href="{{ route('borrow.show', $borrow->id) }}">{{ $borrow->id }}</a></td>
+                                <td><a class="btn btn-sm btn-block bg-olive" href="{{ route('borrows.show', $borrow->id) }}">{{ $borrow->id }}</a></td>
                                 <td>{{ $borrow->amountbooks }}</td>
                                 <td>{{ $borrow->getOutDate() }}</td>
                                 <td>{{ $borrow->getInDate() }}</td>

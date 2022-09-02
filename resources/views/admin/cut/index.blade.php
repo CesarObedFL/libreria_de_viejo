@@ -32,13 +32,13 @@
                     {{ csrf_field() }}
                     <div class="box-body">
                         <div class="form-group col-md-4">
-                            <label>Periodo: {{ $initDate .' / '.$endDate }}</label>
+                            <label>Periodo: {{ $start_date .' / '.$end_date }}</label>
                         </div>
                         <div class="form-group col-md-8">
-                            <label for="initDate"> Fecha Inicial: </label>
-                            <input type="date" name="initDate" id="initDate">
-                            <label for="endDate"> Fecha Final: </label>
-                            <input type="date" name="endDate" id="endDate">
+                            <label for="start_date"> Fecha Inicial: </label>
+                            <input type="date" name="start_date" id="start_date">
+                            <label for="end_date"> Fecha Final: </label>
+                            <input type="date" name="end_date" id="end_date">
                             <button type="submit" class="btn btn-primary btn-sm"> Buscar </button>
                         </div>
                     </div>

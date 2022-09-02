@@ -10,11 +10,11 @@
     <h1>
         <div class="col-md-6"><strong>Instituciones y Contactos Registrados</strong></div>
         <div class="col-md-2">
-            <a class="btn btn-block pull-right" href="{{ route('donation.index') }}">
+            <a class="btn btn-block pull-right" href="{{ route('donations.index') }}">
             <i class="fa fa-gift"></i> DONACIONES </a>
         </div>
         <div class="col-md-4">
-            <a class="btn btn-success btn-block pull-right" href="{{ route('donor.create') }}">
+            <a class="btn btn-success btn-block pull-right" href="{{ route('donors.create') }}">
             <i class="fa fa-pencil-square-o"></i> NUEVA INSTITUCIÓN O CONTACTO </a>
         </div>
     </h1>
@@ -39,7 +39,7 @@
             <div class="box-header">
             </div>
             <div class="box-body">
-                <table id="donationsTable" class="table table-bordered table-striped">
+                <table id="donations_table" class="table table-bordered table-striped">
                     <thead>
                         <tr class="success">
                             <th> ID </th>
@@ -55,7 +55,7 @@
                     <tbody>
                         @foreach($DONORS as $donor)
                             <tr>
-                                <td><a class="btn btn-block btn-sm bg-olive" href="{{ route('donor.edit', $donor->id) }}">{{ $donor->id }}</a></td> 
+                                <td><a class="btn btn-block btn-sm bg-olive" href="{{ route('donors.edit', $donor->id) }}">{{ $donor->id }}</a></td> 
                                 <td>{{ $donor->institution }}</td>
                                 <td>{{ $donor->contact }}</td>
                                 <td>{{ $donor->email }}</td>
@@ -79,7 +79,7 @@
     <script src="{{ asset('bower_components/jquery-slimscroll/jquery.slimscroll.min.js') }}"></script>
     <script>
       $(function () {
-        $('#donationsTable').DataTable({
+        $('#donations_table').DataTable({
           'paging'      : true,
           'lengthChange': true,
           'searching'   : true,

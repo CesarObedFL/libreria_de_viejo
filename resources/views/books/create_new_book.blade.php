@@ -11,7 +11,7 @@
 	@include('partials.edit')
 	@include('partials.errors')
 
-	<form role="form" action="{{ route('book.store') }}" method="POST">
+	<form role="form" action="{{ route('books.store') }}" method="POST">
 		{{ csrf_field() }}
 		<div class="box-body">
 			<div class="form-group col-md-12">
@@ -51,6 +51,7 @@
 					<input class="form-control" type="text" name="collection" id="collection" value="{{ old('collection') }}">
 				</div>
 			</div>
+			<br>
 			CARACTERÍSTICAS <hr class="col-xs-10 pull-right">
 
 			<div class="form-group">
@@ -103,7 +104,7 @@
 		</div> {{-- box-body --}}
 		<div class="box-footer">
 			<button type="submit" class="btn btn-primary btn-block"> Registrar </button>
-			<a class="btn btn-danger btn-block" href="{{ route('book.index') }}"> Cancelar </a>
+			<a class="btn btn-danger btn-block" href="{{ route('books.index') }}"> Cancelar </a>
 		</div>
 	</form>
 

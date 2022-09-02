@@ -5,8 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
-use App\Feature;
-use App\Book;
+use App\Models\Feature;
+use App\Models\Book;
 
 class FeatureController extends Controller
 {
@@ -15,20 +15,9 @@ class FeatureController extends Controller
         $this->middleware('auth');
     }
 
-    public function index()
-    {
-        //
-    }
-
-    public function create() 
-    {
-        //
-    }
-
     public function newFeature($book)
     {
-        $bookID = Book::findOrFail($book)->id;
-        return view('features.create_feature', compact('bookID'));
+        return view('features.create_feature', [ 'bookID' => Book::findOrFail($book)->id ]);
     }
 
     public function store(Request $request)
@@ -48,21 +37,17 @@ class FeatureController extends Controller
         }
         
         Feature::create($request->all());
-        $BOOK = Book::findOrFail($request->bookID);
-        return view('books.info_book', compact('BOOK'))->with('success','La entrada del libro se ha creado exitosamente!...');
+        return view('books.show_book', [ 'BOOK' => Book::findOrFail($request->bookID) ])->with('success','La entrada del libro se ha creado exitosamente!...');
     }
 
     public function show($id)
     {
-        $BOOK = Book::findOrFail(Feature::findOrFail($id)->bookID);
-        return view('books.info_book', compact('BOOK'));
+        return view('books.show_book', [ 'BOOK' => Book::findOrFail(Feature::findOrFail($id)->bookID) ]);
     }
 
     public function edit($id)
     {
-        $FEATURE = Feature::findOrFail($id);
-        $BOOK = Book::findOrFail($FEATURE->bookID);
-        return view('features.edit_feature', compact('FEATURE','id','BOOK'));
+        return view('features.edit_feature', [ 'FEATURE' => Feature::findOrFail($id), 'BOOK' => Book::findOrFail($FEATURE->bookID) ]);
     }
 
     public function update(Request $request, $id)
@@ -83,7 +68,7 @@ class FeatureController extends Controller
         
         Feature::where('id',$id)->update($request->except('_token','_method'));
         $BOOK = Book::findOrFail(Feature::findOrFail($id)->bookID);
-        return redirect()->action('BookController@show',$BOOK->id)->with('edit','La entrada del libro se ha modificado exitosamente!...');
+        return redirect()->action([ BookController::class, 'show'], $BOOK->id)->with('edit','La entrada del libro se ha modificado exitosamente!...');
     }
 
     public function destroy($id)

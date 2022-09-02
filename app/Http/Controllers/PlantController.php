@@ -4,8 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
-use App\Plant;
-use App\Classification;
+use App\Models\Plant;
+use App\Models\Classification;
 
 class PlantController extends Controller
 {
@@ -16,14 +16,12 @@ class PlantController extends Controller
 
     public function index()
     {
-        $PLANTS = Plant::all();
-        return view('plants.index_plants', compact('PLANTS'));
+        return view('plants.index_plants', [ 'PLANTS' => Plant::all() ]);
     }
 
     public function create()
     {
-        $CLASSES = Classification::orderBy('class')->where('type',2)->get();
-        return view('plants.create_plant', compact('CLASSES'));
+        return view('plants.create_plant', [ 'CLASSES' => Classification::orderBy('class')->where('type', 'Planta')->get() ]);
     }
 
     public function store(Request $request)
@@ -45,20 +43,17 @@ class PlantController extends Controller
         //$plant->image = $i;
 
         Plant::create($request->all());
-        return redirect()->action('PlantController@index')->with('success', 'La planta se ha registrado exitosamente!...');
+        return redirect()->action([ PlantController::class, 'index'] )->with('success', 'La planta se ha registrado exitosamente!...');
     }
 
     public function show($id)
     {
-        $PLANT = Plant::findOrFail($id);
-        return view('plants.info_plant', compact('PLANT'));
+        return view('plants.show_plant', ['PLANT' => Plant::findOrFail($id) ] );
     }
 
     public function edit($id)
     {
-        $CLASSES = Classification::orderBy('class')->where('type',2)->get();
-        $PLANT = Plant::findOrFail($id);
-        return view('plants.edit_plant', compact('PLANT','id','CLASSES'));
+        return view('plants.edit_plant', [ 'PLANT' => Plant::findOrFail($id), 'CLASSES' => Classification::orderBy('class')->where('type','Planta')->get() ]);
     }
 
     public function update(Request $request, $id)
@@ -77,12 +72,12 @@ class PlantController extends Controller
         }
 
         Plant::where('id',$id)->update($request->except('_token','_method'));
-        return redirect()->action('PlantController@show',$id)->with('edit','La planta se ha modificador exitosamente!...');
+        return redirect()->action([ PlantController::class, 'show' ], $id)->with('edit','La planta se ha modificado exitosamente!...');
     }
 
     public function destroy($id)
     {
         $PLANT = Plant::findOrFail($id)->delete();
-        return redirect()->action('PlantController@index')->with('delete', 'La planta se ha eliminado correctamente!...');
+        return redirect()->action([ PlantController::class, 'index' ])->with('delete', 'La planta se ha eliminado correctamente!...');
     }
 }

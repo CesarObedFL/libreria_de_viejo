@@ -9,9 +9,9 @@ use Illuminate\Support\Facades\Auth;
 
 use Carbon\Carbon;
 
-use App\User;
-use App\Pay;
-use App\Code;
+use App\Models\User;
+use App\Models\Pay;
+use App\Models\Code;
 
 class AdminController extends Controller
 {
@@ -19,21 +19,13 @@ class AdminController extends Controller
     {
         $this->middleware('auth');
     }
-
-    public function index(){}
-    public function create(){}
-    public function store(Request $request){}
-    public function show($id){}
-    public function destroy($id){}
     
     public function edit($id) // pay
     {
         if(Auth::user()->isAdmin()) {
-            $USER = User::findOrFail((integer)$id);
-            $OWED = DB::table('pays')->where('userID',$id)->SUM('owed');
-            return view('admin.cut.pay',compact('USER','OWED'));
+            return view('admin.cut.pay', [ 'USER' => User::findOrFail($id),'OWED' => DB::table('pays')->where('userID',$id)->SUM('owed')]);
         }
-        return redirect()->action('HomeController@index');
+        return redirect()->action([ HomeController::class, 'index' ]);
     }
     
     public function update(Request $request, $id) // update pays
@@ -53,19 +45,19 @@ class AdminController extends Controller
             'amount' => $PAY->amount + $request->get('pay'), 
             'owed' => $request->get('owed') - $request->get('pay')
         ]);
-        return redirect()->action('AdminController@cut')->with('success','El pago se ha realizado exitosamente!...');
+        return redirect()->action([ AdminController::class, 'cut' ])->with('success','El pago se ha realizado exitosamente!...');
     }
 
     public function cut(Request $request) 
     {
         if(Auth::user()->isAdmin()) {
-            $initDate = '2018-11-14';
-            $endDate = Carbon::now()->toDateString();
+            $start_date = '2018-11-14';
+            $end_date = Carbon::now()->toDateString();
 
-            if(!is_null($request->initDate) && !empty($request->initDate) &&
-                !is_null($request->endDate) && !empty($request->endDate)) {
-                $initDate = $request->initDate;
-                $endDate = $request->endDate;
+            if(!is_null($request->start_date) && !empty($request->start_date) &&
+                !is_null($request->end_date) && !empty($request->end_date)) {
+                $start_date = $request->start_date;
+                $end_date = $request->end_date;
             }
 
             $DATA = DB::select(DB::raw(
@@ -74,16 +66,16 @@ class AdminController extends Controller
                     MAX(invoices.date) AS FechaFinal,
                     SUM(total) AS Monto,
                     SUM(total)/10 AS Comision,
-                    (SELECT SUM(amounttopay) FROM swaps s WHERE s.userID = users.id AND s.date BETWEEN '$initDate' AND '$endDate') montoDeTrueques,
-                    (SELECT SUM(amount) FROM borrows b WHERE b.userID = users.id AND b.inDate BETWEEN '$initDate' AND '$endDate') montoDePrestamos,
-                    (SELECT SUM(owed) FROM pays p WHERE p.userID = users.id AND p.date BETWEEN '$initDate' AND '$endDate') adeudo,
-                    (SELECT SUM(amount) FROM pays p WHERE p.userID = users.id AND p.date BETWEEN '$initDate' AND '$endDate') montoPagado,
-                    (SELECT COUNT(*) FROM sales s JOIN invoices i ON s.invoiceID = i.id WHERE i.userID = users.id AND s.type = 1 AND i.date BETWEEN '$initDate' AND '$endDate') librosVendidos,
-                    (SELECT COUNT(*) FROM sales s JOIN invoices i ON s.invoiceID = i.id WHERE i.userID = users.id AND s.type = 2 AND i.date BETWEEN '$initDate' AND '$endDate') plantasVendidas,
+                    (SELECT SUM(amounttopay) FROM swaps s WHERE s.userID = users.id AND s.date BETWEEN '$start_date' AND '$end_date') montoDeTrueques,
+                    (SELECT SUM(amount) FROM borrows b WHERE b.userID = users.id AND b.inDate BETWEEN '$start_date' AND '$end_date') montoDePrestamos,
+                    (SELECT SUM(owed) FROM pays p WHERE p.userID = users.id AND p.date BETWEEN '$start_date' AND '$end_date') adeudo,
+                    (SELECT SUM(amount) FROM pays p WHERE p.userID = users.id AND p.date BETWEEN '$start_date' AND '$end_date') montoPagado,
+                    (SELECT COUNT(*) FROM sales s JOIN invoices i ON s.invoiceID = i.id WHERE i.userID = users.id AND s.type = 1 AND i.date BETWEEN '$start_date' AND '$end_date') librosVendidos,
+                    (SELECT COUNT(*) FROM sales s JOIN invoices i ON s.invoiceID = i.id WHERE i.userID = users.id AND s.type = 2 AND i.date BETWEEN '$start_date' AND '$end_date') plantasVendidas,
                     COUNT(*) AS CantidadVentas
                 FROM invoices, users 
                 WHERE invoices.userID = users.id 
-                    AND invoices.date BETWEEN '$initDate' AND '$endDate'  
+                    AND invoices.date BETWEEN '$start_date' AND '$end_date'  
                  GROUP BY userID
                  ORDER BY invoices.date"
                 ));
@@ -112,18 +104,17 @@ class AdminController extends Controller
             $TOTALS['subtotal'] += $TOTALS['total'] + $TOTALS['swapsTotal'];
             $TOTALS['ttotal'] += $TOTALS['subtotal'] + $TOTALS['borrowsTotal'];
             
-            return view('admin.cut.index',compact('DATA','TOTALS','initDate','endDate'));
+            return view('admin.cut.index', [ 'DATA' => $DATA, 'TOTALS' => $TOTALS, 'start_date' => $start_date, 'end_date' => $end_date ]);
         }
-        return redirect()->action('HomeController@index');
+        return redirect()->action([ HomeController::class, 'index' ]);
     }
 
     public function barcodes()
     {
         if(Auth::user()->isAdmin()) {
-            $CODE ='code';
             return view('admin.barcodes.index');
         }
-        return redirect()->action('HomeController@index');
+        return redirect()->action([ HomeController::class, 'index' ]);
     }
 
     public function pdf(Request $request) 
@@ -158,10 +149,10 @@ class AdminController extends Controller
                 }
             }
 
-            $pdf = \PDF::loadView('admin.barcodes.codes',compact('PAGES','CODES', 'TOTALROWS'));
+            $pdf = \PDF::loadView('admin.barcodes.codes', [ 'PAGES' => $PAGES, 'CODES' => $CODES, 'TOTALROWS' => $TOTALROWS ]);
             return $pdf->download('barcodes.pdf');
         }
-        return redirect()->action('HomeController@index');
+        return redirect()->action([ HomeController::class, 'index' ]);
     }
 
     public function searchbook($title)

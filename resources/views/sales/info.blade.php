@@ -58,7 +58,7 @@
         <div class="col-md-12">
             <div class="box box-primary">
                 <div class="box-footer">
-                    <a class="btn btn-primary col-md-12" href="{{ route('sale.index') }}"> Aceptar </a>
+                    <a class="btn btn-primary col-md-12" href="{{ route('sales.index') }}"> Aceptar </a>
                 </div>
             </div>
         </div>

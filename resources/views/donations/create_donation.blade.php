@@ -6,7 +6,7 @@
 	<h1>
 		<div class="col-md-8"><strong> Registro de Donaciones </strong></div>
 		<div class="col-md-4">
-            <a class="btn btn-success btn-block pull-right" href="{{ route('donor.create') }}">
+            <a class="btn btn-success btn-block pull-right" href="{{ route('donors.create') }}">
             <i class="fa fa-pencil-square-o"></i> NUEVA INSTITUCIÓN O CONTACTO </a>
         </div>
     </h1><hr>
@@ -18,7 +18,7 @@
 
 	<div class="box-header"><h3 class="box-title">{{ $TITLE }}</h3></div>
 
-	<form role="form" action="{{ route('donation.store') }}" method="POST">
+	<form role="form" action="{{ route('donations.store') }}" method="POST">
 		{{ csrf_field() }}
 		<div class="box-body">
 			<div class="form-group col-md-12">
@@ -49,7 +49,7 @@
 		</div>
 		<div class="box-footer">
 			<button type="submit" class="btn btn-primary btn-block"> Realizar </button>
-			<a class="btn btn-danger btn-block" href="{{ route('donation.index') }}"> Cancelar </a>
+			<a class="btn btn-danger btn-block" href="{{ route('donations.index') }}"> Cancelar </a>
 		</div>
 	</form>
 

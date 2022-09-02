@@ -12,7 +12,7 @@
     <script src="{{ asset('bower_components/jquery-slimscroll/jquery.slimscroll.min.js') }}"></script>
     <script>
       $(function () {
-        $('#booksTable').DataTable({
+        $('#plants_table').DataTable({
           'paging'      : true,
           'lengthChange': true,
           'searching'   : true,
@@ -28,7 +28,7 @@
     <h1>
         <div class="col-md-8"><strong>Lista de Plantas</strong></div>
         <div class="col-md-4">
-            <a class="btn btn-success btn-block pull-right" href="{{ route('plant.create') }}">
+            <a class="btn btn-success btn-block pull-right" href="{{ route('plants.create') }}">
             <i class="fa  fa-pencil-square-o"></i> NUEVO REGISTRO </a>
         </div>
     </h1>
@@ -48,7 +48,7 @@
         </div>
     
     @else
-        <table id="booksTable" class="table table-condensed">
+        <table id="plants_table" class="table table-condensed">
             <thead>
                 <tr class="success">
                     <th> ID </th>
@@ -59,7 +59,7 @@
             <tbody>
                 @foreach($PLANTS as $plant)
                     <tr>
-                        <td><a class="btn btn-sm btn-block bg-olive" href="{{ route('plant.show', $plant->id) }}">{{ $plant->id }}</a></td>
+                        <td><a class="btn btn-sm btn-block bg-olive" href="{{ route('plants.show', $plant->id) }}">{{ $plant->id }}</a></td>
                         <td>{{ $plant->name }}</td>
                         <td>{{ $plant->stock }}</td>
                     </tr>

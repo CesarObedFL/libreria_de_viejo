@@ -9,10 +9,10 @@ use Illuminate\Http\Request;
 
 use Carbon\Carbon;
 
-use App\Borrow;
-use App\Book;
-use App\Client;
-use App\BorrowedBook;
+use App\Models\Borrow;
+use App\Models\Book;
+use App\Models\Client;
+use App\Models\BorrowedBook;
 
 class BorrowController extends Controller
 {
@@ -23,26 +23,25 @@ class BorrowController extends Controller
 
     public function index(Request $request)
     {
-        $initDate = '2019-05-14';
-        $endDate = Carbon::now()->toDateString();
+        $start_date = '2019-05-14';
+        $end_date = Carbon::now()->toDateString();
 
         $BORROWS = Borrow::all();
 
-        if(!is_null($request->initDate) && !empty($request->initDate) &&
-            !is_null($request->endDate) && !empty($request->endDate)) {
-            $initDate = $request->initDate;
-            $endDate = $request->endDate;
-            $BORROWS = Borrow::whereBetween('outDate',[$initDate,$endDate])
-                                ->orWhereBetween('inDate',[$initDate,$endDate])
+        if(!is_null($request->start_date) && !empty($request->start_date) &&
+            !is_null($request->end_date) && !empty($request->end_date)) {
+            $start_date = $request->start_date;
+            $end_date = $request->end_date;
+            $BORROWS = Borrow::whereBetween('outDate',[$start_date, $end_date])
+                                ->orWhereBetween('inDate',[$start_date, $end_date])
                                 ->get();
         }
-        return view('borrows.index_borrows', compact('BORROWS','initDate','endDate'));
+        return view('borrows.index_borrows', [ 'BORROWS' => $BORROWS, 'start_date' => $start_date, 'end_date' => $end_date ]);
     }
 
     public function create()
     {
-        $CLIENTS = Client::all()->where('type','Interno');
-        return view('borrows.create_borrow',compact('CLIENTS'));
+        return view('borrows.create_borrow', [ 'CLIENTS' => Client::all()->where('type','Interno') ]);
     }
 
     public function store(Request $request)
@@ -88,19 +87,17 @@ class BorrowController extends Controller
         }
         $BORROW->amountbooks = $TOTALBORROWEDBOOKS;
         $BORROW->save();
-        return redirect()->action('BorrowController@show',$BORROW->id)->with('success','El préstamo se ha registrado exitosamente!...');
+        return redirect()->action([ BorrowController::class, 'show' ], $BORROW->id)->with('success','El préstamo se ha registrado exitosamente!...');
     }
 
     public function show($id)
     {
-        $BORROW = Borrow::findOrFail($id);
-        return view('borrows.info_borrow',compact('BORROW'));
+        return view('borrows.show_borrow', [ 'BORROW' => Borrow::findOrFail($id) ]);
     }
     
     public function edit($id)
     {
-        $BORROW = Borrow::findOrFail($id);
-        return view('borrows.devolution',compact('BORROW'));
+        return view('borrows.devolution', [ 'BORROW' => Borrow::findOrFail($id) ]);
     }
 
     public function update(Request $request, $id) // DEVOLUTION...
@@ -133,12 +130,7 @@ class BorrowController extends Controller
             }
         }
         $BORROW->save();
-        return redirect()->action('BorrowController@show',$BORROW->id)->with(['success' => 'La devolución se ha registrado exitosamente!...', 'balancedue' => 'El cambio de la operación es: $'.$BALANCE]);
-    }
-
-    public function destroy($id)
-    {
-        //
+        return redirect()->action([ BorrowController::class, 'show' ], $BORROW->id)->with(['success' => 'La devolución se ha registrado exitosamente!...', 'balancedue' => 'El cambio de la operación es: $'.$BALANCE]);
     }
 
     public function searchbook($isbn)

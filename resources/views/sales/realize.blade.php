@@ -63,7 +63,7 @@
   </div>
   <br>
   <hr>
-	<form role="form" action="{{ route('sale.store') }}" method="POST">
+	<form role="form" action="{{ route('sales.store') }}" method="POST">
     {{ csrf_field() }}
 		<div class="box-body">
 			<div class="col-md-4">

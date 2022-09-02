@@ -10,7 +10,7 @@
 
 	@include('partials.errors')
 
-	<form role="form" action="{{ route('plant.store') }}" method="POST">
+	<form role="form" action="{{ route('plants.store') }}" method="POST">
 		{{ csrf_field() }}
 		<div class="box-body">
 			<div class="form-group col-md-12">
@@ -56,7 +56,7 @@
 		</div>
 		<div class="box-footer">
 			<button type="submit" class="btn btn-primary btn-block"> Registrar </button>
-			<a class="btn btn-danger btn-block" href="{{ route('plant.index') }}"> Cancelar </a>
+			<a class="btn btn-danger btn-block" href="{{ route('plants.index') }}"> Cancelar </a>
 		</div>
 	</form>
 

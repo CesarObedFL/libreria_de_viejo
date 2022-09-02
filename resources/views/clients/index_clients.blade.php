@@ -12,7 +12,7 @@
     <script src="{{ asset('bower_components/jquery-slimscroll/jquery.slimscroll.min.js') }}"></script>
     <script>
       $(function () {
-        $('#clientsTable').DataTable({
+        $('#clients_table').DataTable({ 
           'paging'      : true,
           'lengthChange': true,
           'searching'   : true,
@@ -28,7 +28,7 @@
     <h1>
         <div class="col-md-8"><strong>Lista de Clientes</strong></div>
         <div class="col-md-4">
-            <a class="btn btn-success btn-block pull-right" href="{{ route('client.create') }}">
+            <a class="btn btn-success btn-block pull-right" href="{{ route('clients.create') }}">
             <i class="fa fa-pencil-square-o"></i> NUEVO REGISTRO </a>
         </div>
     </h1>
@@ -48,7 +48,7 @@
         </div>
     
     @else
-        <table id="clientsTable" class="table table-condensed">
+        <table id="clients_table" class="table table-condensed">
             <thead>
                 <tr class="success">
                     <th> ID </th>
@@ -62,7 +62,7 @@
                         @if($client->id == 1)
                             <td style="text-align: center">{{ $client->id }}</a></td>
                         @else
-                            <td><a class="btn btn-sm btn-block bg-olive" href="{{ route('client.show', $client->id) }}">{{ $client->id }}</a></td>
+                            <td><a class="btn btn-sm btn-block bg-olive" href="{{ route('clients.show', $client->id) }}">{{ $client->id }}</a></td>
                         @endif
                         <td>{{ $client->name }}</td>
                         <td>{{ $client->type }}</td>

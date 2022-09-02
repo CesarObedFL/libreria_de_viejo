@@ -80,7 +80,7 @@
 		</div> {{-- box-body --}}
 		<div class="box-footer">
 			<button type="submit" class="btn btn-primary btn-block"> Actualizar </button>
-			<a class="btn btn-danger btn-block" href="{{ route('book.index') }}"> Cancelar </a>
+			<a class="btn btn-danger btn-block" href="{{ route('books.index') }}"> Cancelar </a>
 		</div>
 	</form>
 
