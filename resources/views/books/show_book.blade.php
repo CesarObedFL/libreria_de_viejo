@@ -19,28 +19,28 @@
                 {{--<div class="pull-right">
                     <a class="btn btn-success" href="{{ route('feature.newFeature', $BOOK->id) }}"> Nueva Entrada </a>
                 </div>--}}
-                <h1 class="box-title"> <strong>{{ '#'.$BOOK->id }} : {{ $BOOK->title }} </strong></h1>
+                <h1 class="box-title"> <strong>{{ '#'.$book->id }} : {{ $book->title }} </strong></h1>
             </div>
             <div class="box-body">
                 <div class="col-md-6">
                     <dl class="dl-horizontal">
-                        <dt>ISBN:</dt><dd>{{ $BOOK->ISBN }}</dd>
-                        <dt>Autor:</dt><dd>{{ $BOOK->author }}</dd>
-                        <dt>Editorial:</dt><dd>{{ $BOOK->editorial }}</dd>
-                        <dt>Clasificación:</dt><dd>{{ $BOOK->getClassification($BOOK->classification) }}</dd>
-                        <dt>Estante:</dt><dd>{{ $BOOK->getLocation() }}</dd>
-                        <dt>Stock:</dt><dd>{{ $BOOK->stock }}</dd>
+                        <dt>ISBN:</dt><dd>{{ $book->ISBN }}</dd>
+                        <dt>Autor:</dt><dd>{{ $book->author }}</dd>
+                        <dt>Editorial:</dt><dd>{{ $book->editorial }}</dd>
+                        <dt>Clasificación:</dt><dd>{{ $book->classification->name }}</dd>
+                        <dt>Estante:</dt><dd>{{ $book->getLocation() }}</dd>
+                        <dt>Stock:</dt><dd>{{ $book->stock }}</dd>
                     </dl>
                 </div>
 
                 <div class="col-md-6">
                     <dl class="dl-horizontal">
-                        <dt>Precio:</dt><dd>{{ '$ '.$BOOK->price }}</dd>
-                        <dt>Edición:</dt><dd>{{ $BOOK->edition }}</dd>
-                        <dt>Condiciones:</dt><dd>{{ $BOOK->conditions }}</dd>
-                        <dt>Género:</dt><dd>{{ $BOOK->genre }}</dd>
-                        <dt>Colección:</dt><dd>{{ $BOOK->collection }}</dd>
-                        <dt>Prestados:</dt><dd>{{ $BOOK->borrowedbooks }}</dd>
+                        <dt>Precio:</dt><dd>{{ '$ '.$book->price }}</dd>
+                        <dt>Edición:</dt><dd>{{ $book->edition }}</dd>
+                        <dt>Condiciones:</dt><dd>{{ $book->conditions }}</dd>
+                        <dt>Género:</dt><dd>{{ $book->genre }}</dd>
+                        <dt>Colección:</dt><dd>{{ $book->collection }}</dd>
+                        <dt>Prestados:</dt><dd>{{ $book->borrowed_books }}</dd>
                     </dl>
                 </div>
 
@@ -50,7 +50,7 @@
                     <div class="box-group" id="accordion">
                         <div class="box-title">ENTRADAS : Características del libro </div>
                         <div class="panel box box-primary">
-                            @foreach($BOOK->features as $feature)
+                            @foreach($book->features as $feature)
                                 <div class="box-header with-border">
                                     <div class="pull-right">
                                         <b><a data-toggle="collapse" data-parent="#accordion" href="#collapse{{ $feature->id }}" align="pull-right"> ver detalles </a></b>
@@ -89,7 +89,7 @@
             <div class="box box-primary">
                 <div class="box-footer">
                     <a class="btn btn-primary col-md-6" href="{{ route('books.index') }}"> Aceptar </a>
-                    <a class="btn btn-success col-md-6" href="{{ route('books.edit', $BOOK->id) }}"> Editar </a>
+                    <a class="btn btn-success col-md-6" href="{{ route('books.edit', $book->id) }}"> Editar </a>
                 </div>
             </div>
         </div>

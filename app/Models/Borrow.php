@@ -9,45 +9,44 @@ use Carbon\Carbon;
 class Borrow extends Model
 {
     protected $table = 'borrows';
+    
     public $timestamps = false;
 
-    protected $fillable = ['amountbooks', 'outDate', 'inDate', 'clientID','userID','amount','status'];
+    protected $fillable = [ 'amount_book', 'out_date', 'in_date', 'client_id', 'user_id', 'amount', 'status' ];
 
     public function client()
     {
-    	return $this->belongsTo(Client::class,'clientID')->withDefault([
+    	return $this->belongsTo(Client::class,'client_id', 'id')->withDefault([
                 'name' => 'borrado'
             ]);
     }
 
     public function user()
     {
-        return $this->belongsTo(User::class,'userID')->withDefault([
+        return $this->belongsTo(User::class,'user_id', 'id')->withDefault([
                 'name' => 'borrado'
             ]);
     }
 
-    public function borrowedbooks()
+    public function borrowed_books()
     {
-        return $this->hasMany(BorrowedBook::class,'borrowID','id');
+        return $this->hasMany(BorrowedBook::class, 'borrow_id', 'id');
     }
 
     public function getOutDate()
     {
-    	$DATE = Carbon::parse($this->outDate);
-    	return $DATE->format('d/m/Y');
+    	return Carbon::parse($this->out_date)->format('d/m/Y');
     }
 
     public function getInDate()
     {
-    	$DATE = Carbon::parse($this->inDate);
-    	return $DATE->format('d/m/Y');
+    	return Carbon::parse($this->in_date)->format('d/m/Y');
     }
 
     public function getDays()
     {
         if($this->status == 'Activo')
-            return Carbon::now()->diffInDays(Carbon::parse($this->inDate));
+            return Carbon::now()->diffInDays(Carbon::parse($this->in_date));
         else
             return 0;
     }
@@ -55,9 +54,9 @@ class Borrow extends Model
     public function getOwed()
     {
         if($this->status == 'Activo') {
-        	$PAYPERDAY = 5;
-        	if(Carbon::now()->greaterThan(Carbon::parse($this->inDate)))
-        		return Carbon::now()->diffInDays(Carbon::parse($this->inDate)) * $PAYPERDAY.'.00';
+        	$pay_per_day = 5;
+        	if(Carbon::now()->greaterThan(Carbon::parse($this->in_date)))
+        		return Carbon::now()->diffInDays(Carbon::parse($this->in_date)) * $pay_per_day.'.00';
         	else
         		return '0.00';
         } else 
@@ -67,7 +66,7 @@ class Borrow extends Model
     public function getCondition()
     {
         if($this->status == 'Activo')
-            return (Carbon::now()->greaterThan(Carbon::parse($this->inDate))) ? 'Vencido' : 'Activo';
+            return (Carbon::now()->greaterThan(Carbon::parse($this->in_date))) ? 'Vencido' : 'Activo';
         else
             return 'Entregado';
         

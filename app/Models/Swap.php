@@ -13,26 +13,25 @@ class Swap extends Model
 
     protected $fillable = [
         'date',
-        'userID',
-        'incoming',     // cantidad de libros entrantes
-        'outcoming',    // cantidad de libros salientes
-        'amounttopay'
+        'user_id',
+        'incoming_books',     // cantidad de libros entrantes
+        'outgoing_books',    // cantidad de libros salientes
+        'amount_to_pay'
     ];
 
-	public function swapedbooks()
+	public function swaped_books()
     {
-        return $this->hasMany('App\SwapBook','swapID','id');
+        return $this->hasMany(SwapBook::class, 'swap_id', 'id');
     }
 
     public function inbooks()
     {
-        return $this->hasMany('App\SwapBook','swapID','id')->where('type','Entrante');
-        //return $this->hasMany('App\SwapBook', 'swapID', )->where('type','Entrante');
+        return $this->hasMany(SwapBook::class, 'swap_id', 'id')->where('type', 'Entrante');
     }
 
     public function outbooks()
     {
-        return $this->hasMany('App\SwapBook','swapID','id')->where('type','Saliente');
+        return $this->hasMany(SwapBook::class, 'swap_id', 'id')->where('type', 'Saliente');
     }
 
     public function isComplete()
@@ -45,12 +44,12 @@ class Swap extends Model
 
     public function user()
     {
-    	return $this->belongsTo(User::class,'userID');
+    	return $this->belongsTo(User::class, 'user_id', 'id');
     }
 
     public function getDate()
     {
-    	$DATE = Carbon::parse($this->date);
-    	return $DATE->format('d/m/Y');
+    	$date = Carbon::parse($this->date);
+    	return $date->format('d/m/Y');
     }
 }

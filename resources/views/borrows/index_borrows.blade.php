@@ -47,7 +47,7 @@
     @include('partials.success')
     @include('partials.delete')
 
-    @if($BORROWS->isEmpty())
+    @if($borrows->isEmpty())
         <div class="col-md-12">
             <div class="alert alert-warning">
                 <i class="icon fa fa-warning"></i> No hay préstamos registrados...
@@ -71,7 +71,7 @@
                             <button type="submit" class="btn btn-primary btn-sm"> Buscar </button>
                         </div>
                     </div>
-                </form>
+                </form> 
             </div>
             <div class="box-body">
                 <table class="table table-condensed text-center" id="borrows_table">
@@ -88,10 +88,10 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach($BORROWS as $borrow)
+                        @foreach($borrows as $borrow)
                             <tr>
                                 <td><a class="btn btn-sm btn-block bg-olive" href="{{ route('borrows.show', $borrow->id) }}">{{ $borrow->id }}</a></td>
-                                <td>{{ $borrow->amountbooks }}</td>
+                                <td>{{ $borrow->amount_book }}</td>
                                 <td>{{ $borrow->getOutDate() }}</td>
                                 <td>{{ $borrow->getInDate() }}</td>
                                 <td>{{ $borrow->client->name }}</td>

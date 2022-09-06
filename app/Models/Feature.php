@@ -6,15 +6,17 @@ use Illuminate\Database\Eloquent\Model;
 
 class Feature extends Model
 {
-    protected $table = 'features';
-    public $timestamps = false; 
-
     protected $fillable = [
-        'bookID','edition','conditions','location',
-        'place','language','price','status','stock',
+        'book_id', 'edition', 'conditions', 'location',
+        'place', 'language', 'price', 'status', 'stock',
     ];
 
-    protected function books() {
-        return $this->belongsTo(Book::class, 'bookID');
+    protected $table = 'features';
+    
+    public $timestamps = false; 
+
+    public function book() 
+    {
+        return $this->belongsTo(Book::class, 'book_id', 'id');
     }
 }

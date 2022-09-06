@@ -27,7 +27,7 @@
     @include('partials.success')
     @include('partials.delete')
 
-    @if($SWAPS->isEmpty())
+    @if($swaps->isEmpty())
         <div class="col-md-12">
             <div class="alert alert-warning">
                 <i class="icon fa fa-warning"></i> No hay trueques registrados...
@@ -66,14 +66,14 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach($SWAPS as $swap)
+                        @foreach($swaps as $swap)
                             <tr>
                                 <td><a class="btn btn-sm btn-block bg-olive" href="{{ route('swaps.show', $swap->id) }}">{{ $swap->id }}</a></td>
                                 <td>{{ $swap->getDate() }}</td>
                                 <td>{{ $swap->user->name }}</td>
-                                <td>{{ $swap->incoming }}</td>
-                                <td>{{ $swap->outcoming }}</td>
-                                <td>{{ '$ '.$swap->amounttopay }}</td>
+                                <td>{{ $swap->incoming_books }}</td>
+                                <td>{{ $swap->outgoing_books }}</td>
+                                <td>{{ '$ '.$swap->amount_to_pay }}</td>
                                 <td class="{{ $swap->isComplete() }}">{{ $swap->isComplete() }}</td>
                             </tr>
                         @endforeach

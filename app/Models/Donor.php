@@ -8,14 +8,14 @@ class Donor extends Model
 {
 	protected $table = 'donors';
 	
-    protected $fillable = ['institution', 'contact', 'email', 'phone', 'address', 'commercialBusiness'];
+    protected $fillable = [ 'institution', 'contact', 'email', 'phone', 'address', 'commercial_business' ];
 
     public $timestamps = false;
 
     protected function donations()
     {
-    	return $this->hasMany('App\Donation','donorID','id');
-    }
+    	return $this->hasMany(Donation::class, 'donor_id', 'id');
+    } 
 
     public function getDonor() 
     {

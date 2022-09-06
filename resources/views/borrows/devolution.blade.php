@@ -5,7 +5,7 @@
 <meta name="csrf-token" content="{{ csrf_token() }}">
 
 @section('content-header')
-	<h1><div class="col-md-8"><strong> {{ "Préstamo de ".$BORROW->client->getInfo() }}  </strong></div></h1><hr>
+	<h1><div class="col-md-8"><strong> {{ "Préstamo de ".$borrow->client->getInfo() }}  </strong></div></h1><hr>
 @endsection
 
 @section('content')
@@ -13,7 +13,7 @@
 	<div class="input-group"> 
 		<input class="form-control" type="text" name="isbn" id="isbn" placeholder="Introduce el ISBN del libro a devolver...">
 		<input type="hidden" name="route" id="route" value="/devolution/search/book">
-		<input type="hidden" name="borrowID" id="borrowID" value="{{ $BORROW->id }}">
+		<input type="hidden" name="borrow_id" id="borrow_id" value="{{ $borrow->id }}">
 		<span class="input-group-btn">
 			<button class="btn btn-flat" type="submit" name="btnAddBook" id="btnAddBook">
 				<i class="fa fa-search"></i>
@@ -28,15 +28,15 @@
 	  	<div class="box" style="width:100%;">
 	  		<div class="box-header"><h3 class="box-title">Libros Prestados</h3></div>
 	      	<div class="box-body no-padding">
-				<table class="table table-condensed" id="borrowsTable">
+				<table class="table table-condensed" id="borrows_table">
 			        <thead>
-			            <tr class="info">
+			            <tr class="info"> 
 			                <th> Título </th>
 			                <th style="width:10%"> Cantidad </th>
 			            </tr>
 			        </thead>
 			        <tbody> 
-		        		@foreach($BORROW->borrowedbooks as $bBook)
+		        		@foreach($borrow->borrowed_books as $bBook)
 		        		<tr>
 			        		<td>{{ $bBook->book->title }}</td>
 			        		<td>{{ $bBook->amount }}</td>
@@ -69,7 +69,7 @@
 
 	<hr>
 	<div class="col-md-12">
-	<form role="form" action="{{ route('borrows.update',$BORROW->id) }}" method="POST">
+	<form role="form" action="{{ route('borrows.update',$borrow->id) }}" method="POST">
 		{{ csrf_field() }}
 		<div class="box-body">
 			<input name="_method" type="hidden" value="PATCH">
@@ -78,7 +78,7 @@
 				<label for="total"> Adeudo: </label>
         		<div class="input-group">
           			<span class="input-group-addon"> $ </span>
-				  	<input class="form-control" type="text" name="total" id="total" value="{{ $BORROW->getOwed() }}" readonly required>
+				  	<input class="form-control" type="text" name="total" id="total" value="{{ $borrow->getOwed() }}" readonly required>
         		</div>
 			</div>
       		<div class="col-md-4">
@@ -91,7 +91,7 @@
 		</div>
 		<div class="box-footer">
 			<button type="submit" class="btn btn-primary btn-block" id="btnAccept" disabled="disabled"> Aceptar </button>
-			<a class="btn btn-danger btn-block" href="{{ route('borrows.show',$BORROW->id) }}"> Cancelar </a>
+			<a class="btn btn-danger btn-block" href="{{ route('borrows.show', $borrow->id) }}"> Cancelar </a>
 		</div>
 	</form>
 	</div>

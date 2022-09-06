@@ -25,10 +25,10 @@
 				</div>
 				<div class="col-md-4">
 					<label for="classification"> Clasificación </label>
-					<select class="form-control select2" style="width:100%;" name="classification" id="classification" value="{{ $PLANT->classification }}">
-						<option value="{{ $PLANT->classification }}" selected="disabled"> {{ $PLANT->getClassification($PLANT->classification) }} </option>
+					<select class="form-control select2" style="width:100%;" name="classification_id" id="classification_id" value="{{ $PLANT->classification->id }}">
+						<option value="{{ $PLANT->classification->id }}" selected="disabled"> {{ $PLANT->classification->name }} </option>
 						@foreach($CLASSES as $CLASS)
-							<option value="{{ $CLASS->id }}"> {{ $CLASS->class }} </option>
+							<option value="{{ $CLASS->id }}"> {{ $CLASS->name }} </option>
 						@endforeach
 					</select>
 				</div>

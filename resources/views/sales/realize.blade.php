@@ -28,7 +28,7 @@
       <input type="hidden" name="routeplant" id="routeplant" value="/sale/search/plant">
       <select class="form-control select2" style="width:100%;" name="plantID" id="plantID" value="">
         <option value="none" selected="disabled">Selecciona la planta a vender...</option>
-        @foreach($PLANTS as $plant)
+        @foreach($plants as $plant)
           <option value="{{ $plant->id }}">{{ $plant->getInfo() }}</option>
         @endforeach
       </select>
@@ -68,8 +68,8 @@
 		<div class="box-body">
 			<div class="col-md-4">
 				<label for="client"> Cliente: </label>
-        <select class="form-control select2" style="width:100%;" name="clientID" id="clientID" value="{{ old('clientID') }}">
-          @foreach($CLIENTS as $client)
+        <select class="form-control select2" style="width:100%;" name="client_id" id="client_id" value="{{ old('client_id') }}">
+          @foreach($clients as $client)
             <option value="{{ $client->id }}">{{ $client->getInfo() }}</option>
           @endforeach
 			  </select>

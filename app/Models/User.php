@@ -22,17 +22,12 @@ class User extends Authenticatable
 
     public function donations()
     {
-        return $this->hasMany('App\Donation','userID','id');
-    }
-
-    public function loans()
-    {
-        return $this->hasMany('App\Loan','userID','id');
+        return $this->hasMany(Donation::class, 'user_id', 'id');
     }
 
     public function swaps()
     {
-        return $this->hasMany('App\Swap','userID','id');
+        return $this->hasMany(Swap::class, 'user_id', 'id');
     }
 
     public function getUserRoleAttribute()

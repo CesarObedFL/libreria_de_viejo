@@ -25,16 +25,16 @@ class SwapController extends Controller
         $start_date = '2019-05-14';
         $end_date = Carbon::now()->toDateString();
 
-        $SWAPS = Swap::all();
+        $swaps = Swap::all();
 
         if(!is_null($request->start_date) && !empty($request->start_date) &&
             !is_null($request->end_date) && !empty($request->end_date)) {
             $start_date = $request->start_date;
             $end_date = $request->end_date;
-            $SWAPS = Swap::whereBetween('date', [ $start_date, $end_date ])->get();
+            $swaps = Swap::whereBetween('date', [ $start_date, $end_date ])->get();
         }
         
-        return view('swaps.index_swaps', [ 'SWAPS' => $SWAPS, 'start_date' => $start_date, 'end_date' => $end_date ]);
+        return view('swaps.index_swaps', [ 'swaps' => $swaps, 'start_date' => $start_date, 'end_date' => $end_date ]);
     }
 
     public function create()
@@ -55,48 +55,47 @@ class SwapController extends Controller
             return redirect()->back()->withErrors($validator->errors())->withInput();
         }
 
-        $SWAP = new Swap([
+        $swap = new Swap([
             'date' => Carbon::now()->toDateString(),
-            'userID' => Auth::id(),
-            'incoming' => 0,
-            'outcoming' => 0, 
-            'amounttopay' => $request->get('total')
+            'user_id' => Auth::id(),
+            'incoming_books' => 0,
+            'outgoing_books' => 0, 
+            'amount_to_pay' => $request->get('total')
         ]);
-        $SWAP->save();
+        $swap->save();
 
-        $OUTBOOKS = 0;
-        $PRODUCTS = json_decode($request->get('outProducts'));
-        foreach($PRODUCTS as $product) {
-            $SWAPBOOK = new SwapBook([
-                'swapID' => $SWAP->id,
-                'bookID' => $product->id,
+        $outgoing_books = 0;
+        $out_products = json_decode($request->get('outProducts'));
+        foreach($out_products as $product) {
+            SwapBook::create([
+                'swap_id' => $swap->id,
+                'book_id' => $product->id,
                 'type' => 'Saliente',
                 'status' => 'Registrado'
             ]);
-            $SWAPBOOK->save();
-            $OUTBOOKS += $product->amount;
+            $outgoing_books += $product->amount;
             
             // decrementar libros salientes
             $newbb = Book::findOrFail($product->id)->stock - $product->amount;
-            Book::where('id',$product->id)->update(['stock' => $newbb]);
+            Book::where('id', $product->id)->update(['stock' => $newbb]);
         }
 
-        $PRODUCTS = json_decode($request->get('inProducts'));
-        $INBOOKS = 0; 
-        $STATUS;
-        foreach($PRODUCTS as $product) {
-            $BOOK = DB::table('books')->where('ISBN',$product->isbn)->first();
-            if($BOOK) {
-                $NEWSTOCK = $BOOK->stock + $product->amount;
-                Book::where('ISBN',$product->isbn)->update(['stock' => $NEWSTOCK]);
-                $STATUS = 'Registrado';
+        $in_products = json_decode($request->get('inProducts'));
+        $incoming_books = 0; 
+        $status = '';
+        foreach($in_products as $product) {
+            $book = DB::table('books')->where('ISBN',$product->isbn)->first();
+            if($book) {
+                $new_stock = $book->stock + $product->amount;
+                Book::where('ISBN', $product->isbn)->update(['stock' => $new_stock]);
+                $status = 'Registrado';
             } else {
-                $BOOK = new BOOK([
+                $book = new BOOK([
                     'ISBN' => $product->isbn,
                     'title' => $product->title,
                     'author' => 'author',
                     'editorial' => 'editorial',
-                    'classification' => 1,
+                    'classification_id' => 1,
                     'edition' => 'edition',
                     'stock' => $product->amount,
                     'price' => $product->price,
@@ -104,42 +103,42 @@ class SwapController extends Controller
                     'place' => 'Libreria',
                     'location' => 1
                 ]);
-                $BOOK->save();
-                $STATUS = 'Sin Registro';
+                $book->save();
+                $status = 'Sin Registro';
             }
             
-            $SWAPBOOK = new SwapBook([
-                'swapID' => $SWAP->id,
-                'bookID' => $BOOK->id,
+            SwapBook::create([
+                'swap_id' => $swap->id,
+                'book_id' => $book->id,
                 'type' => 'Entrante',
-                'status' => $STATUS
+                'status' => $status
             ]);
-            $SWAPBOOK->save();
-            $INBOOKS += $product->amount;
+            $incoming_books += $product->amount;
         }
 
-        $SWAP->incoming = $INBOOKS;
-        $SWAP->outcoming = $OUTBOOKS;
-        $SWAP->save();
-        $BALANCE = $request->get('pay') - $request->get('total');
-        return redirect()->action([ SwapController::class, 'show' ], [ 'id' => $SWAP->id ])->with([ 'success' => 'El trueque se ha registrado exitosamente!...', 'balancedue' => 'El cambio de la operación es: $'.$BALANCE ]);
+        $swap->incoming_books = $incoming_books;
+        $swap->outgoing_books = $outgoing_books;
+        $swap->save();
+        $balance = $request->get('pay') - $request->get('total');
+        return redirect()->action([ SwapController::class, 'show' ], [ 'id' => $swap->id ])->with([ 'success' => 'El trueque se ha registrado exitosamente!...', 'balancedue' => 'El cambio de la operación es: $'.$balance ]);
 
     }
 
     public function show($id)
     {
-        return view('swaps.show_swap', [ 'SWAP' => Swap::findOrFail($id) ]);
+        return view('swaps.show_swap', [ 'swap' => Swap::findOrFail($id) ]);
     }
 
     public function edit($id)
     {
-        $SWAP = Swap::findOrFail($id);
-        if ($SWAP->inbooks->where('status','Sin Registro')->count() > 0) {
-            $SBOOK = $SWAP->inbooks->where('status','Sin Registro')->first()->book;
-            $CLASSES = Classification::orderBy('class')->where('type',1)->get();
-            return view('swaps.register_swaped_book', [ 'SBOOK' => $SBOOK,'id' => $id, 'CLASSES' => $CLASSES ]);
+        $swap = Swap::findOrFail($id);
+        if ( $swap->inbooks->where('status','Sin Registro')->count() > 0 ) {
+            $swaped_book = $swap->inbooks->where('status', 'Sin Registro')->first()->book;
+            $classes = Classification::orderBy('name')->where('type', 'Libro')->get();
+            return view('swaps.register_swaped_book', [ 'swaped_book' => $swaped_book, 'classes' => $classes ]);
         }
-        return redirect()->action( [ SwapController::class, 'show' ], [ 'id' => $id ])->with('edit', 'No hay libros pendientes por registrar...');
+        
+        return redirect()->action( [ SwapController::class, 'show' ], $swap->id )->with('edit', 'No hay libros pendientes por registrar...');
     }
 
     public function update(Request $request, $id)
@@ -148,7 +147,7 @@ class SwapController extends Controller
             'title' => 'required|max:100',
             'author' => 'required|max:50',
             'editorial' => 'required|max:30',
-            'classification' => 'required',
+            'classification_id' => 'required',
             'genre' => 'nullable|max:20',
             'collection' => 'nullable|max:20',
             'edition' => 'required|max:20', // <--
@@ -162,28 +161,27 @@ class SwapController extends Controller
         if($validator->fails()) {
             return redirect()->back()->withErrors($validator->errors())->withInput();
         }
-        SwapBook::where('swapID',$id)->where('bookID',$request->get('bookID'))->update(['status' => 'Registrado']);
-        Book::where('ISBN',$request->get('ISBN'))->update($request->except('_token','_method','bookID'));
+        SwapBook::where('swap_id', $id)->where('book_id', $request->get('book_id'))->update(['status' => 'Registrado']);
+        Book::where('ISBN',$request->get('ISBN'))->update($request->except('_token','_method','book_id'));
         return redirect()->action([ SwapController::class, 'show' ], $id )->with('edit', 'El libro pendiente se ha registrado exitosamente!...');
     }
 
     public function destroy($id)
     {
-        $SWAP = Swap::findOrFail($id);
-        $SWAP->delete();
+        Swap::findOrFail($id)->delete();
         return redirect()->action([ SwapController::class, 'index' ])->with('delete', 'El trueque se ha eliminado exitosamente!...');
     }
 
     public function searchbook($isbn) // out books
     {
-        //$BOOK = DB::table('books')->where('ISBN',$isbn)->where('stock','>',0)->first();
-        $BOOK = DB::table('books')->where('ISBN', $isbn)->first();
+
+        $book = DB::table('books')->where('ISBN', $isbn)->first();
         return response()->json([
-            'id' => $BOOK->id,
-            'isbn' => $BOOK->ISBN,
-            'title' => $BOOK->title,
-            'price' => $BOOK->price,
-            'stock' => $BOOK->stock,
+            'id' => $book->id,
+            'isbn' => $book->ISBN,
+            'title' => $book->title,
+            'price' => $book->price,
+            'stock' => $book->stock,
             'amount' => 1
         ]);
     }

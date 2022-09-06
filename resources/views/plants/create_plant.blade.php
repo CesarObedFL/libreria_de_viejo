@@ -26,10 +26,10 @@
 			<div class="form-group">
 				<div class="col-md-4">
 					<label for="classification"> Clasificación: </label>
-	                <select class="form-control select2" style="width:100%;" name="classification" id="classification" value="{{ old('classification') }}">
+	                <select class="form-control select2" style="width:100%;" name="classification_id" id="classification_id" value="{{ old('classification_id') }}">
 	                  	<option value="" selected="disabled"> </option>
 	                  	@foreach($CLASSES as $CLASS)
-	                  		<option value="{{ $CLASS->id }}"> {{ $CLASS->class }} </option>
+	                  		<option value="{{ $CLASS->id }}"> {{ $CLASS->name }} </option>
 						@endforeach
 					</select>
             	</div>

@@ -12,10 +12,10 @@
 
 	<form role="form" action="{{ route('classifications.store') }}" method="POST" enctype="multipart/form-data">
 		{{ csrf_field() }}
-		<div class="box-body">
+		<div class="box-body"> 
 			<div class="form-group col-md-12">
 				<label for="class"> Clasificación: </label>
-				<input type="text" class="form-control" id="class" name="class">
+				<input type="text" class="form-control" id="name" name="name">
 			</div>
 			<div class="form-group col-md-12">
 				<p> Tipo: &nbsp&nbsp&nbsp

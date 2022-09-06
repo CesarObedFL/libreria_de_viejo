@@ -34,7 +34,7 @@
     @include('partials.success')
     @include('partials.delete')
 
-    @if($DONATIONS->isEmpty())
+    @if($donations->isEmpty())
         <div class="col-md-12">
             <div class="alert alert-warning">
                 <i class="icon fa fa-warning"></i> No hay donaciones registradas...
@@ -44,7 +44,7 @@
     @else
         <div class="box">
             <div class="box-header">
-                <form role="form" action="{{ route('donation.index') }}" method="GET">
+                <form role="form" action="{{ route('donations.index') }}" method="GET">
                     {{ csrf_field() }}
                     <div class="box-body">
                         <div class="form-group col-md-4">
@@ -72,12 +72,12 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach($DONATIONS as $donation)
+                        @foreach($donations as $donation)
                             <tr id="tableRow" value="{{ $donation->type }}">
-                                <td><a class="btn btn-sm btn-block bg-olive" href="{{ route('donation.show', $donation->id) }}">{{ $donation->id }}</a></td>
+                                <td><a class="btn btn-sm btn-block bg-olive" href="{{ route('donations.show', $donation->id) }}">{{ $donation->id }}</a></td>
                                 <td>{{ $donation->getDate() }}</td>
                                 <td>{{ $donation->amount }}</td>
-                                <td>{{ $donation->getClass() }}</td>
+                                <td>{{ $donation->classification->name }}</td>
                                 <td class="{{ $donation->type }}">{{ $donation->type }}</td>
                             </tr>
                         @endforeach

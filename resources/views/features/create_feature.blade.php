@@ -3,7 +3,7 @@
 @section('title', 'Registro de Características')
 
 @section('content-header')
-	<h1><div class="col-md-8"><strong> Registro de Características : {{ $bookID }}</strong></div></h1><hr>
+	<h1><div class="col-md-8"><strong> Registro de Características : {{ $book_id }}</strong></div></h1><hr>
 @endsection
 
 @section('content')
@@ -13,7 +13,7 @@
 	<form role="form" action="{{ route('features.store') }}" method="POST">
 		{{ csrf_field() }}
 		<div class="box-body">
-			<input type="hidden" id="bookID" name="bookID" value="{{ $bookID }}">
+			<input type="hidden" id="book_id" name="book_id" value="{{ $book_id }}">
 			<div class="form-group">
 				<div class="col-md-4">
 					<label for="edition"> Edición </label>
@@ -63,7 +63,7 @@
 		</div>
 		<div class="box-footer">
 			<button type="submit" class="btn btn-primary btn-block"> Guardar </button>
-			<a class="btn btn-danger btn-block" href="{{ route('books.show', $bookID) }}"> Cancelar </a>
+			<a class="btn btn-danger btn-block" href="{{ route('books.show', $book_id) }}"> Cancelar </a>
 		</div>
 	</form>
 		

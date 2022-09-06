@@ -40,7 +40,7 @@
     @include('partials.success')
     @include('partials.delete')
 
-    @if($CLIENTS->isEmpty())
+    @if($clients->isEmpty())
         <div class="col-md-12">
             <div class="alert alert-warning">
                 <i class="icon fa fa-warning"></i> No hay clientes registrados...
@@ -57,7 +57,7 @@
                 </tr>
             </thead>
             <tbody>
-                @foreach($CLIENTS as $client)
+                @foreach($clients as $client)
                     <tr>
                         @if($client->id == 1)
                             <td style="text-align: center">{{ $client->id }}</a></td>

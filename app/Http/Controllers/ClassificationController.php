@@ -16,7 +16,7 @@ class ClassificationController extends Controller
 
     public function index()
     {
-        return view('classifications.index_classes', [ 'CLASSES' => Classification::all() ]);
+        return view('classifications.index_classes', [ 'classes' => Classification::all() ]);
     }
 
     public function create()
@@ -27,7 +27,7 @@ class ClassificationController extends Controller
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'class' => 'required',
+            'name' => 'required',
             'type' => 'required'
         ]);
 
@@ -41,13 +41,13 @@ class ClassificationController extends Controller
 
     public function edit($id)
     {
-        return view('classifications.edit_class', [ 'CLASS' => Classification::findOrFail($id) ]);
+        return view('classifications.edit_class', [ 'class' => Classification::findOrFail($id) ]);
     }
 
     public function update(Request $request, $id)
     {
         $validator = Validator::make($request->all(), [
-            'class'     => 'required'
+            'name'     => 'required'
         ]);
 
         if ($validator->fails()) {

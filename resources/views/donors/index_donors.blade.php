@@ -27,7 +27,7 @@
     @include('partials.delete')
     @include('partials.edit')
 
-    @if($DONORS->isEmpty())
+    @if($donors->isEmpty())
         <div class="col-md-12">
             <div class="alert alert-warning">
                 <i class="icon fa fa-warning"></i> No hay instituciones o contactos registrados...
@@ -53,7 +53,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach($DONORS as $donor)
+                        @foreach($donors as $donor)
                             <tr>
                                 <td><a class="btn btn-block btn-sm bg-olive" href="{{ route('donors.edit', $donor->id) }}">{{ $donor->id }}</a></td> 
                                 <td>{{ $donor->institution }}</td>
@@ -61,7 +61,7 @@
                                 <td>{{ $donor->email }}</td>
                                 <td>{{ $donor->phone }}</td>
                                 <td>{{ $donor->address }}</td>
-                                <td>{{ $donor->commercialBusiness }}</td>
+                                <td>{{ $donor->commercial_business }}</td>
                             </tr>
                         @endforeach
                     </tbody>

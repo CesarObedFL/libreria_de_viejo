@@ -24,7 +24,7 @@
 	<hr>
 
 	@include('partials.errors')
-  
+
   	<div class="box" style="width:100%;">
   		<div class="box-header"><h3 class="box-title">Libros a Prestar</h3></div>
       	<div class="box-body no-padding">
@@ -52,8 +52,8 @@
 		<div class="box-body">
 			<div class="col-md-6">
 				<label for="client"> Cliente: </label>
-		        <select class="form-control select2" style="width:100%;" name="clientID" id="clientID" value="{{ old('clientID') }}" required>
-		        	@foreach($CLIENTS as $client)
+		        <select class="form-control select2" style="width:100%;" name="client_id" id="client_id" value="{{ old('client_id') }}" required>
+		        	@foreach($clients as $client)
 		        		<option value="{{ $client->id }}"> {{ $client->getInfo() }}</option>
 		        	@endforeach
 				</select>

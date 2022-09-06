@@ -35,10 +35,10 @@
 				</div>
 				<div class="col-md-3">
 					<label for="classification"> Clasificación </label>
-	                <select class="form-control select2" style="width:100%;" name="classification" id="classification" value="{{ old('classification') }}">
-	                  	<option value="{{ old('classification') }} selected="disabled"> </option>
-	                  	@foreach($CLASSES as $CLASS)
-	                  		<option value="{{ $CLASS->id }}"> {{ $CLASS->class }}</option>
+	                <select class="form-control select2" style="width:100%;" name="classification_id" id="classification_id" value="{{ old('classification_id') }}">
+	                  	<option value="{{ old('classification_id') }} selected="disabled"> </option>
+	                  	@foreach($classes as $class)
+	                  		<option value="{{ $class->id }}"> {{ $class->name }}</option>
 						@endforeach
 					</select>
             	</div>

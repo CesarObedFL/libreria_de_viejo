@@ -37,8 +37,8 @@
 			</div>
 			<div class="form-group">
 				<div class="col-md-6">
-					<label for="commercialBusiness"> Actividad </label>
-					<input class="form-control" type="text" name="commercialBusiness" id="commercialBusiness" value="{{ old('commercialBusiness') }}">
+					<label for="commercial_business"> Actividad </label>
+					<input class="form-control" type="text" name="commercial_business" id="commercial_business" value="{{ old('commercial_business') }}">
 				</div>
 			</div>
 		</div>

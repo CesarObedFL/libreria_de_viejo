@@ -22,7 +22,7 @@ class BookController extends Controller
     
     public function index()
     {
-        return view('books.index_books', [ 'BOOKS' =>  Book::all() ] );
+        return view('books.index_books', [ 'books' =>  Book::all() ] );
     }
 
     public function create()
@@ -38,7 +38,7 @@ class BookController extends Controller
             'title' => 'required|max:100',
             'author' => 'required|max:50',
             'editorial' => 'required|max:30',
-            'classification' => 'required',
+            'classification_id' => 'required',
             'genre' => 'nullable|max:20',
             'collection' => 'nullable|max:20',
             // BOOK FEATURES
@@ -55,26 +55,26 @@ class BookController extends Controller
             return redirect()->back()->withErrors($validator->errors())->withInput();
         }
 
-        $BOOK = new BOOK([
+        $book = new BOOK([
             'ISBN' => $request->get('ISBN'),
             'title' => $request->get('title'),
             'author' => $request->get('author'),
             'editorial' => $request->get('editorial'),
-            'classification' => $request->get('classification'),
+            'classification_id' => $request->get('classification_id'),
             'genre' => $request->get('genre'),
-            'collection' => $request->get('collection')
+            'collection' => $request->get('collection'),
             // BOOK FEATURES
-            ,'edition' => $request->get('edition'),
+            'edition' => $request->get('edition'),
             'stock' => $request->get('stock'),
             'price' => $request->get('price'),
             'conditions' => $request->get('conditions'),
             'place' => $request->get('place'),
             'location' => $request->get('location'),
         ]);
-        $BOOK->save();
+        $book->save();
 
-        $FEATURE = new Feature ([
-            'bookID' => $BOOK->id,
+        Feature::create([
+            'book_id' => $book->id,
             'edition' => $request->get('edition'),
             'stock' => $request->get('stock'),
             'price' => $request->get('price'),
@@ -83,19 +83,18 @@ class BookController extends Controller
             'location' => $request->get('location'),
             'language' => $request->get('language')
         ]);
-        $FEATURE->save();
 
         return redirect()->action([ BookController::class, 'index' ])->with('success', 'El libro se ha registrado exitosamente!...');
     }
 
     public function show($id)
     {
-        return view('books.show_book', [ 'BOOK' => Book::findOrFail($id) ]);
+        return view('books.show_book', [ 'book' => Book::findOrFail($id) ]);
     }
 
     public function edit($id)
     {
-        return view('books.edit_book', [ 'BOOK' => Book::findOrFail($id) ,'CLASSES' => Classification::orderBy('class')->where('type','Libro')->get() ]);
+        return view('books.edit_book', [ 'book' => Book::findOrFail($id) ,'classes' => Classification::orderBy('name')->where('type','Libro')->get() ]);
     }
 
     public function update(Request $request, $id)
@@ -106,7 +105,7 @@ class BookController extends Controller
             'title' => 'required|max:100',
             'author' => 'required|max:50',
             'editorial' => 'required|max:30',
-            'classification' => 'required',
+            'classification_id' => 'required',
             'genre' => 'nullable|max:20',
             'collection' => 'nullable|max:20',
             // BOOK FEATURES
@@ -128,8 +127,7 @@ class BookController extends Controller
 
     public function destroy($id)
     {
-        $BOOK = Book::findOrFail($id);
-        $BOOK->delete();
+        Book::findOrFail($id)->delete();
         return redirect()->action([ BookController::class, 'index' ])->with('delete', 'El libro se ha eliminado exitosamente!...');
     }
 
@@ -144,10 +142,10 @@ class BookController extends Controller
             return redirect()->back()->withErrors($validator->errors())->withInput();
         }
 
-        //Feature::where('id',$request->get('featureID'))->update($request->except('_token','_method','bookID','featureID'));
+        //Feature::where('id',$request->get('featureID'))->update($request->except('_token','_method','book_id','featureID'));
         $new_stock = $request->get('stock');
-        Book::where('id',$request->get('bookID'))->update(['stock' => $new_stock]);
-        return redirect()->action([ BookController::class, 'show'] , $request->get('bookID'))->with('edit','El libro se ha actualizado exitosamente!...');
+        Book::where('id',$request->get('book_id'))->update(['stock' => $new_stock]);
+        return redirect()->action([ BookController::class, 'show'] , $request->get('book_id'))->with('edit','El libro se ha actualizado exitosamente!...');
     }
 
     public function search(Request $request)
@@ -157,7 +155,7 @@ class BookController extends Controller
             'TITLE' => '', 
             'author' => '', 
             'editorial' => '', 
-            'CLASSES' =>  Classification::orderBy('class')->where('type','Libro')->get() 
+            'classes' =>  Classification::orderBy('name')->where('type','Libro')->get() 
         ]);
 
 
@@ -211,8 +209,8 @@ class BookController extends Controller
             $editorial = substr($book_characteristics[2],$ESPACIOS_AL_FRENTE_DE_LA_EDITORIAL);
             //var_dump($TITLE);
             //echo $TITLE;
-            $CLASSES = Classification::orderBy('class')->where('type','Libro')->get();
-            return view('books.create_new_book', compact('ISBN','TITLE','author','editorial','CLASSES'));
+            $CLASSES = Classification::orderBy('name')->where('type','Libro')->get();
+            return view('books.create_new_book', compact('ISBN','TITLE','author','editorial','classes'));
         //} */
     }
 }

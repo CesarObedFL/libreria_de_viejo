@@ -10,14 +10,14 @@ class CreateBorrowsTable extends Migration
     public function up()
     {
         Schema::create('borrows', function (Blueprint $table) {
-            $table->increments('id');
-            $table->unsignedInteger('amountbooks');
-            $table->date('outDate');
-            $table->date('inDate');
-            $table->unsignedInteger('clientID');
-            $table->unsignedInteger('userID');
+            $table->id();
+            $table->unsignedInteger('amount_book');
+            $table->date('out_date');
+            $table->date('in_date');
+            $table->foreignId('client_id')->constrained();
+            $table->foreignId('user_id')->constrained();
             $table->unsignedDecimal('amount');
-            $table->enum('status',['Activo','Entregado'])->default('Activo');
+            $table->enum('status', [ 'Activo', 'Entregado' ])->default('Activo');
         });
     }
 

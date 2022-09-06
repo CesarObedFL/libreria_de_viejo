@@ -4,15 +4,13 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-use App\Models\Classification;
-
 class Book extends Model
 {
     protected $fillable = ['ISBN','title','author','editorial',
-                        'classification','genre','collection'//];
+                        'classification_id','genre','collection'//];
                         // BOOK FEATURES
                         ,'edition','conditions','location','place',
-                        'price','borrowedbooks','stock'];
+                        'price','borrowed_books','stock'];
 
     public $timestamps = false;
 
@@ -20,20 +18,16 @@ class Book extends Model
 
     public function features()
     {
-        return $this->hasMany('App\Feature','bookID','id')->withDefault();
+        return $this->hasMany(Feature::class, 'book_id', 'id')->withDefault();
     }
 
     public function classification()
     {
-        return $this->hasOne('App\Classification','id','classification');
-    }
-
-    public function getClassification($id)
-    {    
-        $CLASS = Classification::find($this->classification);
-        if(!$CLASS)
-            return 'eliminada';
-        return $CLASS->class;
+        return $this->hasOne(Classification::class, 'id', 'classification_id')
+                    ->withDefault([
+                                    'name' => 'eliminada o sin registrar', 
+                                    'type' => 'Libro'
+                                ]);
     }
 
     public function getLocation()

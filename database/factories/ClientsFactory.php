@@ -1,8 +1,10 @@
 <?php
 
+namespace App\Models;
+
 use Faker\Generator as Faker;
 
-$factory->define(App\Client::class, function (Faker $faker) {
+$factory->define(Client::class, function (Faker $faker) {
     return [
         'name' => $faker->name,
         'email' => $faker->unique()->safeEmail,

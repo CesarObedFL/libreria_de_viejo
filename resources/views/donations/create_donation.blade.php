@@ -16,16 +16,16 @@
 
 	@include('partials.errors')
 
-	<div class="box-header"><h3 class="box-title">{{ $TITLE }}</h3></div>
+	<div class="box-header"><h3 class="box-title">{{ $title }}</h3></div>
 
 	<form role="form" action="{{ route('donations.store') }}" method="POST">
 		{{ csrf_field() }}
 		<div class="box-body">
 			<div class="form-group col-md-12">
 				<label for="donor"> Institucion o Contacto </label>
-				<select class="form-control select2" name="donorID" id="donorID" value="{{ old('donor') }}">
+				<select class="form-control select2" name="donor_id" id="donor_id" value="{{ old('donor_id') }}">
 					<option value="" selected="disabled"> </option>
-					@foreach($DONORS as $donor)
+					@foreach($donors as $donor)
 						<option value="{{ $donor->id }}">{{ $donor->getDonor() }}</option>
 					@endforeach
 				</select>
@@ -37,14 +37,14 @@
 			<div class="form-group">
 				<div class="col-md-6">
 					<label for="classification"> Clasificación </label>
-					<select class="form-control select2" name="classification" id="classification" value="{{ old('classification')}}">
+					<select class="form-control select2" name="classification_id" id="classification_id" value="{{ old('classification_id')}}">
 						<option value="" selected="disabled"> </option>
-						@foreach($CLASSES as $class)
-							<option value="{{ $class->id }}">{{ $class->class }}</option>
+						@foreach($classes as $class)
+							<option value="{{ $class->id }}">{{ $class->name }}</option>
 						@endforeach
 					</select>
 				</div>
-				<input class="form-control" type="hidden" name="type" id="type" value="{{ $TYPE }}">
+				<input class="form-control" type="hidden" name="type" id="type" value="{{ $type }}">
 			</div>
 		</div>
 		<div class="box-footer">

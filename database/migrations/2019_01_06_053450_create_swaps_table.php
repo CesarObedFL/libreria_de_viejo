@@ -10,12 +10,12 @@ class CreateSwapsTable extends Migration
     public function up()
     {
         Schema::create('swaps', function (Blueprint $table) {
-            $table->increments('id');
+            $table->id();
             $table->date('date');
-            $table->unsignedInteger('userID');
-            $table->unsignedInteger('incoming');
-            $table->unsignedInteger('outcoming');
-            $table->unsignedDecimal('amounttopay',6,2);
+            $table->foreignId('user_id')->constrained();
+            $table->unsignedInteger('incoming_books');
+            $table->unsignedInteger('outgoing_books');
+            $table->unsignedDecimal('amount_to_pay', 6, 2);
         });
     }
 

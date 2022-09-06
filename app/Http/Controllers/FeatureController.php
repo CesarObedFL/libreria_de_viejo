@@ -15,9 +15,9 @@ class FeatureController extends Controller
         $this->middleware('auth');
     }
 
-    public function newFeature($book)
+    public function newFeature($book_id)
     {
-        return view('features.create_feature', [ 'bookID' => Book::findOrFail($book)->id ]);
+        return view('features.create_feature', [ 'book_id' => Book::findOrFail($book_id)->id ]);
     }
 
     public function store(Request $request)
@@ -37,17 +37,17 @@ class FeatureController extends Controller
         }
         
         Feature::create($request->all());
-        return view('books.show_book', [ 'BOOK' => Book::findOrFail($request->bookID) ])->with('success','La entrada del libro se ha creado exitosamente!...');
+        return view('books.show_book', [ 'book' => Book::findOrFail($request->book_id) ])->with('success', 'La entrada del libro se ha creado exitosamente!...');
     }
 
     public function show($id)
     {
-        return view('books.show_book', [ 'BOOK' => Book::findOrFail(Feature::findOrFail($id)->bookID) ]);
+        return view('books.show_book', [ 'book' => Feature::findOrFail($id)->book ]);
     }
 
     public function edit($id)
     {
-        return view('features.edit_feature', [ 'FEATURE' => Feature::findOrFail($id), 'BOOK' => Book::findOrFail($FEATURE->bookID) ]);
+        return view('features.edit_feature', [ 'feature' => Feature::findOrFail($id) ]);
     }
 
     public function update(Request $request, $id)
@@ -67,13 +67,13 @@ class FeatureController extends Controller
         }
         
         Feature::where('id',$id)->update($request->except('_token','_method'));
-        $BOOK = Book::findOrFail(Feature::findOrFail($id)->bookID);
-        return redirect()->action([ BookController::class, 'show'], $BOOK->id)->with('edit','La entrada del libro se ha modificado exitosamente!...');
+        $book_id = Feature::findOrFail($id)->book_id;
+        return redirect()->action([ BookController::class, 'show'], $book_id)->with('edit', 'La entrada del libro se ha modificado exitosamente!...');
     }
 
     public function destroy($id)
     {
-        $FEATURE = Feature::findOrFail($id)->delete();
+        Feature::findOrFail($id)->delete();
         return redirect()->back()->with('delete', 'La entrada del libro se ha eliminado exitosamente!...');
     }
 }

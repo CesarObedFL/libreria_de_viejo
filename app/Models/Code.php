@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Code extends Model
 {
-    protected $fillable = ['code'];
+    protected $fillable = [ 'code' ];
 
     public $timestamps = false;
 

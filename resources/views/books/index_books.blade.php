@@ -70,7 +70,7 @@
     @include('partials.success')
     @include('partials.delete')
 
-    @if($BOOKS->isEmpty())
+    @if($books->isEmpty())
         <div class="col-md-12">
             <div class="alert alert-warning">
                 <i class="icon fa fa-warning"></i> No hay libros registrados...
@@ -91,7 +91,7 @@
                 </tr>
             </thead>
             <tbody>
-                @foreach($BOOKS as $book)
+                @foreach($books as $book)
                     <tr>
                         <td><a class="btn btn-sm btn-block bg-olive" href="{{ route('books.show', $book->id) }}">{{ $book->id }}</a></td>
                         <td>{{ $book->ISBN }}</td>

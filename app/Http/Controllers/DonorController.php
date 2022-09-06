@@ -17,12 +17,12 @@ class DonorController extends Controller
 
     public function index()
     {
-        return view('donors.index_donors', [ 'DONORS' => Donor::all() ]);
+        return view('donors.index_donors', [ 'donors' => Donor::all() ]);
     }
 
     public function create()
     {
-        return view('donors.create_donor', [ 'CLASSES' => Classification::orderBy('class')->where('type', 'Libro')->get() ]);
+        return view('donors.create_donor');
     }
 
     public function store(Request $request)
@@ -40,7 +40,7 @@ class DonorController extends Controller
     
     public function edit($id)
     {
-        return view('donors.edit_donor', [ 'DONOR' => Donor::findOrFail($id) ]);
+        return view('donors.edit_donor', [ 'donor' => Donor::findOrFail($id) ]);
     }
 
     public function update(Request $request, $id)

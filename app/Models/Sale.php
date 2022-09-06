@@ -10,10 +10,10 @@ class Sale extends Model
 
     public $timestamps = false;
 
-    protected $fillable = [ 'invoiceID','productID','amount','discount','price', 'type' ];
+    protected $fillable = [ 'invoice_id', 'product_id', 'amount', 'discount', 'price', 'type' ];
 
     public function invoice() 
     {
-        return $this->belongsTo(Invoice::class);
+        return $this->belongsTo(Invoice::class, 'invoice_id', 'id');
     }
 }

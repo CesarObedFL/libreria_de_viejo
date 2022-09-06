@@ -3,19 +3,19 @@
 @section('title', 'Edición de Usuario')
 
 @section('content-header')
-	<h1><div class="col-md-8"><strong> Cambiar Rol de Usuario : {{ $USER->name }} </strong></div></h1><hr>
+	<h1><div class="col-md-8"><strong> Cambiar Rol de Usuario : {{ $user->name }} </strong></div></h1><hr>
 @endsection
 
 @section('content')
 
 	@include('partials.errors')
 
-	<form role="form" action="{{ route('user.updateRole', $USER->id) }}" method="POST">
+	<form role="form" action="{{ route('user.updateRole', $user->id) }}" method="POST">
 		{{ csrf_field() }}
 		<div class="box-body">
 			<input name="_method" type="hidden" value="PATCH">
 			<div class="form-group col-md-12">
-				<label for="privileges"> Privilegios Actuales: &nbsp&nbsp <i>{{ $USER->role }} </i></label>
+				<label for="privileges"> Privilegios Actuales: &nbsp&nbsp <i>{{ $user->role }} </i></label>
 			</div>
 			<div class="form-group col-md-12">
 				<p> Qué privilegios tendrá el usuario? &nbsp&nbsp&nbsp
@@ -27,10 +27,10 @@
 					<label for="role"> Administrador </label>
 				</p>
 			</div>
-		</div>
+		</div> 
 		<div class="box-footer">
 			<button type="submit" class="btn btn-primary btn-block"> Guardar </button>
-			<a class="btn btn-danger btn-block" href="{{ route('users.show', $USER->id) }}"> Cancelar </a>
+			<a class="btn btn-danger btn-block" href="{{ route('users.show', $user->id) }}"> Cancelar </a>
 		</div>
 	</form>
 

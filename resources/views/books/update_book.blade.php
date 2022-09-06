@@ -18,36 +18,36 @@
 		<div class="box-body">
 			<input name="_method" type="hidden" value="PUT">
 			<div class="col-md-12">
-				<div> <label for="ISBN"> ISBN: </label> {{ $BOOK->ISBN }} </div>
+				<div> <label for="ISBN"> ISBN: </label> {{ $book->ISBN }} </div>
 			</div>
 			<div class="form-group col-md-6">
-				<div> <label for="title"> Título: </label>{{ $BOOK->title }} </div>
-				<div> <label for="author"> Autor: </label>{{ $BOOK->author }} </div>
+				<div> <label for="title"> Título: </label>{{ $book->title }} </div>
+				<div> <label for="author"> Autor: </label>{{ $book->author }} </div>
 			</div>
 			<div class="form-group col-md-6">
 				<div class="col-md-6">
-					<label for="editorial"> Editorial: </label>{{ $BOOK->editorial }}
+					<label for="editorial"> Editorial: </label>{{ $book->editorial }}
 				</div>
             	<div class="col-md-6">
 					{{-- <label for="genre"> Género: </label>{{ $BOOK->genre }} --}}
-					<label for="genre"> Stock Actual: </label>{{ $BOOK->stock }}
+					<label for="genre"> Stock Actual: </label>{{ $book->stock }}
 				</div>
 				<div class="col-md-6">
-					<label for="classification"> Clasificación: </label> {{ $BOOK->getClassification($BOOK->classification) }}
+					<label for="classification"> Clasificación: </label> {{ $book->classification->name }}
             	</div>
 				<div class="col-md-6">
-					{{-- <label for="collection"> Colección: </label>{{ $BOOK->collection }} --}}
-					<label for="collection"> Precio: </label>{{ ' $ '.$BOOK->price }} 
+					{{-- <label for="collection"> Colección: </label>{{ $book->collection }} --}}
+					<label for="collection"> Precio: </label>{{ ' $ '.$book->price }} 
 				</div>
 			</div>
 
-			{{-- SI YA EXISTE EL LIBRO SE ELIGE LAS CARACATERÍSTICAS A INGRESAR --
+			{{-- SI YA EXISTE EL LIBRO SE ELIGE LAS CARACATERÍSTICAS A INGRESAR --}}
 			<div class="form-group">CARACTERÍSTICAS <hr class="col-xs-10 pull-right"></div>
             <div class="col-md-6">
                 <div class="box-group" id="accordion">
                     <div class="box-title">ENTRADAS : Características registradas del libro</div>
                     <div class="panel box box-primary">
-                        @foreach($BOOK->features as $feature)
+                        @foreach($book->features as $feature)
                             <div class="box-header with-border">
                                 <div class="pull-right">
                                     <b><a data-toggle="collapse" data-parent="#accordion" href="#collapse{{ $feature->id }}" align="pull-right"> ver detalles </a></b>
@@ -72,9 +72,9 @@
             </div> {{-- CARACTERÍSTICAS DE LOS LIBROS - MODIFICAR Y ELIMINAR --}}
 
             <div class="col-md-6">
-            	<input name="bookID" type="hidden" value="{{ $BOOK->id }}">
+            	<input name="book_id" type="hidden" value="{{ $book->id }}">
             	<label for="stock"> Nuevo Stock </label>
-				<input class="form-control" type="text" name="stock" id="stock" value="{{ $BOOK->stock + 1 }}" required="required">
+				<input class="form-control" type="text" name="stock" id="stock" value="{{ $book->stock + 1 }}" required="required">
             </div>
 
 		</div> {{-- box-body --}}

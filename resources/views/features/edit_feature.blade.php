@@ -3,7 +3,7 @@
 @section('title', 'Edición de Libro')
 
 @section('content-header')
-	<h1><div class="col-md-8"><strong> {{ $BOOK->id }} : {{ $BOOK->title }}</strong></div></h1><hr>
+	<h1><div class="col-md-8"><strong> {{ $feature->book->id }} : {{ $feature->book->title }}</strong></div></h1><hr>
 @endsection
 
 @section('content')
@@ -11,37 +11,36 @@
 	@include('partials.errors')
 	
 	<h3>Edición de Características</h3>
-	<form role="form" action="{{ route('features.update', $FEATURE->id) }}" method="POST">
+	<form role="form" action="{{ route('features.update', $feature->id) }}" method="POST">
 		{{ csrf_field() }}
 		<div class="box-body">
 			<input name="_method" type="hidden" value="PATCH">
 			<div class="form-group">
 				<div class="col-md-4">
 					<label for="edition"> Edición </label>
-					<input type="text" class="form-control" id="edition" name="edition" 
-					value="{{ $FEATURE->edition }}">
+					<input type="text" class="form-control" id="edition" name="edition" value="{{ $feature->edition }}">
 				</div>
 				<div class="col-md-4">
 					<label for="price"> Precio </label>
 					<div class="input-group">
 						<span class="input-group-addon"> $ </span>
-						<input class="form-control" type="text" name="price" id="price" value="{{ $FEATURE->price }}">
+						<input class="form-control" type="text" name="price" id="price" value="{{ $feature->price }}">
 					</div>
 				</div>
 				<div class="col-md-4">
 					<label for="conditions"> Condiciones </label>
-					<input type="text" class="form-control" id="conditions" name="conditions" value="{{ $FEATURE->conditions }}">
+					<input type="text" class="form-control" id="conditions" name="conditions" value="{{ $feature->conditions }}">
 				</div>
 			</div>
 			<div class="form-group">
 				<div class="col-md-3">
 					<label for="stock"> Stock </label>
-					<input type="text" class="form-control" id="stock" name="stock" value="{{ $FEATURE->stock }}">
+					<input type="text" class="form-control" id="stock" name="stock" value="{{ $feature->stock }}">
 				</div>
 				<div class="col-md-3">
 					<label for="place"> Lugar </label>
 					<select class="form-control select2" style="width:100%;" name="place" id="place">
-						<option value="{{ $FEATURE->place }}">{{ $FEATURE->place }}</option>
+						<option value="{{ $feature->place }}">{{ $feature->place }}</option>
 						<option value="1"> Librería </option>
 						<option value="2"> Almacén </option>
 						<option value="3"> Exhibición </option>
@@ -50,15 +49,15 @@
 				</div>
 				<div class="col-md-3">
 					<label for="status"> Estatus </label>
-					<select class="form-control select2" style="width:100%;" name="status" id="status" value="{{ $FEATURE->status }}">
-	                  	<option value="{{ $FEATURE->status }}"> {{ $FEATURE->status }}</option>
+					<select class="form-control select2" style="width:100%;" name="status" id="status" value="{{ $feature->status }}">
+	                  	<option value="{{ $feature->status }}"> {{ $feature->status }}</option>
 	                  	<option value="1"> Disponible </option>
 	                  	<option value="2"> Prestado </option>
 					</select>
 				</div>
 				<div class="col-md-3">
 					<label for="language"> Lenguaje </label>
-					<input type="text" class="form-control" id="language" name="language" value="{{ $FEATURE->language }}">
+					<input type="text" class="form-control" id="language" name="language" value="{{ $feature->language }}">
 				</div>
 			</div>
 			<div class="form-group">
@@ -75,7 +74,7 @@
 		</div>
 		<div class="box-footer">
 			<button type="submit" class="btn btn-primary btn-block"> Guardar </button>
-			<a class="btn btn-danger btn-block" href="{{ route('features.show', $FEATURE->id) }}"> Cancelar </a>
+			<a class="btn btn-danger btn-block" href="{{ route('features.show', $feature->id) }}"> Cancelar </a>
 		</div>
 	</form>
 		

@@ -3,14 +3,14 @@
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
-use Illuminate\Support\Facades\DB;
+use App\Models\User;
 use Carbon\Carbon;
 
 class UserTableSeeder extends Seeder
 {
     public function run()
     {
-        DB::table("users")->insert([
+        User::create([
             'name' => 'César Obed Figueroa Luna',
             'email' => 'test@test.com',
             'password' => bcrypt('secret'),

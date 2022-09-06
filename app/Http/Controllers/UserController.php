@@ -17,7 +17,7 @@ class UserController extends Controller
     public function index()
     {
         if(Auth::user()->isAdmin()) {
-            return view('users.index_users', [ 'USERS' => User::all() ]);
+            return view('users.index_users', [ 'users' => User::all() ]);
         }
         return view('home');
     }
@@ -44,14 +44,13 @@ class UserController extends Controller
             return redirect()->back()->withErrors($validator->errors())->withInput();
         }
 
-        $USER = new User([
+        User::create([
             'name' => $request->get('name'),
             'email' => $request->get('email'),
             'phone' => $request->get('phone'),
             'password' => bcrypt($request->get('password')),
             'role' => $request->get('role')
         ]);
-        $USER->save();
 
         return redirect()->action([ UserController::class, 'index' ])->with('success', 'El usuario se ha registrado exitosamente!...');
     }
@@ -59,15 +58,14 @@ class UserController extends Controller
     public function show($id)
     {
         if( Auth::user()->isAdmin() || Auth::id() == $id ) {
-            return view('users.show_user', [ 'USER' => User::findOrFail($id) ] );
+            return view('users.show_user', [ 'user' => User::findOrFail($id) ] );
         }
         return view('home');
     }
 
     public function edit($id)
     {
-        $USER = User::findOrFail($id);
-        return view('users.edit_user', [ 'USER' => User::findOrFail($id) ] );
+        return view('users.edit_user', [ 'user' => User::findOrFail($id) ] );
     }
 
     public function update(Request $request, $id)
@@ -98,7 +96,7 @@ class UserController extends Controller
     public function showRole($id)
     {
         if(Auth::user()->isAdmin()) {
-            return view('users.update_role_user', [ 'USER' => User::findOrFail($id)]);
+            return view('users.update_role_user', [ 'user' => User::findOrFail($id)]);
         } 
         return redirect()->action([ UserController::class, 'show' ], $id)->with('error', 'Se necesitan permisos de administrador...');
 
@@ -121,7 +119,7 @@ class UserController extends Controller
     public function showPass($id)
     {
         if(Auth::user()->isAdmin() || Auth::id() == $id) {
-            return view('users.change_pass', [ 'USER' =>  User::findOrFail($id) ]);
+            return view('users.change_pass', [ 'user' =>  User::findOrFail($id) ]);
         }
         return redirect()->action([ UserController::class, 'show' ], $id)->with('error', 'Ocurrio un error... ID de usuario incorrecto...');
     }
@@ -135,9 +133,9 @@ class UserController extends Controller
         if ($validator->fails()) {
             return redirect()->back()->withErrors($validator->errors())->withInput();
         }
-        $USER = User::findOrFail($id);
-        $USER->password = bcrypt($request->get('password'));
-        $USER->save();
+        $user = User::findOrFail($id);
+        $user->password = bcrypt($request->get('password'));
+        $user->save();
 
         return redirect()->action([ UserController::class, 'show' ], $id)->with('edit', 'La contraseña de usuario se ha modificado exitosamente!...');
     }

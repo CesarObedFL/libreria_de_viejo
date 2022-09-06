@@ -18,7 +18,7 @@
     @include('partials.success')
     @include('partials.delete')
 
-    @if(!$DATA)
+    @if(!$box_cutting)
         <div class="col-md-12">
             <div class="alert alert-warning">
                 <i class="icon fa fa-warning"></i> No hay datos registrados...
@@ -31,7 +31,7 @@
                 <form role="form" action="{{ route('admin.cut') }}" method="GET">
                     {{ csrf_field() }}
                     <div class="box-body">
-                        <div class="form-group col-md-4">
+                        <div class="form-group col-md-4"> 
                             <label>Periodo: {{ $start_date .' / '.$end_date }}</label>
                         </div>
                         <div class="form-group col-md-8">
@@ -66,19 +66,19 @@
                         </tr>
                     </thead>
                     <tbody>
-                       @foreach($DATA as $data)
+                       @foreach($box_cutting as $data)
                             <tr id="tableRow" value="">
-                                <td>{{ $data->Vendedor }}</a></td>
-                                <td>{{ $data->librosVendidos }}</td>
-                                <td>{{ $data->plantasVendidas }}</td>
-                                <td>{{ $data->CantidadVentas }}</td>
-                                <td>{{ $data->FechaInicial.'   '.$data->FechaFinal }}</td>
-                                <td>{{ '$ '.round($data->Monto,2) }}</td>
-                                <td>{{ '$ '.round($data->montoDeTrueques,2) }}</td>
-                                <td>{{ '$ '.round($data->Comision,2) }}</td>
-                                <td>{{ '$ '.round($data->montoPagado,2) }}</td>
+                                <td>{{ $data->seller }}</a></td>
+                                <td>{{ $data->sold_books }}</td>
+                                <td>{{ $data->sold_plants }}</td>
+                                <td>{{ $data->sales_amount }}</td>
+                                <td>{{ $data->start_date.'   '.$data->end_date }}</td>
+                                <td>{{ '$ '.round($data->amount, 2) }}</td>
+                                <td>{{ '$ '.round($data->swaps_amount, 2) }}</td>
+                                <td>{{ '$ '.round($data->comission, 2) }}</td>
+                                <td>{{ '$ '.round($data->paid_amount, 2) }}</td>
                                 <td>
-                                    <a class="btn btn-sm btn-block bg-olive" href="{{ route('admin.edit', $data->userID) }}">{{ '$ '.round($data->adeudo,2) }}
+                                    <a class="btn btn-sm btn-block bg-olive" href="{{ route('admin.edit', $data->user_id) }}">{{ '$ '.round($data->owe,2) }}
                                     </a>
                                 </td>
                             </tr>
@@ -105,15 +105,15 @@
                     </thead>
                     <tbody>
                         <tr>
-                            <td width="10%">{{ $TOTALS['saledBooks'] }}</td>
-                            <td width="10%">{{ $TOTALS['saledPlants'] }}</td>
-                            <td width="10%">{{ $TOTALS['totalSales'] }}</td>
-                            <td width="10%">{{ '$ '.$TOTALS['swapsTotal'] }}</td>
-                            <td width="10%">{{ '$ '.$TOTALS['borrowsTotal'] }}</td>
-                            <td width="10%">{{ '$ '.$TOTALS['total'] }}</td>
-                            <td width="10%">{{ '$ '.$TOTALS['subtotal'] }}</td>
-                            <td width="15%">{{ '$ '.$TOTALS['ttotal'] }}</td>
-                            <td width="10%">{{ '$ '.$TOTALS['comissions'] }}</td> <!-- COMISIONES -->
+                            <td width="10%">{{ $totals['sold_books'] }}</td>
+                            <td width="10%">{{ $totals['sold_plants'] }}</td>
+                            <td width="10%">{{ $totals['sales_total'] }}</td>
+                            <td width="10%">{{ '$ '.$totals['swaps_total'] }}</td>
+                            <td width="10%">{{ '$ '.$totals['borrows_total'] }}</td>
+                            <td width="10%">{{ '$ '.$totals['total'] }}</td>
+                            <td width="10%">{{ '$ '.$totals['subtotal'] }}</td>
+                            <td width="15%">{{ '$ '.$totals['ttotal'] }}</td>
+                            <td width="10%">{{ '$ '.$totals['comissions'] }}</td> <!-- COMISIONES -->
                         </tr>
                     </tbody>
                 </table>

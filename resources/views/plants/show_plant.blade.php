@@ -20,7 +20,7 @@
                 <div class="col-md-6">
                     <dl class="dl-horizontal">
                         <dt>Precio:</dt><dd>{{ "$ ".$PLANT->price }}</dd>
-                        <dt>Clasificación:</dt><dd>{{ $PLANT->getClassification($PLANT->classification) }}</dd>
+                        <dt>Clasificación:</dt><dd>{{ $PLANT->classification->name }}</dd>
                         <dt>Recomendaciones:</dt><dd>{{ $PLANT->tips }}</dd>
                         <dt>Stock:</dt><dd>{{ $PLANT->stock }}</dd>
                     </dl>

@@ -16,14 +16,14 @@
     <div class="col-md-12">
         <div class="box box-solid">
             <div class="box-header with-border">
-                <h1 class="box-title"> {{ 'ID: '.$SWAP->id }} </h1>
+                <h1 class="box-title"> {{ 'ID: '.$swap->id }} </h1>
             </div>
             <div class="box-body">
                 <div class="col-md-6">
                     <dl class="dl-horizontal">
-                        <dt>Fecha:</dt><dd>{{ $SWAP->getDate() }}</dd>
-                        <dt>Monto:</dt><dd>{{ '$ '.$SWAP->amounttopay }}</dd>
-                        <dt>Usuario:</dt><dd>{{ $SWAP->user->getUser() }}</dd>
+                        <dt>Fecha:</dt><dd>{{ $swap->getDate() }}</dd>
+                        <dt>Monto:</dt><dd>{{ '$ '.$swap->amount_to_pay }}</dd>
+                        <dt>Usuario:</dt><dd>{{ $swap->user->getUser() }}</dd>
                     </dl>
                 </div>
 
@@ -36,12 +36,12 @@
                                 <div class="pull-right">
                                     <b><a data-toggle="collapse" data-parent="#accordion" href="#collapse_in" align="pull-right"> ver </a></b>
                                 </div>
-                                {{ $SWAP->incoming.' Libros Entrantes' }}
+                                {{ $swap->incoming_books.' Libros Entrantes' }}
                             </div>
                             <div id="collapse_in" class="panel-collapse collapse">
                                 <div class="box-body">
                                     <dl class="dl-horizontal">
-                                        @foreach($SWAP->inbooks as $bbook)
+                                        @foreach($swap->inbooks as $bbook)
                                             <dt>Título: </dt><dd>{{ $bbook->book->title }} - {{ $bbook->status }}</dd>
                                         @endforeach
                                     </dl>
@@ -53,12 +53,12 @@
                                 <div class="pull-right">
                                     <b><a data-toggle="collapse" data-parent="#accordion" href="#collapse_out" align="pull-right"> ver </a></b>
                                 </div>
-                                {{ $SWAP->outcoming. ' Libros Salientes' }}
+                                {{ $swap->outgoing_books. ' Libros Salientes' }}
                             </div>
                             <div id="collapse_out" class="panel-collapse collapse">
                                 <div class="box-body">
                                     <dl class="dl-horizontal">
-                                        @foreach($SWAP->outbooks as $bbook)
+                                        @foreach($swap->outbooks as $bbook)
                                             <dt>Título:</dt><dd>{{ $bbook->book->title }}</dd>
                                         @endforeach
                                     </dl>
@@ -74,7 +74,7 @@
             <div class="box box-primary">
                 <div class="box-footer">
                     <a class="btn btn-primary col-md-6" href="{{ route('swaps.index') }}"> Aceptar </a>
-                    <a class="btn btn-success col-md-6" href="{{ route('swaps.edit', $SWAP->id) }}"> Registrar pendientes </a>
+                    <a class="btn btn-success col-md-6" href="{{ route('swaps.edit', $swap->id) }}"> Registrar pendientes </a>
                 </div>
             </div>
         </div>

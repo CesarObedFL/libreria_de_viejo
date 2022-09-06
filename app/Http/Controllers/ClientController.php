@@ -16,7 +16,7 @@ class ClientController extends Controller
 
     public function index()
     {
-        return view('clients.index_clients', [ 'CLIENTS' => Client::all() ]);
+        return view('clients.index_clients', [ 'clients' => Client::all() ]);
     }
 
     public function create()
@@ -44,12 +44,12 @@ class ClientController extends Controller
 
     public function show($id)
     {
-        return view('clients.show_client', [ 'CLIENT'=> Client::findOrFail($id) ]);
+        return view('clients.show_client', [ 'client' => Client::findOrFail($id) ]);
     }
 
     public function edit($id)
     {
-        return view('clients.edit_client', [ 'CLIENT' => Client::findOrFail($id) ]);
+        return view('clients.edit_client', [ 'client' => Client::findOrFail($id) ]);
     }
 
     public function update(Request $request, $id)

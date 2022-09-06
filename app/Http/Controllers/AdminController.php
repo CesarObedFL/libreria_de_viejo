@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\Auth;
 use Carbon\Carbon;
 
 use App\Models\User;
-use App\Models\Pay;
+use App\Models\Payment;
 use App\Models\Code;
 
 class AdminController extends Controller
@@ -20,32 +20,32 @@ class AdminController extends Controller
         $this->middleware('auth');
     }
     
-    public function edit($id) // pay
+    public function edit($id) // payment
     {
         if(Auth::user()->isAdmin()) {
-            return view('admin.cut.pay', [ 'USER' => User::findOrFail($id),'OWED' => DB::table('pays')->where('userID',$id)->SUM('owed')]);
+            return view('admin.cut.payment', [ 'user' => User::findOrFail($id), 'owed' => DB::table('payments')->where('user_id', $id)->SUM('owed')]);
         }
         return redirect()->action([ HomeController::class, 'index' ]);
     }
     
-    public function update(Request $request, $id) // update pays
+    public function update(Request $request, $id) // update payments
     {
         $validator = Validator::make($request->all(), [
             'owed' => 'required|numeric',
-            'pay'  => 'required|numeric'
+            'payment'  => 'required|numeric'
         ]);
 
         if($validator->fails()) {
             return redirect()->back()->withErrors($validator->errors())->withInput();
         }
         
-        $PAY = DB::table('pays')->where('userID',(integer)$id)->first();
-        Pay::where('id',$PAY->id)->update([
+        $payment = DB::table('payments')->where('user_id', $id)->first();
+        Payment::where('id', $payment->id)->update([
             'date' => Carbon::now()->toDateString(), 
-            'amount' => $PAY->amount + $request->get('pay'), 
-            'owed' => $request->get('owed') - $request->get('pay')
+            'amount' => $payment->amount + $request->get('payment'), 
+            'owed' => $request->get('owed') - $request->get('payment')
         ]);
-        return redirect()->action([ AdminController::class, 'cut' ])->with('success','El pago se ha realizado exitosamente!...');
+        return redirect()->action([ AdminController::class, 'cut' ])->with('success', 'El pago se ha realizado exitosamente!...');
     }
 
     public function cut(Request $request) 
@@ -60,51 +60,51 @@ class AdminController extends Controller
                 $end_date = $request->end_date;
             }
 
-            $DATA = DB::select(DB::raw(
-                "SELECT name AS Vendedor, users.id as userID, 
-                    MIN(invoices.date) AS FechaInicial,
-                    MAX(invoices.date) AS FechaFinal,
-                    SUM(total) AS Monto,
-                    SUM(total)/10 AS Comision,
-                    (SELECT SUM(amounttopay) FROM swaps s WHERE s.userID = users.id AND s.date BETWEEN '$start_date' AND '$end_date') montoDeTrueques,
-                    (SELECT SUM(amount) FROM borrows b WHERE b.userID = users.id AND b.inDate BETWEEN '$start_date' AND '$end_date') montoDePrestamos,
-                    (SELECT SUM(owed) FROM pays p WHERE p.userID = users.id AND p.date BETWEEN '$start_date' AND '$end_date') adeudo,
-                    (SELECT SUM(amount) FROM pays p WHERE p.userID = users.id AND p.date BETWEEN '$start_date' AND '$end_date') montoPagado,
-                    (SELECT COUNT(*) FROM sales s JOIN invoices i ON s.invoiceID = i.id WHERE i.userID = users.id AND s.type = 1 AND i.date BETWEEN '$start_date' AND '$end_date') librosVendidos,
-                    (SELECT COUNT(*) FROM sales s JOIN invoices i ON s.invoiceID = i.id WHERE i.userID = users.id AND s.type = 2 AND i.date BETWEEN '$start_date' AND '$end_date') plantasVendidas,
-                    COUNT(*) AS CantidadVentas
+            $box_cutting = DB::select(DB::raw(
+                "SELECT name AS seller, users.id as user_id, 
+                    MIN(invoices.date) AS start_date,
+                    MAX(invoices.date) AS end_date,
+                    SUM(total) AS amount,
+                    SUM(total)/10 AS comission,
+                    (SELECT SUM(amount_to_pay) FROM swaps s WHERE s.user_id = users.id AND s.date BETWEEN '$start_date' AND '$end_date') swaps_amount,
+                    (SELECT SUM(amount) FROM borrows b WHERE b.user_id = users.id AND b.in_date BETWEEN '$start_date' AND '$end_date') borrows_amount,
+                    (SELECT SUM(owed) FROM payments p WHERE p.user_id = users.id AND p.date BETWEEN '$start_date' AND '$end_date') owe,
+                    (SELECT SUM(amount) FROM payments p WHERE p.user_id = users.id AND p.date BETWEEN '$start_date' AND '$end_date') paid_amount,
+                    (SELECT COUNT(*) FROM sales s JOIN invoices i ON s.invoice_id = i.id WHERE i.user_id = users.id AND s.type = 1 AND i.date BETWEEN '$start_date' AND '$end_date') sold_books,
+                    (SELECT COUNT(*) FROM sales s JOIN invoices i ON s.invoice_id = i.id WHERE i.user_id = users.id AND s.type = 2 AND i.date BETWEEN '$start_date' AND '$end_date') sold_plants,
+                    COUNT(*) AS sales_amount
                 FROM invoices, users 
-                WHERE invoices.userID = users.id 
+                WHERE invoices.user_id = users.id 
                     AND invoices.date BETWEEN '$start_date' AND '$end_date'  
-                 GROUP BY userID
+                 GROUP BY user_id
                  ORDER BY invoices.date"
                 ));
 
-            $TOTALS = array(
-                'saledBooks' => 0,
-                'saledPlants' => 0,
-                'totalSales' => 0,
-                'swapsTotal' => 0,
-                'borrowsTotal' => 0,
+            $totals = array(
+                'sold_books' => 0,
+                'sold_plants' => 0,
+                'sales_total' => 0,
+                'swaps_total' => 0,
+                'borrows_total' => 0,
                 'total' => 0,
                 'subtotal' => 0,
                 'ttotal' => 0,
                 'comissions' => 0
             );
 
-            foreach ($DATA as $data) {
-                $TOTALS['saledBooks'] += $data->librosVendidos;
-                $TOTALS['saledPlants'] += $data->plantasVendidas;
-                $TOTALS['totalSales'] += $data->CantidadVentas;
-                $TOTALS['swapsTotal'] += $data->montoDeTrueques;
-                $TOTALS['borrowsTotal'] += $data->montoDePrestamos;
-                $TOTALS['total'] += $data->Monto;
-                $TOTALS['comissions'] += $data->Comision;
+            foreach ($box_cutting as $data) {
+                $totals['sold_books'] += $data->sold_books;
+                $totals['sold_plants'] += $data->sold_plants;
+                $totals['sales_total'] += $data->sales_amount;
+                $totals['swaps_total'] += $data->swaps_amount;
+                $totals['borrows_total'] += $data->borrows_amount;
+                $totals['total'] += $data->amount;
+                $totals['comissions'] += $data->comission;
             }
-            $TOTALS['subtotal'] += $TOTALS['total'] + $TOTALS['swapsTotal'];
-            $TOTALS['ttotal'] += $TOTALS['subtotal'] + $TOTALS['borrowsTotal'];
+            $totals['subtotal'] += $totals['total'] + $totals['swaps_total'];
+            $totals['ttotal'] += $totals['subtotal'] + $totals['borrows_total'];
             
-            return view('admin.cut.index', [ 'DATA' => $DATA, 'TOTALS' => $TOTALS, 'start_date' => $start_date, 'end_date' => $end_date ]);
+            return view('admin.cut.index', [ 'box_cutting' => $box_cutting, 'totals' => $totals, 'start_date' => $start_date, 'end_date' => $end_date ]);
         }
         return redirect()->action([ HomeController::class, 'index' ]);
     }
@@ -124,32 +124,32 @@ class AdminController extends Controller
                 'pages' => 'required|integer|between:1,5'
             ]);
 
-            $CODES = array();
-            $MIN = 1000000000; 
-            $MAX = 9999999999;
-            $PAGES = $request->pages;
-            $TOTALROWS = (23 * $PAGES) - 1; // 23 rows of codes per pages | the last page 22 rows...
-            $CODESPERPAGE = (115 * $PAGES) - 5; // 115 codes per page -5 codes for the last page...
+            $codes = array();
+            $min = 1000000000; 
+            $max = 9999999999;
+            $pages = $request->pages;
+            $total_rows = (23 * $pages) - 1; // 23 rows of codes per pages | the last page 22 rows...
+            $codes_per_page = (115 * $pages) - 5; // 115 codes per page -5 codes for the last page...
 
-            $BOOKS = json_decode($request->get('books'));
+            $books = json_decode($request->get('books'));
             $counter = 0;
-            foreach($BOOKS as $book) {
+            foreach($books as $book) {
                 for($i = 0; $i < $book->amount; $i++) {
-                    array_push($CODES,$book->isbn);
+                    array_push($codes, $book->isbn);
                     $counter++;
                 }
             }
 
-            for($i = $counter; $i < $CODESPERPAGE;) {
-                $randISBN = Rand($MIN,$MAX);
-                if (!DB::table('codes')->where('code',$randISBN)->exists()){
-                    array_push($CODES,$randISBN);
-                    Code::create(['code' => $randISBN]);
+            for($i = $counter; $i < $codes_per_page;) {
+                $rand_ISBN = Rand($min, $max);
+                if (!DB::table('codes')->where('code', $rand_ISBN)->exists()){
+                    array_push($codes, $rand_ISBN);
+                    Code::create(['code' => $rand_ISBN]);
                     $i++;
                 }
             }
 
-            $pdf = \PDF::loadView('admin.barcodes.codes', [ 'PAGES' => $PAGES, 'CODES' => $CODES, 'TOTALROWS' => $TOTALROWS ]);
+            $pdf = \PDF::loadView('admin.barcodes.codes', [ 'pages' => $pages, 'codes' => $codes, 'total_rows' => $total_rows ]);
             return $pdf->download('barcodes.pdf');
         }
         return redirect()->action([ HomeController::class, 'index' ]);
@@ -157,11 +157,11 @@ class AdminController extends Controller
 
     public function searchbook($title)
     {
-        $BOOK = DB::table('books')->where('title',$title)->first();
+        $book = DB::table('books')->where('title', $title)->first();
         return response()->json([
-            'id' => $BOOK->id,
-            'isbn' => $BOOK->ISBN,
-            'title' => $BOOK->title,
+            'id' => $book->id,
+            'isbn' => $book->ISBN,
+            'title' => $book->title,
             'amount' => 1
         ]);
     }

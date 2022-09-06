@@ -10,14 +10,14 @@ class CreateInvoicesTable extends Migration
     public function up()
     {
         Schema::create('invoices', function (Blueprint $table) {
-            $table->increments('id'); // PK
-            $table->unsignedInteger('userID'); // FK
+            $table->id();
+            $table->foreignId('user_id')->constrained();
             $table->date('date');
-            $table->enum('turn', ['M','V','S','D']);
-            $table->unsignedInteger('clientID'); // FK
-            $table->unsignedDecimal('subTotal',8,2);
-            $table->unsignedDecimal('total',8,2);
-            $table->unsignedDecimal('received',8,2);
+            $table->enum('shift', [ 'M', 'V', 'S', 'D' ]);
+            $table->foreignId('client_id')->constrained(); 
+            $table->unsignedDecimal('subtotal', 8, 2);
+            $table->unsignedDecimal('total', 8, 2);
+            $table->unsignedDecimal('received', 8, 2);
         });
     }
 

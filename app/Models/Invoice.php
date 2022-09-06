@@ -12,28 +12,27 @@ class Invoice extends Model
     public $timestamps = false;
 
     protected $fillable = [
-        'userID','date','turn','clientID',
-        'subTotal','total','received'
+        'user_id', 'date', 'shift', 'client_id',
+        'subtotal', 'total', 'received'
     ];
 
     public function sales() 
     {
-        return $this->hasMany('App\Sale','invoiceID','id');
+        return $this->hasMany(Sale::class, 'invoice_id', 'id');
     }
 
     public function user()
     {
-        return $this->belongsTo(User::class,'userID');
+        return $this->belongsTo(User::class, 'user_id', 'id');
     }
 
     public function client()
     {
-        return $this->belongsTo(Client::class,'clientID');
+        return $this->belongsTo(Client::class, 'client_id', 'id');
     }
 
-    public function getDate()
+    public function get_date()
     {
-        $DATE = Carbon::parse($this->date);
-        return $DATE->format('d/m/Y');
+        return Carbon::parse($this->date)->format('d/m/Y');
     }
 }

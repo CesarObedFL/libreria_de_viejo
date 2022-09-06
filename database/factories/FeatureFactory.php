@@ -1,10 +1,12 @@
 <?php
 
+namespace App\Models;
+
 use Faker\Generator as Faker;
 
-$factory->define(App\Feature::class, function (Faker $faker) {
+$factory->define(Feature::class, function (Faker $faker) {
     return [
-    	'bookID' => $faker->numberBetween($min = 1, $max = 50),
+    	'book_id' => $faker->numberBetween($min = 1, $max = 50),
     	'edition' => $faker->numberBetween($min = 1, $max = 5),
     	'conditions' => $faker->randomElement($array = array ('buenas','usado','malas')),
         'location' => $faker->numberBetween($min = 0, $max = 13),

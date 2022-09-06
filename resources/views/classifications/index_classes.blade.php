@@ -40,7 +40,7 @@
 	@include('partials.delete')
 	@include('partials.edit')
 
-	@if($CLASSES->isEmpty())
+	@if($classes->isEmpty())
         <div class="col-md-12">
             <div class="alert alert-warning">
                 <i class="icon fa fa-warning"></i>No hay clasificaciones registradas...
@@ -52,20 +52,18 @@
 	        <thead>
 	            <tr class="success">
 	                <th> Nombre </th>
-	                <th> Tipo </th>
+	                <th> Tipo </th> 
 	                <th> Editar </th>
 	                <th> Eliminar </th>
 	            </tr>
 	        </thead>
 	        <tbody>
-	            @foreach($CLASSES as $class)
+	            @foreach($classes as $class)
 	            <tr>
-	                <td>{{ $class->class }}</a></td>
+	                <td>{{ $class->name }}</a></td>
 	                <td style="width:20%">{{ $class->type }}</td>
 	                <td style="width:10%">
-	                	<a class="btn btn-sm btn-block btn-info" href="{{ route('classifications.edit', $class->id) }}">  
-	                	
-	                	<i class="icon fa fa-pencil"></i></a>
+	                	<a class="btn btn-sm btn-block btn-info" href="{{ route('classifications.edit', $class->id) }}"><i class="icon fa fa-pencil"></i></a>
 	                </td>
 	                <td style="width:10%">
 	                	<form role="form" action="{{ route('classifications.destroy', $class->id) }}" method="POST">

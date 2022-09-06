@@ -14,15 +14,15 @@
     <div class="col-md-12">
         <div class="box box-solid">
             <div class="box-header with-border">
-                <h1 class="box-title"> {{ $DONATION->id.' :: Donación '. $DONATION->type }} </h1>
+                <h1 class="box-title"> {{ $donation->id.' :: Donación '. $donation->type }} </h1>
             </div>
             <div class="box-body">
                 <div class="col-md-6">
                     <dl class="dl-horizontal">
-                        <dt>Fecha:</dt><dd>{{ $DONATION->getDate() }}</dd>
-                        <dt>Cantidad de Libros:</dt><dd>{{ $DONATION->amount }}</dd>
-                        <dt>Clasificación:</dt><dd>{{ $DONATION->getClass() }}</dd>
-                        <dt>Usuario:</dt><dd>{{ $DONATION->user->getUser() }}</dd>
+                        <dt>Fecha:</dt><dd>{{ $donation->getDate() }}</dd>
+                        <dt>Cantidad de Libros:</dt><dd>{{ $donation->amount }}</dd>
+                        <dt>Clasificación:</dt><dd>{{ $donation->classification->name }}</dd>
+                        <dt>Usuario:</dt><dd>{{ $donation->user->getUser() }}</dd>
                     </dl>
                 </div>
                 {{-- DONANTE | BENEFICIARIO --}}
@@ -34,17 +34,17 @@
                                 <div class="pull-right">
                                     <b><a data-toggle="collapse" data-parent="#accordion" href="#collapse" align="pull-right"> ver </a></b>
                                 </div>
-                                {{ $DONATION->getType() }}
+                                {{ $donation->getType() }}
                             </div>
                             <div id="collapse" class="panel-collapse collapse">
                                 <div class="box-body">
                                     <dl class="dl-horizontal">
-                                        <dt>Institución:</dt><dd>{{ $DONATION->donor->institution }}</dd>
-                                        <dt>Contacto:</dt><dd>{{ $DONATION->donor->contact }}</dd>
-                                        <dt>Correo:</dt><dd>{{ $DONATION->donor->email }}</dd>
-                                        <dt>Teléfono:</dt><dd>{{ $DONATION->donor->phone }}</dd>
-                                        <dt>Dirección:</dt><dd>{{ $DONATION->donor->address }}</dd>
-                                        <dt>Giro:</dt><dd>{{ $DONATION->donor->commercialBusiness }}</dd>
+                                        <dt>Institución:</dt><dd>{{ $donation->donor->institution }}</dd>
+                                        <dt>Contacto:</dt><dd>{{ $donation->donor->contact }}</dd>
+                                        <dt>Correo:</dt><dd>{{ $donation->donor->email }}</dd>
+                                        <dt>Teléfono:</dt><dd>{{ $donation->donor->phone }}</dd>
+                                        <dt>Dirección:</dt><dd>{{ $donation->donor->address }}</dd>
+                                        <dt>Giro:</dt><dd>{{ $donation->donor->commercial_business }}</dd>
                                     </dl>
                                 </div>
                                 <div class="box-footer"> </div>

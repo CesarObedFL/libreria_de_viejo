@@ -37,9 +37,9 @@
 @section('content')
 
 	@include('partials.success')
-	@include('partials.delete')
+	@include('partials.delete') 
 
-	@if( $USERS->isEmpty() )
+	@if( $users->isEmpty() )
         <div class="col-md-12">
             <div class="alert alert-warning">
                 <i class="icon fa fa-warning"></i>No hay usuarios registrados...
@@ -56,7 +56,7 @@
 	            </tr>
 	        </thead>
 	        <tbody>
-	            @foreach($USERS as $user)
+	            @foreach($users as $user)
 	            <tr>
 	                <td><a class="btn btn-sm btn-block bg-olive" href="{{ route('users.show', $user->id) }}">{{ $user->id }}</a></td>
 	                <td>{{ $user->name }}</td>

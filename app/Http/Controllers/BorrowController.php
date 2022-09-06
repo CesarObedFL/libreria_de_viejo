@@ -26,28 +26,28 @@ class BorrowController extends Controller
         $start_date = '2019-05-14';
         $end_date = Carbon::now()->toDateString();
 
-        $BORROWS = Borrow::all();
+        $borrows = Borrow::all();
 
         if(!is_null($request->start_date) && !empty($request->start_date) &&
             !is_null($request->end_date) && !empty($request->end_date)) {
             $start_date = $request->start_date;
             $end_date = $request->end_date;
-            $BORROWS = Borrow::whereBetween('outDate',[$start_date, $end_date])
-                                ->orWhereBetween('inDate',[$start_date, $end_date])
+            $borrows = Borrow::whereBetween('out_date',[$start_date, $end_date])
+                                ->orWhereBetween('in_date',[$start_date, $end_date])
                                 ->get();
         }
-        return view('borrows.index_borrows', [ 'BORROWS' => $BORROWS, 'start_date' => $start_date, 'end_date' => $end_date ]);
+        return view('borrows.index_borrows', [ 'borrows' => $borrows, 'start_date' => $start_date, 'end_date' => $end_date ]);
     }
 
     public function create()
     {
-        return view('borrows.create_borrow', [ 'CLIENTS' => Client::all()->where('type','Interno') ]);
+        return view('borrows.create_borrow', [ 'clients' => Client::all()->where('type','Interno') ]);
     }
 
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'clientID' => 'required',
+            'client_id' => 'required',
             'products' => 'required'
         ]);
 
@@ -55,49 +55,48 @@ class BorrowController extends Controller
             return redirect()->back()->withErrors($validator->errors())->withInput();
         }
 
-        $BORROW = new Borrow([
-            'amountbooks' => 0,
-            'outDate' => Carbon::now()->toDateString(),
-            'inDate' => Carbon::now()->addDays(15)->toDateString(),
-            'clientID' => $request->get('clientID'),
-            'userID' => Auth::id(),
+        $borrow = new Borrow([
+            'amount_book' => 0,
+            'out_date' => Carbon::now()->toDateString(),
+            'in_date' => Carbon::now()->addDays(15)->toDateString(),
+            'client_id' => $request->get('client_id'),
+            'user_id' => Auth::id(),
             'amount' => 0, //$
         ]);
-        $BORROW->save();
+        $borrow->save();
 
-        $TOTALBORROWEDBOOKS = 0; 
-        $PRODUCTS = json_decode($request->get('products'));
-        foreach($PRODUCTS as $product) {
-            $BORROWEDBOOK = new BorrowedBook([
-                'borrowID' => $BORROW->id,
-                'bookID' => $product->id,
+        $total_borrowed_books = 0; 
+        $products = json_decode($request->get('products'));
+        foreach($products as $product) {
+            BorrowedBook::create([
+                'borrow_id' => $borrow->id,
+                'book_id' => $product->id,
                 'amount' => $product->amount,
                 'status' => 'Activo',
             ]);
-            $BORROWEDBOOK->save();
-            $TOTALBORROWEDBOOKS += $product->amount;
+            $total_borrowed_books += $product->amount;
             
             //MODIFICAR STATUS incrementer libros prestados
-            $BOOK = Book::findOrFail($product->id);
-            $BOOK->borrowedbooks += $product->amount;
-            $BOOK->stock -= $product->amount;
-            $BOOK->save();
-            //DB::table('books')->where('id',$product->id)->increment('borrowedbooks',$product->amount)
+            $book = Book::findOrFail($product->id);
+            $book->borrowed_books += $product->amount;
+            $book->stock -= $product->amount;
+            $book->save();
+            //DB::table('books')->where('id',$product->id)->increment('borrowed_books',$product->amount)
             //DB::table('books')->where('id',$product->id)->decrement('stock',$product->amount);
         }
-        $BORROW->amountbooks = $TOTALBORROWEDBOOKS;
-        $BORROW->save();
-        return redirect()->action([ BorrowController::class, 'show' ], $BORROW->id)->with('success','El préstamo se ha registrado exitosamente!...');
+        $borrow->amount_book = $total_borrowed_books;
+        $borrow->save();
+        return redirect()->action([ BorrowController::class, 'show' ], $borrow->id)->with('success','El préstamo se ha registrado exitosamente!...');
     }
 
     public function show($id)
     {
-        return view('borrows.show_borrow', [ 'BORROW' => Borrow::findOrFail($id) ]);
+        return view('borrows.show_borrow', [ 'borrow' => Borrow::findOrFail($id) ]);
     }
     
     public function edit($id)
     {
-        return view('borrows.devolution', [ 'BORROW' => Borrow::findOrFail($id) ]);
+        return view('borrows.devolution', [ 'borrow' => Borrow::findOrFail($id) ]);
     }
 
     public function update(Request $request, $id) // DEVOLUTION...
@@ -111,49 +110,49 @@ class BorrowController extends Controller
             return redirect()->back()->withErrors($validator->errors())->withInput();
         }
 
-        $BORROW = Borrow::findOrFail($id);
-        $BORROW->status = 'Entregado';
-        $BORROW->amount = $request->get('total');
-        $BALANCE = $BORROW->amount - $request->get('pay');
+        $borrow = Borrow::findOrFail($id);
+        $borrow->status = 'Entregado';
+        $borrow->amount = $request->get('total');
+        $balance = $borrow->amount - $request->get('pay');
 
-        $PRODUCTS = json_decode($request->get('products'));
-        foreach($PRODUCTS as $product) {
-            foreach($BORROW->borrowedbooks as $bbook) {
+        $products = json_decode($request->get('products'));
+        foreach($products as $product) {
+            foreach($borrow->borrowed_books as $bbook) {
                 if($bbook->book->ISBN == $product->isbn) {
                     BorrowedBook::where('id',$bbook->id)->update(['status' => 'Entregado']);
                     // decrementar libros prestados, incrementar stock...
-                    $BOOK = Book::findOrFail($product->id);
-                    $BOOK->borrowedbooks -= $product->amount;
-                    $BOOK->stock += $product->amount;
-                    $BOOK->save();
+                    $book = Book::findOrFail($product->id);
+                    $book->borrowed_books -= $product->amount;
+                    $book->stock += $product->amount;
+                    $book->save();
                 }
             }
         }
-        $BORROW->save();
-        return redirect()->action([ BorrowController::class, 'show' ], $BORROW->id)->with(['success' => 'La devolución se ha registrado exitosamente!...', 'balancedue' => 'El cambio de la operación es: $'.$BALANCE]);
+        $borrow->save();
+        return redirect()->action([ BorrowController::class, 'show' ], $borrow->id)->with(['success' => 'La devolución se ha registrado exitosamente!...', 'balancedue' => 'El cambio de la operación es: $'.$balance]);
     }
 
     public function searchbook($isbn)
     {
-        $BOOK = DB::table('books')->where('ISBN',$isbn)->where('stock','>=',0)->first();
+        $book = DB::table('books')->where('ISBN',$isbn)->where('stock','>=',0)->first();
         //$BOOK = DB::table('books')->where('ISBN',$isbn);
         return response()->json([
-            'id' => $BOOK->id,
-            'isbn' => $BOOK->ISBN,
-            'title' => $BOOK->title,
-            'stock' => $BOOK->stock,
+            'id' => $book->id,
+            'isbn' => $book->ISBN,
+            'title' => $book->title,
+            'stock' => $book->stock,
             'amount' => 1
         ]);
     }
 
     public function searchborrowedbook($isbn)
     {
-        $BOOK = DB::table('books')->where('ISBN',$isbn)->where('borrowedbooks','>',0)->first();
+        $book = DB::table('books')->where('ISBN', $isbn)->where('borrowed_books', '>', 0)->first();
         return response()->json([
-            'id' => $BOOK->id,
-            'isbn' => $BOOK->ISBN,
-            'title' => $BOOK->title,
-            'stock' => $BOOK->stock,
+            'id' => $book->id,
+            'isbn' => $book->ISBN,
+            'title' => $book->title,
+            'stock' => $book->stock,
             'amount' => 1
         ]);
     }

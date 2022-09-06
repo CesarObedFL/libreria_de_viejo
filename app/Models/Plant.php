@@ -6,22 +6,19 @@ use Illuminate\Database\Eloquent\Model;
 
 class Plant extends Model
 {
-    protected $fillable = ['name', 'price', 'image', 'tips', 'stock', 'classification'];
+    protected $fillable = [ 'name', 'price', 'image', 'tips', 'stock', 'classification_id' ];
 
     public $timestamps = false;
 
     protected $table = 'plants';
 
-    public function classification() 
+    public function classification()
     {
-        return $this->hasOne('App\Classification', 'id', 'classification');
-        //return $this->hasOne(Classification::class);
-    }
-
-    public function getClassification($id)
-    {    
-        $CLASS = Classification::findOrFail($id);
-        return $CLASS->class;
+        return $this->hasOne(Classification::class, 'id', 'classification_id')
+                    ->withDefault([
+                                    'name' => 'eliminada', 
+                                    'type' => 'Libro'
+                                ]);
     }
 
     public function getInfo()

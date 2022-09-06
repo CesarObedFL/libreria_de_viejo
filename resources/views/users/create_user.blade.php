@@ -21,7 +21,7 @@
 				<label for="email"> Correo </label>
 				<input type="email" class="form-control" id="email" name="email"  value="{{ old('email') }}">
 			</div>
-			<div class="form-group col-md-12">
+			<div class="form-group col-md-12"> 
 				<label for="phone"> Telefono </label>
 				<input type="text" class="form-control" id="phone" name="phone" value="{{ old('phone') }}">
 			</div>

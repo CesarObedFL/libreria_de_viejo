@@ -9,7 +9,7 @@ class CreateCodesTable extends Migration
     public function up()
     {
         Schema::create('codes', function (Blueprint $table) {
-            $table->increments('id');
+            $table->id();
             $table->unsignedBigInteger('code')->unique();
         });
     }

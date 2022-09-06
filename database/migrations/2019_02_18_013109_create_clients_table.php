@@ -10,12 +10,12 @@ class CreateClientsTable extends Migration
     public function up()
     {
         Schema::create('clients', function (Blueprint $table) {
-            $table->increments('id');
-            $table->string('name',40);
-            $table->string('email',40)->unique()->nullable();
-            $table->string('phone',10);
-            $table->string('interests',50);
-            $table->enum('type',['Interno','Externo']);
+            $table->id();
+            $table->string('name', 40);
+            $table->string('email', 40)->unique()->nullable();
+            $table->string('phone', 10);
+            $table->string('interests', 50);
+            $table->enum('type', [ 'Interno', 'Externo' ]);
         });
     }
 

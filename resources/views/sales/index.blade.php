@@ -35,7 +35,7 @@
 	@include('partials.success')
 	@include('partials.delete')
 
-	@if($INVOICES->isEmpty())
+	@if($invoices->isEmpty())
         <div class="col-md-12">
             <div class="alert alert-warning">
                 <i class="icon fa fa-warning"></i>No hay ventas realizadas...
@@ -75,13 +75,13 @@
 			            </tr>
 			        </thead>
 			        <tbody>
-			            @foreach($INVOICES as $invoice)
+			            @foreach($invoices as $invoice)
 			            <tr>
 			                <td><a class="btn btn-sm btn-block bg-olive" href="{{ route('sales.show', $invoice->id) }}">{{ $invoice->id }}</a></td>
-			                <td>{{ $invoice->getDate() }}</td>
-			                <td>{{ $invoice->turn }}</td>
-			                <td>{{ $invoice->user['name'] }}</td>
-			                <td>{{ '$ '.$invoice->subTotal }}</td>
+			                <td>{{ $invoice->get_date() }}</td>
+			                <td>{{ $invoice->shift }}</td>
+			                <td>{{ $invoice->user->name }}</td>
+			                <td>{{ '$ '.$invoice->subtotal }}</td>
 			                <td>{{ '$ '.$invoice->total }}</td>
 			                <td>{{ '$ '.$invoice->received }}</td>
 			            </tr>

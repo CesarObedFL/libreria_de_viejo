@@ -21,7 +21,7 @@ class PlantController extends Controller
 
     public function create()
     {
-        return view('plants.create_plant', [ 'CLASSES' => Classification::orderBy('class')->where('type', 'Planta')->get() ]);
+        return view('plants.create_plant', [ 'CLASSES' => Classification::orderBy('name')->where('type', 'Planta')->get() ]);
     }
 
     public function store(Request $request)
@@ -32,7 +32,7 @@ class PlantController extends Controller
             'tips' => 'required',
             //'image' => 'required',//'mimes:jpeg,png',
             'stock' => 'required|integer|min:1',
-            'classification' => 'required',
+            'classification_id' => 'required',
         ]);
 
         if($validator->fails()) {
@@ -53,7 +53,7 @@ class PlantController extends Controller
 
     public function edit($id)
     {
-        return view('plants.edit_plant', [ 'PLANT' => Plant::findOrFail($id), 'CLASSES' => Classification::orderBy('class')->where('type','Planta')->get() ]);
+        return view('plants.edit_plant', [ 'PLANT' => Plant::findOrFail($id), 'CLASSES' => Classification::orderBy('name')->where('type','Planta')->get() ]);
     }
 
     public function update(Request $request, $id)
@@ -64,7 +64,7 @@ class PlantController extends Controller
             'tips' => 'required',
             //'image' => 'required', // mimes:jpeg,png
             'stock' => 'required|integer|min:1',
-            'classification' => 'required',
+            'classification_id' => 'required',
         ]);
 
         if($validator->fails()) {

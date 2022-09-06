@@ -12,32 +12,32 @@ class Donation extends Model
 {
     protected $table = 'donations';
 
-    protected $fillable = ['donorID', 'type', 'amount', 'date', 'userID', 'classification'];
+    protected $fillable = [ 'donor_id', 'type', 'amount', 'date', 'user_id', 'classification_id' ];
 
     public $timestamps = false;
-
+ 
     protected function donor()
     {
-    	return $this->belongsTo(Donor::class, 'donorID');
+    	return $this->belongsTo(Donor::class, 'donor_id', 'id');
     }
 
     protected function user()
     {
-        return $this->belongsTo(User::class, 'userID');
+        return $this->belongsTo(User::class, 'user_id', 'id');
+    }
+
+    public function classification()
+    {
+        return $this->hasOne(Classification::class, 'id', 'classification_id')
+                    ->withDefault([
+                                    'name' => 'sin registrar', 
+                                    'type' => 'Libro'
+                                ]);
     }
 
     public function getDate()
     {
-    	$DATE = Carbon::parse($this->date);
-    	return $DATE->format('d-m-Y');
-    }
-
-    public function getClass()
-    {
-    	$CLASS = Classification::find($this->classification);
-        if(!$CLASS)
-            return 'eliminada';
-        return $CLASS->class;
+    	return Carbon::parse($this->date)->format('d-m-Y');
     }
 
     public function getType()
