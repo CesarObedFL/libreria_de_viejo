@@ -18,7 +18,7 @@
 				<label for="password"> Nuevo Password </label>
 				<input type="password" class="form-control" id="password" name="password">
 			</div>
-		</div>
+		</div> <!-- /. class="box-body" -->
 		<div class="box-footer">
 			<button type="submit" class="btn btn-primary btn-block"> Guardar </button>
 			<a class="btn btn-danger btn-block" href="{{ route('users.show', $user->id) }}"> Cancelar </a>

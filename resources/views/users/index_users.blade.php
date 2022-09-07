@@ -64,6 +64,6 @@
 	            </tr>
 	            @endforeach
 	        </tbody>
-		</table>
+		</table> <!-- /. id="users_table" -->
 	@endif
 @endsection

@@ -15,7 +15,7 @@
         <div class="box box-solid">
             <div class="box-header with-border">
                 <h1 class="box-title"> {{ $user->name }} </h1>
-            </div>
+            </div> <!-- /. class="box-header with-border" -->
             <div class="box-body">
                 <dl class="dl-horizontal">
                     <dt>ID:</dt><dd>{{ $user->id }}</dd>
@@ -25,8 +25,8 @@
                     <dt>Fecha de Registro:</dt><dd>{{ date('d/m/Y', strtotime($user->created_at)) }}</dd>
                 </dl>
                 <a href="{{ route('user.changepass', $user->id) }}"><i> Cambiar Password </i></a>
-            </div>
-        </div>
+            </div> <!-- /. class="box-body" -->
+        </div> <!-- /. class="box box-solid" -->
         <div class="col-md-13"> 
             <div class="box box-primary">
                 <div class="box-footer">
@@ -38,9 +38,9 @@
                         <input type="hidden" name="_method" value="DELETE">
                         <button type="submit" class="btn btn-danger col-md-3"> Eliminar </button>
                     </form>
-                </div>
-            </div>
-        </div>
-    </div>
+                </div> <!-- /. class="box-footer" -->
+            </div> <!-- /. class="box box-primary" -->
+        </div> <!-- /. class="col-md-13" -->
+    </div> <!-- /. class="col-md-12" -->
 
 @endsection

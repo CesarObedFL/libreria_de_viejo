@@ -54,7 +54,8 @@
 					<input type="text" class="form-control" id="collection" name="collection" value="{{ $swaped_book->collection }}">
 				</div>
 			</div>
-			{{-- BOOK FEATURES--}}
+
+			{{-- BOOK FEATURES --}}
 			<div class="form-group">
 				<div class="col-md-4">
 					<label for="edition"> Edición </label>
@@ -89,7 +90,6 @@
 	                </select>
 				</div>
 			</div>
-
 			<div class="form-group">
 				<div class="col-md-4">
 					<label for="location"> Estante </label>
@@ -101,14 +101,15 @@
 	                </select>
               	</div>
 			</div>
+			{{-- /. BOOK FEATURES --}}
 
-			{{-- /BOOK FEATURES --}}
+		</div> <!-- /. class="box-body" -->
 
-		</div>
 		<div class="box-footer">
 			<button type="submit" class="btn btn-primary btn-block"> Guardar </button>
 			<a class="btn btn-danger btn-block" href="{{ route('swaps.show', $swaped_book->swap->id) }}"> Cancelar </a>
-		</div>
+		</div> <!-- /. class="box-footer" -->
+
 	</form>
 		
 

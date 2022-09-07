@@ -2,12 +2,12 @@ function calculateTotal() {
 	var total = 0, i = 0;
 
 	for (i = 0; i < outProducts.length; i++) {
-		var product = jQuery.parseJSON(outProducts[i]);
+		var product = JSON.parse(outProducts[i]);
 		total += parseFloat(product.price) * parseFloat(product.amount);
 	}
 	
 	for(i = 0; i < inProducts.length; i++){
-		var product = jQuery.parseJSON(inProducts[i]);
+		var product = JSON.parse(inProducts[i]);
 		total -= parseFloat(product.price) * parseFloat(product.amount);
 	}
 

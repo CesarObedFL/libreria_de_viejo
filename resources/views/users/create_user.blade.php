@@ -39,7 +39,7 @@
 					<label for="role"> Administrador </label>
 				</p>
 			</div>
-		</div>
+		</div> <!-- /. class="box-body" -->
 		<div class="box-footer">
 			<button type="submit" class="btn btn-primary btn-block"> Registrar </button>
 			<a class="btn btn-danger btn-block" href="{{ route('users.index') }}"> Cancel </a>
@@ -49,5 +49,5 @@
 @endsection
 
 @section('scripts')
-	<script src="{{ asset('js/functions/typeNumber.js') }}"></script>
+	<script src="{{ asset('js/functions/typeNumber.js') }}"></script> <!-- se usa para tipear el telefóno -->
 @endsection

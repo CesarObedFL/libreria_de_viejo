@@ -1,21 +1,21 @@
-$(document).ready(function () {
+$(function () {
 	$.ajaxSetup({
 		headers: {
 			'X-CSRF-TOKEN' : $('meta[name="csrf-token"]').attr('content')
 		}
 	});
 
-	$('#btnOut').click(function(event) {
+	$('#btnOut').on('click', function(event) {
 		event.preventDefault();
 		var isbn = $('#isbn').val();
 		if(isbn != '') {
 			var isRegistered = false;
 			for(var i = 0; i < outProducts.length; i++) {
-				var product = jQuery.parseJSON(outProducts[i]);
+				var product = JSON.parse(outProducts[i]);
 				if (product.isbn == isbn) {	
 					isRegistered = true; break;
 				}
-			}
+			} 
 			if (isRegistered)
 				alert("El libro ya se encuentra registrado en la tabla de salidas...");
 			else {
@@ -25,7 +25,7 @@ $(document).ready(function () {
 					dataType: 'json',
 					success: function(jsonObject) {
 						var object = JSON.stringify(jsonObject);
-		                if(jQuery.parseJSON(object).stock <= 0)
+		                if(JSON.parse(object).stock <= 0)
 		                    alert('Stock en cero de ese producto...');
 		                else
 		                    addOutProduct(object);
@@ -41,12 +41,12 @@ $(document).ready(function () {
 		}
 	});
 
-	$('#btnIn').click(function(event) {
+	$('#btnIn').on('click', function(event) {
 		event.preventDefault();
 		var isbn = $('#isbn').val();
 		var isRegistered = false;
 		for(var i = 0; i < inProducts.length; i++) {
-			var product = jQuery.parseJSON(inProducts[i]);
+			var product = JSON.parse(inProducts[i]);
 			if (product.isbn == isbn) {	
 				isRegistered = true; break;
 			}
@@ -58,15 +58,15 @@ $(document).ready(function () {
 		$('#isbn').val('');
 	});
 
-	$('#inProductsTable').change(function() {
+	$('#inProductsTable').on('mousemove', function() {
 		calculateTotal();
 	});
 
-	$('#outProductsTable').change(function() {
+	$('#outProductsTable').on('mousemove', function() {
 		calculateTotal();
 	});
 
-	$('#btnAccept').click(function(event) {
+	$('#btnAccept').on('click', function(event) {
 		$('#inProducts').attr('value','['+inProducts+']');
 		$('#outProducts').attr('value','['+outProducts+']');
 	});

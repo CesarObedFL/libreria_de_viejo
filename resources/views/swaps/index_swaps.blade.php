@@ -49,9 +49,9 @@
                             <input type="date" name="end_date" id="end_date">
                             <button type="submit" class="btn btn-primary btn-sm"> Buscar </button>
                         </div>
-                    </div>
+                    </div> <!-- /. class="box-body" -->
                 </form>
-            </div>
+            </div> <!-- /. class="box-header" -->
             <div class="box-body">
                 <table id="books_table" class="table table-bordered table-striped">
                     <thead>
@@ -78,9 +78,10 @@
                             </tr>
                         @endforeach
                     </tbody>
-                </table>
-            </div>
-        </div>
+                </table> <!-- /. id="books_table" -->
+            </div> <!-- /. class="box-body" -->
+            
+        </div> <!-- /. class="box" -->
     @endif
 @endsection
 

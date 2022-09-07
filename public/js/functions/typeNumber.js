@@ -1,11 +1,11 @@
-$(document).ready(function() {
+$(function () {
 	const INTEGER = 1, REAL = 2, ISBN = 3;
-	$('#stock').keypress(function(event) { return typeNumber(event,INTEGER); });
-	$('#amount').keypress(function(event) { return typeNumber(event,INTEGER); });
-    $('#phone').keypress(function(event) { return typeNumber(event,INTEGER); });
-	$('#pay').keypress(function(event) { return typeNumber(event,REAL);	});
-	$('#price').keypress(function(event) { return typeNumber(event,REAL); });
-	$('#isbn').keypress(function(event) { return typeNumber(event,ISBN); });
+	$('#stock').on('keypress', function(event) { return typeNumber(event,INTEGER); });
+	$('#amount').on('keypress', function(event) { return typeNumber(event,INTEGER); });
+    $('#phone').on('keypress', function(event) { return typeNumber(event,INTEGER); });
+	$('#pay').on('keypress', function(event) { return typeNumber(event,REAL);	});
+	$('#price').on('keypress', function(event) { return typeNumber(event,REAL); });
+	$('#isbn').on('keypress', function(event) { return typeNumber(event,ISBN); });
 });
 
 function typeNumber(event, type) {

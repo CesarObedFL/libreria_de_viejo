@@ -45,7 +45,7 @@ class SwapController extends Controller
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'pay' => 'required|numeric|min:0',
+            'payment' => 'required|numeric|min:0',
             'total' => 'required|numeric|min:0',
             'inProducts' => 'required',
             'outProducts' => 'required'
@@ -119,8 +119,8 @@ class SwapController extends Controller
         $swap->incoming_books = $incoming_books;
         $swap->outgoing_books = $outgoing_books;
         $swap->save();
-        $balance = $request->get('pay') - $request->get('total');
-        return redirect()->action([ SwapController::class, 'show' ], [ 'id' => $swap->id ])->with([ 'success' => 'El trueque se ha registrado exitosamente!...', 'balancedue' => 'El cambio de la operación es: $'.$balance ]);
+        $balance = $request->get('payment') - $request->get('total');
+        return redirect()->action([ SwapController::class, 'show' ], $swap->id )->with([ 'success' => 'El trueque se ha registrado exitosamente!...', 'balancedue' => 'El cambio de la operación es: $'.$balance ]);
 
     }
 

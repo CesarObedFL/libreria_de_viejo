@@ -26,15 +26,15 @@
 				<label for="phone"> Telefono </label>
 				<input type="text" class="form-control" id="phone" name="phone" value="{{ $user->phone }}">
 			</div> 
-		</div>
+		</div> <!-- /. class="box-body" -->
 		<div class="box-footer">
 			<button type="submit" class="btn btn-primary btn-block"> Guardar </button>
 			<a class="btn btn-danger btn-block" href="{{ route('users.show', $user->id) }}"> Cancelar </a>
-		</div>
+		</div> <!-- /. class="box-footer" -->
 	</form>
 
 @endsection
 
 @section('scripts')
-	<script src="{{ asset('js/functions/typeNumber.js') }}"></script>
+	<script src="{{ asset('js/functions/typeNumber.js') }}"></script> <!-- se usa para typear el telefóno -->
 @endsection

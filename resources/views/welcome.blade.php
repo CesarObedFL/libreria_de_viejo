@@ -12,6 +12,7 @@
 <body class="hold-transition skin-blue">
 
 <div class="wrapper">
+  
   <header class="main-header">
     <a href="{{ route('home') }}" class="logo">
       <span class="logo-lg"><b>Librería</b><i>De</i><b>Viejo</b></span>
@@ -27,8 +28,7 @@
 
   <div class="col-md-12">
     <div class="box box-primary">
-      <div class="box-header">
-      </div>
+      <div class="box-header"> </div>
       <div class="box-body pad table-responsive">
         <section class="content">
           <div class="col-md-12">
@@ -54,20 +54,20 @@
                       <div class="item">
                           <img src="{{ asset('dist/img/slides/e.jpg') }}" alt="Third slide" width="100%" height="100%">
                       </div>
-                  </div>
+                  </div> <!-- /. class="carousel-inner" -->
                   <a class="left carousel-control" href="#carousel-example-generic" data-slide="prev">
                       <span class="fa fa-angle-left"></span>
                   </a>
                   <a class="right carousel-control" href="#carousel-example-generic" data-slide="next">
                       <span class="fa fa-angle-right"></span>
                   </a>
-                </div>
-              </div>
-            </div>
-          </div>
-        </section>
-      </div>
-    </div>
+                </div> <!-- /. id="carousel-example-generic" -->
+              </div> <!-- /. class="box-body" -->
+            </div> <!-- /. class="row justify-content-center" -->
+          </div> <!-- /. class="col-md-12" -->
+        </section> <!-- /. class="content"> -->
+      </div> <!-- /. class="box-body pad table-responsive" -->
+    </div> <!-- /. class="box box-primary" -->
   </div>
 </body>
 

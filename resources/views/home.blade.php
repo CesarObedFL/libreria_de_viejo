@@ -27,14 +27,14 @@
                 <div class="item">
                     <img src="{{ asset('dist/img/slides/e.jpg') }}" alt="Third slide" width="100%" height="100%">
                 </div>
-            </div>
+            </div> <!-- /. class="carousel-inner" -->
             <a class="left carousel-control" href="#carousel-example-generic" data-slide="prev">
                 <span class="fa fa-angle-left"></span>
             </a>
             <a class="right carousel-control" href="#carousel-example-generic" data-slide="next">
                 <span class="fa fa-angle-right"></span>
             </a>
-        </div>
-    </div>
+        </div> <!-- /. id="carousel-example-generic" -->
+    </div> <!-- /. class="box-body" -->
 
 @endsection

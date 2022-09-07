@@ -16,7 +16,7 @@
 			<input name="_method" type="hidden" value="PATCH">
 			<div class="form-group col-md-12">
 				<label for="privileges"> Privilegios Actuales: &nbsp&nbsp <i>{{ $user->role }} </i></label>
-			</div>
+			</div> <!-- /. class="form-group col-md-12" -->
 			<div class="form-group col-md-12">
 				<p> Qué privilegios tendrá el usuario? &nbsp&nbsp&nbsp
 					<input type="radio" name="role" value="3" class="flat-red">
@@ -26,16 +26,12 @@
 					<input type="radio" name="role" value="1" class="flat-red">
 					<label for="role"> Administrador </label>
 				</p>
-			</div>
-		</div> 
+			</div> <!-- /. class="form-group col-md-12" -->
+		</div> <!-- /. class="box-body" -->
 		<div class="box-footer">
 			<button type="submit" class="btn btn-primary btn-block"> Guardar </button>
 			<a class="btn btn-danger btn-block" href="{{ route('users.show', $user->id) }}"> Cancelar </a>
-		</div>
+		</div> <!-- /. class="box-footer" -->
 	</form>
 
-@endsection
-
-@section('scripts')
-	<script src="{{ asset('js/functions/typeNumber.js') }}"></script>
 @endsection
