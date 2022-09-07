@@ -18,13 +18,15 @@
 				<i class="fa fa-search"></i>
 			</button>
 		</span>
-	</div>
+	</div> <!-- /. class="input-group" -->
 	<hr>
 
 	<div class="box" style="width:100%;">
-	  	<div class="box-header"><h3 class="box-title">Códigos a Clonar</h3></div>
-	      <div class="box-body no-padding">
-	        	<table class="table table-condensed text-center" id="codesTable">
+	  	<div class="box-header">
+			<h3 class="box-title">Códigos a Clonar</h3>
+		</div> <!-- /. class="box-header" -->
+	    <div class="box-body no-padding">
+	        <table class="table table-condensed text-center" id="codesTable">
 	          	<thead>
 	              <tr class="success">
 	              		<th style="width:10%"></th>
@@ -38,8 +40,8 @@
 	                {{--  TABLA GENERADA CON JQUERY --}} 
 	            </tbody>
 	        </table>
-	    </div>
-	</div>
+	    </div> <!-- /. class="box-body no-padding" -->
+	</div> <!-- /. class="box" -->
 	<br>
 
 	<form role="form" action="{{ route('admin.pdf') }}" method="POST">
@@ -50,7 +52,7 @@
 				<input type="number" class="form-control" id="pages" name="pages" min="1" max="5" value=1>
 			</div>
 			<input type="hidden" name="books" id="books" value="">
-		</div>
+		</div> <!-- /. class="box-body" -->
 		<div class="box-footer">
 			<div class="col-md-6">
 				<button type="submit" class="btn btn-primary btn-block" id="btnAccept">
@@ -59,7 +61,7 @@
 			<div class="col-md-6">
 				<a class="btn btn-danger btn-block" href="{{ route('home') }}"> Cancelar </a>
 			</div>
-		</div>
+		</div> <!-- /. class="box-footer" -->
 	</form>
 
 @endsection

@@ -1,7 +1,7 @@
 function addProduct(jsonObject) {
 	$('#btnAccept').removeAttr('disabled');
 	books[counter] = jsonObject;
-	var book = jQuery.parseJSON(jsonObject);
+	var book = JSON.parse(jsonObject);
 	var row = '<tr id="row'+(++counter)+'">'+
 				'<td style="width:10%" class="success">'+counter+'</td>'+
 				'<td style="width:50%">'+book.title+'</td>'+

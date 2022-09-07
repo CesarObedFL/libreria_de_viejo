@@ -1,20 +1,22 @@
-$(document).ready(function () {
+$(function () {
 	$.ajaxSetup({
 		headers: {
 			'X-CSRF-TOKEN' : $('meta[name="csrf-token"]').attr('content')
 		}
 	});
 
-	$('#booktitle').keypress(function(event) { // enter keycode = 13
-		if(event.keyCode == 13) addBook();
+	$('#booktitle').on('keypress', function(event) { // enter keycode = 13
+		if(event.key == 'Enter') {
+			addBook();
+		}
 	});
 
-	$('#btnAddBook').click(function(event) {
+	$('#btnAddBook').on('click', function(event) {
 		event.preventDefault();
 		addBook();
 	});
 
-	$('#btnAccept').click(function(event) {
+	$('#btnAccept').on('click', function(event) {
 		$('#books').attr('value','['+books+']');
 	});
 });
@@ -28,7 +30,7 @@ function addBook() {
 	if(booktitle != '') {
 		var isRegistered = false;
 		for(var i = 0; i < books.length; i++) {
-			book = jQuery.parseJSON(books[i]);
+			book = JSON.parse(books[i]);
 			if (book.title == booktitle) {	
 				isRegistered = true; break;
 			}
