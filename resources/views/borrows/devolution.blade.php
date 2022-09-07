@@ -19,14 +19,16 @@
 				<i class="fa fa-search"></i>
 			</button>
 		</span>
-	</div>
+	</div> <!-- /. class="input-group" -->
 	<hr>
 
 	@include('partials.errors')
   
   	<div class="col-md-7">
 	  	<div class="box" style="width:100%;">
-	  		<div class="box-header"><h3 class="box-title">Libros Prestados</h3></div>
+	  		<div class="box-header">
+				<h3 class="box-title">Libros Prestados</h3>
+			</div> <!-- /. class="box-header" -->
 	      	<div class="box-body no-padding">
 				<table class="table table-condensed" id="borrows_table">
 			        <thead>
@@ -43,13 +45,16 @@
 			        	</tr>
 		        		@endforeach
 			        </tbody>
-				</table>
-			</div>
-		</div>
-	</div>
+				</table> <!-- /. id="borrows_table" -->
+			</div> <!-- /. class="box-body no-padding" -->
+		</div> <!-- /. class="box" -->
+	</div> <!-- /. class="col-md-7" -->
+
 	<div class="col-md-5">
 		<div class="box" style="width:100%;">
-			<div class="box-header"><h3 class="box-title">Libros a Devolver</h3></div>
+			<div class="box-header">
+				<h3 class="box-title">Libros a Devolver</h3>
+			</div> <!-- /. class="box-header" -->
 			<div class="box-body no-padding">
 				<table class="table table-condensed text-center" id="returnsTable">
 					<thead>
@@ -62,39 +67,40 @@
 					<tbody>
 						{{-- TABLA GENERADA CON JQUERY --}}
 					</tbody>
-				</table>
-			</div>
-		</div>
-	</div>
+				</table> <!-- /. class="table table-condensed text-center" -->
+			</div> <!-- /. class="box-body no-padding" -->
+		</div> <!-- /. class="box" -->
+	</div> <!-- /. class="col-md-5" -->
 
 	<hr>
+
 	<div class="col-md-12">
-	<form role="form" action="{{ route('borrows.update',$borrow->id) }}" method="POST">
-		{{ csrf_field() }}
-		<div class="box-body">
-			<input name="_method" type="hidden" value="PATCH">
-			<input type="hidden" name="products" id="products" value="">
-      		<div class="col-md-4">
-				<label for="total"> Adeudo: </label>
-        		<div class="input-group">
-          			<span class="input-group-addon"> $ </span>
-				  	<input class="form-control" type="text" name="total" id="total" value="{{ $borrow->getOwed() }}" readonly required>
-        		</div>
-			</div>
-      		<div class="col-md-4">
-				<label for="pay"> Pago: </label>
-        		<div class="input-group">
-          			<span class="input-group-addon"> $ </span>
-				  	<input class="form-control" type="text" name="pay" id="pay" value="0" onblur="validatePay();" required>
-        		</div>
-			</div>
-		</div>
-		<div class="box-footer">
-			<button type="submit" class="btn btn-primary btn-block" id="btnAccept" disabled="disabled"> Aceptar </button>
-			<a class="btn btn-danger btn-block" href="{{ route('borrows.show', $borrow->id) }}"> Cancelar </a>
-		</div>
-	</form>
-	</div>
+		<form role="form" action="{{ route('borrows.update',$borrow->id) }}" method="POST">
+			{{ csrf_field() }}
+			<div class="box-body">
+				<input name="_method" type="hidden" value="PATCH">
+				<input type="hidden" name="products" id="products" value="">
+				<div class="col-md-4">
+					<label for="total"> Adeudo: </label>
+					<div class="input-group">
+						<span class="input-group-addon"> $ </span>
+						<input class="form-control" type="text" name="total" id="total" value="{{ $borrow->getOwed() }}" readonly required>
+					</div>
+				</div> <!-- /. class="col-md-4" -->
+				<div class="col-md-4">
+					<label for="pay"> Pago: </label>
+					<div class="input-group">
+						<span class="input-group-addon"> $ </span>
+						<input class="form-control" type="text" name="pay" id="pay" value="0" onblur="validatePay();" required>
+					</div>
+				</div> <!-- /. class="col-md-4" -->
+			</div> <!-- /. class="box-body" -->
+			<div class="box-footer">
+				<button type="submit" class="btn btn-primary btn-block" id="btnAccept" disabled="disabled"> Aceptar </button>
+				<a class="btn btn-danger btn-block" href="{{ route('borrows.show', $borrow->id) }}"> Cancelar </a>
+			</div> <!-- /. class="box-footer" -->
+		</form>
+	</div> <!-- /. class="col-md-12" -->
 
 @endsection
 

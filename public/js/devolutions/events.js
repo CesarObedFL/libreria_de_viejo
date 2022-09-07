@@ -5,19 +5,19 @@ $(document).ready(function () {
 		}
 	});
 
-	$('#isbn').keypress(function(event) {
-		if(event.keyCode == 13) addBook();
+	$('#isbn').on('keypress', function(event) {
+		if(event.key == 'Enter') addBook();
 	});
 
-	$('#btnAddBook').click(function(event) {
+	$('#btnAddBook').on('click', function(event) {
 		event.preventDefault();
 		addBook();
 	});
 
-	$('#btnAccept').click(function(event) {
+	$('#btnAccept').on('click', function(event) {
 		$('#products').attr('value','['+products+']');
 	});
-});
+}); 
 
 var counter = 0;
 var products = [];
@@ -27,7 +27,7 @@ function addBook() {
 	if(isbn != '') {
 		var isRegistered = false;
 		for(var i = 0; i < products.length; i++) {
-			product = jQuery.parseJSON(products[i]);
+			product = JSON.parse(products[i]);
 			if (product.isbn == isbn) {	
 				isRegistered = true; break;
 			}
