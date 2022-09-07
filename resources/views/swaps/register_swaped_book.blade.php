@@ -15,29 +15,29 @@
 		{{ csrf_field() }}
 		<div class="box-body">
 			<input name="_method" type="hidden" value="PATCH">
-			<input name="ISBN" type="hidden" value="{{ $swaped_book->ISBN }}">
-			<input name="book_id" type="hidden" value="{{ $swaped_book->id }}">
+			<input name="ISBN" type="hidden" value="{{ $swaped_book->book->ISBN }}">
+			<input name="book_id" type="hidden" value="{{ $swaped_book->book->id }}">
 			<div class="form-group col-md-12">
-				<label for="ISBN"> ISBN: {{ $swaped_book->ISBN }} </label>
+				<label for="ISBN"> ISBN: {{ $swaped_book->book->ISBN }} </label>
 			</div>
 			<div class="form-group col-md-12">
 				<label for="title"> Título </label>
 				<input type="text" class="form-control" id="title" name="title" 
-				value="{{ $swaped_book->title }}">
+				value="{{ $swaped_book->book->title }}">
 			</div>
 			<div class="form-group col-md-12">
 				<label for="author"> Autor </label>
-				<input type="text" class="form-control" id="author" name="author" value="{{ $swaped_book->author }}">
+				<input type="text" class="form-control" id="author" name="author" value="{{ $swaped_book->book->author }}">
 			</div>
 			<div class="form-group">
 				<div class="col-md-6">
 					<label for="editoral"> Editorial </label>
-					<input type="text" class="form-control" id="editorial" name="editorial" value="{{ $swaped_book->editorial }}">
+					<input type="text" class="form-control" id="editorial" name="editorial" value="{{ $swaped_book->book->editorial }}">
 				</div>
 				<div class="col-md-6">
 					<label for="classification"> Clasificación </label>
-	                <select class="form-control select2" style="width:100%;" name="classification_id" id="classification_id" value="{{ $swaped_book->classification->id }}">
-	                  	<option value="{{ $swaped_book->classification->id }}"> {{ $swaped_book->classification->name }}</option>
+	                <select class="form-control select2" style="width:100%;" name="classification_id" id="classification_id" value="{{ $swaped_book->book->classification->id }}">
+	                  	<option value="{{ $swaped_book->book->classification->id }}"> {{ $swaped_book->book->classification->name }}</option>
 	                  	@foreach($classes as $class)
 	                  		<option value="{{ $class->id }}"> {{ $class->name }}</option>
 						@endforeach
@@ -47,11 +47,11 @@
 			<div class="form-group">
 				<div class="col-md-6">
 					<label for="genre"> Género </label>
-					<input type="text" class="form-control" id="genre" name="genre" value="{{ $swaped_book->genre }}">
+					<input type="text" class="form-control" id="genre" name="genre" value="{{ $swaped_book->book->genre }}">
 				</div>
 				<div class="col-md-6">
 					<label for="collection"> Colección </label>
-					<input type="text" class="form-control" id="collection" name="collection" value="{{ $swaped_book->collection }}">
+					<input type="text" class="form-control" id="collection" name="collection" value="{{ $swaped_book->book->collection }}">
 				</div>
 			</div>
 
@@ -60,29 +60,29 @@
 				<div class="col-md-4">
 					<label for="edition"> Edición </label>
 					<input type="text" class="form-control" id="edition" name="edition" 
-					value="{{ $swaped_book->edition }}">
+					value="{{ $swaped_book->book->edition }}">
 				</div>
 				<div class="col-md-4">
 					<label for="price"> Precio </label>
 					<div class="input-group">
 						<span class="input-group-addon"> $ </span>
-						<input class="form-control" type="text" name="price" id="price" value="{{ $swaped_book->price }}">
+						<input class="form-control" type="text" name="price" id="price" value="{{ $swaped_book->book->price }}">
 					</div>
 				</div>
 				<div class="col-md-4">
 					<label for="conditions"> Condiciones </label>
-					<input type="text" class="form-control" id="conditions" name="conditions" value="{{ $swaped_book->conditions }}">
+					<input type="text" class="form-control" id="conditions" name="conditions" value="{{ $swaped_book->book->conditions }}">
 				</div>
 			</div>
 			<div class="form-group">
 				<div class="col-md-4">
 					<label for="stock"> Stock </label>
-					<input type="text" class="form-control" id="stock" name="stock" value="{{ $swaped_book->stock }}">
+					<input type="text" class="form-control" id="stock" name="stock" value="{{ $swaped_book->book->stock }}">
 				</div>
 				<div class="col-md-4">
 					<label for="place"> Lugar </label>
 					<select class="form-control select2" style="width:100%;" name="place" id="place">
-						<option value="{{ $swaped_book->place }}">{{ $swaped_book->place }}</option>
+						<option value="{{ $swaped_book->book->place }}">{{ $swaped_book->book->place }}</option>
 						<option value="1"> Librería </option>
 						<option value="2"> Almacén </option>
 						<option value="3"> Exhibición </option>

@@ -18,12 +18,12 @@ class SwapBook extends Model
 
     public $timestamps = false;
 
-    protected function swap()
+    public function swap()
     {
     	return $this->belongsTo(Swap::class, 'swap_id', 'id');
     }
 
-    protected function book()
+    public function book()
     {
         return $this->belongsTo(Book::class, 'book_id', 'id');
     }

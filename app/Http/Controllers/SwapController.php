@@ -133,7 +133,7 @@ class SwapController extends Controller
     {
         $swap = Swap::findOrFail($id);
         if ( $swap->inbooks->where('status','Sin Registro')->count() > 0 ) {
-            $swaped_book = $swap->inbooks->where('status', 'Sin Registro')->first()->book;
+            $swaped_book = $swap->inbooks->where('status', 'Sin Registro')->first();
             $classes = Classification::orderBy('name')->where('type', 'Libro')->get();
             return view('swaps.register_swaped_book', [ 'swaped_book' => $swaped_book, 'classes' => $classes ]);
         }
