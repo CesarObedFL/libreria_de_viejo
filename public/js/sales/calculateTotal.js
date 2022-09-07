@@ -11,4 +11,4 @@ function calculateTotal() {
 		total += subtotal[i] - (subtotal[i] * (discount/100));
 	}
 	$("#total").val(Math.abs(total.toFixed(2)));
-}
+} 

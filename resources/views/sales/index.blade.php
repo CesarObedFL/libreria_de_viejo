@@ -60,7 +60,7 @@
                         </div>
                     </div>
                 </form>
-            </div>
+            </div> <!-- /. class="box-header" -->
             <div class="box-body">
 		        <table id="sales_table" class="table table-bordered table-striped">
 			        <thead>
@@ -87,8 +87,8 @@
 			            </tr>
 			            @endforeach
 			        </tbody>
-				</table>
-			</div>
-		</div>
+				</table> <!-- /. id="sales_table" -->
+			</div> <!-- /. class="box-body" -->
+		</div> <!-- /. class="box" -->
 	@endif
 @endsection

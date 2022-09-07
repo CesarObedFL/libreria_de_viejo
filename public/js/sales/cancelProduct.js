@@ -28,4 +28,4 @@ function reOrder() {
 		
 		$(this).find('td').eq(7).find('button').attr('onclick','cancelProduct('+index+');');
 	});
-}
+} 

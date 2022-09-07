@@ -1,6 +1,6 @@
 function addProduct(jsonObject) {
 	$('#btnAccept').removeAttr('disabled');
-	var product = jQuery.parseJSON(jsonObject);
+	var product = JSON.parse(jsonObject);
 	products[counter] = JSON.stringify(product);
 	var row = '<tr id="row'+(++counter)+'">'+
 				'<td style="width:5%" class="success">'+counter+'</td>'+
@@ -27,5 +27,5 @@ function addProduct(jsonObject) {
 					' onclick="cancelProduct('+counter+');" style="width:90%;height:80%;">&times;</button></td>'+
 			'</tr>';
 	$('#productsTable').append(row);
-	calculateTotal();
+	calculateTotal(); 
 }

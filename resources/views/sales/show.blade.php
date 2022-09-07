@@ -3,7 +3,12 @@
 @section('title', 'Factura')
 
 @section('content-header')
-    <h1><div class="col-md-8"><strong>{{ "Factura : ". $invoice->id }} </strong></div></h1><hr>
+    <h1>
+        <div class="col-md-8">
+            <strong>{{ "Factura : ". $invoice->id }} </strong>
+        </div>
+    </h1>
+    <hr>
 @endsection
 
 @section('content')
@@ -21,24 +26,25 @@
                         <dt> Cliente : </dt><dd>{{ $invoice->client->getInfo() }}</dd>
                         <dt> Usuario : </dt><dd>{{ $invoice->user->getUser() }}</dd>
                         <dt> ---------- </dt><dd> ---------- </dd>
-                        <dt> SubTotal : </dt><dd>{{ '$ '.$invoice->subTotal }}</dd>
+                        <dt> SubTotal : </dt><dd>{{ '$ '.$invoice->subtotal }}</dd>
                         <dt> Total : </dt><dd>{{ '$ '.$invoice->total }}</dd>
                         <dt> Monto Recibido : </dt><dd>{{ '$ '.$invoice->received }}</dd>
                     </dl>
-                </div>
-
-                {{-- PRODUCTOS VENDIDOS --}}
-                <div class="col-md-6">
+                </div> <!-- /. class="col-md-6" -->
+                
+                <div class="col-md-6"> {{-- PRODUCTOS VENDIDOS --}}
                     <div class="box-group" id="accordion">
-                        <div class="box-title">Productos Vendidos </div>
+                        <div class="box-title">
+                            Productos Vendidos 
+                        </div>
                         <div class="panel box box-primary">
                             @foreach($invoice->sales as $sale)
                                 <div class="box-header with-border">
                                     <div class="pull-right">
                                         <b><a data-toggle="collapse" data-parent="#accordion" href="#collapse{{ $sale->id }}" align="pull-right"><i> ver detalles </i></a></b>
                                     </div>
-                                    {{ $sale->type.' : '.$sale->product_id }}
-                                </div>
+                                    {{ $sale->type.' : '.$sale->soldProduct() }}
+                                </div> <!-- /. class="box-header with-border" -->
                                 <div id="collapse{{ $sale->id }}" class="panel-collapse collapse">
                                     <div class="box-body">
                                         <dl class="dl-horizontal">
@@ -47,20 +53,19 @@
                                             <dt>Descuento:</dt><dd>{{ $sale->discount.' %' }}</dd>
                                         </dl>
                                     </div>
-                                    <div class="box-footer"></div>
-                                </div>
+                                </div> <!-- /.  class="panel-collapse collapse" -->
                             @endforeach
-                        </div>
-                    </div>
+                        </div> <!-- /. class="panel box box-primary" -->
+                    </div> <!-- /. class="box-group" -->
                 </div> {{-- PRODUCTOS VENDIDOS --}}
-            </div> {{-- BOX BODY --}}
-        </div>
+            </div> <!-- /. class="box-body" -->
+        </div> <!-- /. class="box box-solid" -->
         <div class="col-md-12">
             <div class="box box-primary">
                 <div class="box-footer">
                     <a class="btn btn-primary col-md-12" href="{{ route('sales.index') }}"> Aceptar </a>
                 </div>
-            </div>
-        </div>
-    </div>
+            </div> <!-- /. class="box box-primary" -->
+        </div> <!-- /. class="col-md-12" -->
+    </div> <!-- /. class="col-md-12" -->
 @endsection

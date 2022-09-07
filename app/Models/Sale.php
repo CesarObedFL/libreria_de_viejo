@@ -4,6 +4,9 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
+use App\Models\Book;
+use App\Models\Plant;
+
 class Sale extends Model
 {
     protected $table = 'sales';
@@ -15,5 +18,14 @@ class Sale extends Model
     public function invoice() 
     {
         return $this->belongsTo(Invoice::class, 'invoice_id', 'id');
+    }
+
+    public function soldProduct()
+    {
+        if ( $this->type == 'Libro' ) {
+            return Book::where('ISBN', $this->product_id)->first()->title;
+        }
+        
+        return Plant::findOrFail($this->product_id)->name;
     }
 }
