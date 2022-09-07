@@ -1,20 +1,20 @@
-$(document).ready(function () {
+$(function () {
 	$.ajaxSetup({
 		headers: {
 			'X-CSRF-TOKEN' : $('meta[name="csrf-token"]').attr('content')
 		}
 	});
 
-	$('#isbn').keypress(function(event) { // enter keycode = 13
-		if(event.keyCode == 13) addBook();
+	$('#isbn').on('keypress', function(event) { // enter keycode = 13
+		if(event.key == 'Enter') addBook();
 	});
 
-	$('#btnAddBook').click(function(event) {
+	$('#btnAddBook').on('click', function(event) {
 		event.preventDefault();
 		addBook();
 	});
 
-	$('#btnAccept').click(function(event) {
+	$('#btnAccept').on('click', function(event) {
 		$('#products').attr('value','['+products+']');
 	});
 });
@@ -27,9 +27,10 @@ function addBook() {
 	if(isbn != '') {
 		var isRegistered = false;
 		for(var i = 0; i < products.length; i++) {
-			product = jQuery.parseJSON(products[i]);
+			product = JSON.parse(products[i]);
 			if (product.isbn == isbn) {	
-				isRegistered = true; break;
+				isRegistered = true; 
+				break;
 			}
 		}
 		if (isRegistered)
@@ -41,7 +42,7 @@ function addBook() {
 				dataType: 'json',
 				success: function(jsonObject) {
 					var object = JSON.stringify(jsonObject);
-					if(jQuery.parseJSON(object).stock <= 0)
+					if(JSON.parse(object).stock <= 0)
 						alert('Stock en cero de ese producto...');
 					else
 						addProduct(object);

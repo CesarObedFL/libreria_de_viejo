@@ -6,7 +6,7 @@ function cancelProduct(index) {
 
 		products.splice(index - 1,1);
 		if(products.length < 1) 
-			$('#btnAccept').prop('disabled','true');
+			$('#btnAccept').prop('disabled', 'true');
 	}
 }
 
@@ -15,8 +15,8 @@ function reOrder() {
 	$('#productsTable tbody tr').each(function() {
 		$(this).attr('id','row'+(++index));
 		$(this).find('td').eq(0).text(index);
-		$(this).find('td').eq(3).find('input').attr('id','amount'+index);
-		$(this).find('td').eq(3).find('input').attr('onblur','validateAmount('+index+');');
-		$(this).find('td').eq(5).find('button').attr('onclick','cancelProduct('+index+');');
+		$(this).find('td').eq(3).find('input').attr('id', 'amount'+index);
+		$(this).find('td').eq(3).find('input').attr('onblur', 'validateAmount('+index+');');
+		$(this).find('td').eq(5).find('button').attr('onclick', 'cancelProduct('+index+');');
 	});
 }

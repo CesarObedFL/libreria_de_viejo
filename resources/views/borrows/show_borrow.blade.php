@@ -15,7 +15,7 @@
         <div class="box box-solid"> 
             <div class="box-header with-border">
                 <h1 class="box-title"> {{ 'Cliente: '.$borrow->client->getInfo() }} </h1>
-            </div>
+            </div> <!-- /. class="box-header with-border" -->
             <div class="box-body">
                 <div class="col-md-6">
                     <dl class="dl-horizontal">
@@ -28,11 +28,13 @@
                         <dt>----------</dt><dd>----------</dd>
                         <dt>Usuario:</dt><dd>{{ $borrow->user->getUser() }}</dd>
                     </dl>
-                </div> 
-                {{-- LIBROS PRESTADOS --}}
-                <div class="col-md-6">
+                </div> <!-- /. class="col-md-6" -->
+                
+                <div class="col-md-6"> {{-- LIBROS PRESTADOS --}}
                     <div class="box-group" id="accordion">
-                        <div class="box-title">{{ "Libros Prestados: ".$borrow->amount_book }}</div>
+                        <div class="box-title">
+                            {{ "Libros Prestados: ".$borrow->amount_book }}
+                        </div>
                         <div class="panel box box-primary">
                             @foreach($borrow->borrowed_books as $borrowed_book)
                                 <div class="box-header with-border">
@@ -51,11 +53,12 @@
                                     </div>
                                 </div>
                             @endforeach
-                        </div>
-                    </div>
+                        </div> <!-- /. class="panel box box-primary" -->
+                    </div> <!-- /. class="box-group" -->
                 </div> {{-- LIBROS PRESTADOS --}}
-            </div>
-        </div>
+            </div> <!-- /. class="box-body" -->
+        </div> <!-- /.class="box box-solid" -->
+        
         <div class="col-md-12">
             <div class="box box-primary">
                 <div class="box-footer">
@@ -63,8 +66,9 @@
                     @if(!$borrow->getStatus())
                     <a class="btn btn-success col-md-6" href="{{ route('borrows.edit', $borrow->id) }}"><i class="fa fa-mail-reply"></i><span> Devolución</span></a>
                     @endif
-                </div>
-            </div>
-        </div>
-    </div>
+                </div> <!-- /. class="box-footer" -->
+            </div> <!-- /. class="box box-primary" -->
+        </div> <!-- /. class="col-md-12" -->
+
+    </div> <!-- /. class="col-md-12" -->
 @endsection

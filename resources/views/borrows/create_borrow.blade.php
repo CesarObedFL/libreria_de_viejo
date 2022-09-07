@@ -20,13 +20,15 @@
 				<i class="fa fa-search"></i>
 			</button>
 		</span>
-	</div>
+	</div> <!-- /. class="input-group" -->
 	<hr>
 
 	@include('partials.errors')
 
   	<div class="box" style="width:100%;">
-  		<div class="box-header"><h3 class="box-title">Libros a Prestar</h3></div>
+  		<div class="box-header">
+			<h3 class="box-title">Libros a Prestar</h3>
+		</div> <!-- /. class="box-header" -->
       	<div class="box-body no-padding">
 			<table class="table table-condensed text-center" id="productsTable">
 		        <thead>
@@ -43,8 +45,8 @@
 		            {{--  TABLA GENERADA CON JQUERY --}} 
 		        </tbody>
 			</table>
-		</div>
-	</div>
+		</div> <!-- /. class="box-body no-padding" -->
+	</div> <!-- /. class="box" -->
 
 	<hr>
 	<form role="form" action="{{ route('borrows.store') }}" method="POST">
@@ -57,13 +59,13 @@
 		        		<option value="{{ $client->id }}"> {{ $client->getInfo() }}</option>
 		        	@endforeach
 				</select>
-			</div>
+			</div> <!-- /. class="col-md-6" -->
       		<input type="hidden" name="products" id="products" value="">
-		</div>
+		</div> <!-- /. class="box-body" -->
 		<div class="box-footer">
 			<button class="btn btn-primary btn-block" type="submit" id="btnAccept" disabled="disabled"> Aceptar </button>
 			<a class="btn btn-danger btn-block" href="{{ route('borrows.index') }}"> Cancelar </a>
-		</div>
+		</div> <!-- /. class="box-footer" -->
 	</form>
 
 @endsection

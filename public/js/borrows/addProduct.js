@@ -2,7 +2,7 @@ function addProduct(jsonObject) {
 	// si hay productos en la tabla habilitar el boton de aceptar
 	$('#btnAccept').removeAttr('disabled');
 	products[counter] = jsonObject;
-	var product = jQuery.parseJSON(jsonObject);
+	var product = JSON.parse(jsonObject);
 	var row = '<tr id="row'+(++counter)+'">'+
 				'<td style="width:5%" class="success">'+counter+'</td>'+
 				'<td style="width:15%">'+product.isbn+'</td>'+

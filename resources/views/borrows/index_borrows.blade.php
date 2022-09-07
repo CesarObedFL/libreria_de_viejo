@@ -33,7 +33,9 @@
 
 @section('content-header')
     <h1>
-        <div class="col-md-8"><strong>Préstamos Realizados</strong></div>
+        <div class="col-md-8">
+            <strong>Préstamos Realizados</strong>
+        </div>
         <div class="col-md-4">
             <a class="btn btn-success btn-block pull-right" href="{{ route('borrows.create') }}">
             <i class="fa fa-pencil-square-o"></i> REALIZAR PRÉSTAMO </a>
@@ -72,7 +74,7 @@
                         </div>
                     </div>
                 </form> 
-            </div>
+            </div> <!-- /. class="box-header" -->
             <div class="box-body">
                 <table class="table table-condensed text-center" id="borrows_table">
                     <thead>
@@ -101,10 +103,8 @@
                             </tr>
                         @endforeach
                     </tbody>
-                    <tfoot>
-                    </tfoot>
-                </table>
-            </div>
-        </div>
+                </table> <!-- /. id="borrows_table" -->
+            </div> <!-- /. class="box-body" -->
+        </div> <!-- /. class="box" -->
     @endif
 @endsection
