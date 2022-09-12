@@ -19,17 +19,31 @@ class BookController extends Controller
     {
         $this->middleware('auth');
     }
-    
+    /**
+     * función para listar todos los libros registrados en la plataforma
+     * 
+     * @return View con los datos de los libros a listar
+     */
     public function index()
     {
         return view('books.index_books', [ 'books' =>  Book::all() ] );
     }
 
+    /**
+     * función para renderizar la vista del buscador de libros
+     * 
+     * @return View con el buscador de los libros
+     */
     public function create()
     {
         return view('books.search_book');
     }
 
+    /**
+     * función para almacenar en la base de datos los libros creados
+     * 
+     * @return Redirect hacia la vista de index con la lista de los libros creados y el mensaje correspondiente de creación
+     */
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(), [
@@ -87,16 +101,35 @@ class BookController extends Controller
         return redirect()->action([ BookController::class, 'index' ])->with('success', 'El libro se ha registrado exitosamente!...');
     }
 
+    /**
+     * función para mostrar el detalle de los libros almacenados
+     * 
+     * @param Integer con el $id del libro a mostrar
+     * @return View con la información del libro a mostrar
+     */
     public function show($id)
     {
         return view('books.show_book', [ 'book' => Book::findOrFail($id) ]);
     }
 
+    /**
+     * función para mostrar la vista de edición de los libros registrados en la base de datos
+     * 
+     * @param Integer con el $id del libro a modificar
+     * @return View con la información del libro a modificar y las clasificaciones disponibles
+     */
     public function edit($id)
     {
         return view('books.edit_book', [ 'book' => Book::findOrFail($id) ,'classes' => Classification::orderBy('name')->where('type','Libro')->get() ]);
     }
 
+    /**
+     * función para actualizar la información de los libros almacenados en la base de datos
+     * 
+     * @param Request con la nueva información del libro a actualizar
+     * @param Integer del $id del libro a modificar
+     * @return Redirect hacia la vista del detalle de libros con la información ya actualizada
+     */
     public function update(Request $request, $id)
     {
         $validator = Validator::make($request->all(), [
@@ -125,12 +158,24 @@ class BookController extends Controller
         return redirect()->action([ BookController::class, 'show' ], $id)->with('edit','El libro se ha modificado exitosamente!...');
     }
 
+    /**
+     * función para eliminar los libros registrados en la base de datos
+     * 
+     * @param Integer con el $id del libro a eliminar
+     * @return Redirect hacia el listado de libros registrados con el mensaje correspondiente
+     */
     public function destroy($id)
     {
         Book::findOrFail($id)->delete();
         return redirect()->action([ BookController::class, 'index' ])->with('delete', 'El libro se ha eliminado exitosamente!...');
     }
 
+    /**
+     * función para actualizar el stock de los libros ya registrados en la base de datos
+     * 
+     * @param Request con la información del stock actualizado
+     * @return Redirect a la vista del detalle del libro
+     */
     public function updateStock(Request $request) 
     {
         $validator = Validator::make($request->all(), [
@@ -148,6 +193,12 @@ class BookController extends Controller
         return redirect()->action([ BookController::class, 'show'] , $request->get('book_id'))->with('edit','El libro se ha actualizado exitosamente!...');
     }
 
+    /**
+     * función para buscar libros ya registrados en la base de datos para no registrarlos repetidamente
+     * 
+     * @param Request con el isbn del libro a buscar en la base de datos
+     * @return Redirect hacia la vista de actualización de stock o hacia el registro de nuevos libros, según sea el caso
+     */
     public function search(Request $request)
     {
         return view('books.create_new_book', [ 

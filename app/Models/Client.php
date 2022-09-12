@@ -14,12 +14,12 @@ class Client extends Model
 
     public function borrows()
     {
-    	return $this->hasMany('App\Borrow','clientID','id');
+    	return $this->hasMany(Borrow::class, 'client_id', 'id');
     }
 
     public function invoices()
     {
-        return $this->hasMany('App\Invoice','clientID','id');
+        return $this->hasMany(Invoice::class, 'client_id', 'id');
     }
 
     public function getInfo()

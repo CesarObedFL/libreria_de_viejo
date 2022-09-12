@@ -9,7 +9,7 @@
 @section('content')
 
     @include('partials.error')
-    @include('partials.edit')
+    @include('partials.edit') 
     @include('partials.delete')
     @include('partials.success')
 
@@ -20,7 +20,8 @@
                     <a class="btn btn-success" href="{{ route('feature.newFeature', $BOOK->id) }}"> Nueva Entrada </a>
                 </div>--}}
                 <h1 class="box-title"> <strong>{{ '#'.$book->id }} : {{ $book->title }} </strong></h1>
-            </div>
+            </div> <!-- /. class="box-header with-border" -->
+
             <div class="box-body">
                 <div class="col-md-6">
                     <dl class="dl-horizontal">
@@ -31,7 +32,7 @@
                         <dt>Estante:</dt><dd>{{ $book->getLocation() }}</dd>
                         <dt>Stock:</dt><dd>{{ $book->stock }}</dd>
                     </dl>
-                </div>
+                </div> <!-- /. class="col-md-6" -->
 
                 <div class="col-md-6">
                     <dl class="dl-horizontal">
@@ -42,7 +43,7 @@
                         <dt>Colección:</dt><dd>{{ $book->collection }}</dd>
                         <dt>Prestados:</dt><dd>{{ $book->borrowed_books }}</dd>
                     </dl>
-                </div>
+                </div> <!-- /. class="col-md-6" -->
 
                         
                 {{-- CARACTERÍSTICAS DE LOS LIBROS - MODIFICAR Y ELIMINAR --
@@ -84,14 +85,17 @@
                 </div> {{-- CARACTERÍSTICAS DE LOS LIBROS - MODIFICAR Y ELIMINAR --}}
 
             </div> {{-- FIN BOX-BODY --}}
-        </div>
+
+        </div> <!-- /. class="box box-solid" -->
+
         <div class="col-md-13">
             <div class="box box-primary">
                 <div class="box-footer">
                     <a class="btn btn-primary col-md-6" href="{{ route('books.index') }}"> Aceptar </a>
                     <a class="btn btn-success col-md-6" href="{{ route('books.edit', $book->id) }}"> Editar </a>
-                </div>
-            </div>
-        </div>
-    </div>
+                </div> <!-- /. class="box-footer" -->
+            </div> <!-- /. class="box box-primary" -->
+        </div> <!-- /. class="col-md-13" -->
+
+    </div> <!-- /. class="col-md-12" -->
 @endsection

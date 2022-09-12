@@ -13,21 +13,26 @@
 	<form role="form" action="{{ route('books.update', $book->id) }}" method="POST">
 		{{ csrf_field() }}
 		<div class="box-body">
+
 			<input name="_method" type="hidden" value="PATCH">
+
 			<div class="form-group col-md-12">
 				<label for="ISBN"> ISBN </label>
 				<input type="text" class="form-control" id="ISBN" name="ISBN" 
 				value="{{ $book->ISBN }}">
 			</div>
+
 			<div class="form-group col-md-12">
 				<label for="title"> Título </label>
 				<input type="text" class="form-control" id="title" name="title" 
 				value="{{ $book->title }}">
 			</div>
+
 			<div class="form-group col-md-12">
 				<label for="author"> Autor </label>
 				<input type="text" class="form-control" id="author" name="author" value="{{ $book->author }}">
 			</div>
+
 			<div class="form-group">
 				<div class="col-md-6">
 					<label for="editoral"> Editorial </label>
@@ -43,6 +48,7 @@
 					</select>
             	</div>
 			</div>
+
 			<div class="form-group">
 				<div class="col-md-6">
 					<label for="genre"> Género </label>
@@ -53,6 +59,7 @@
 					<input type="text" class="form-control" id="collection" name="collection" value="{{ $book->collection }}">
 				</div>
 			</div>
+
 			{{-- BOOK FEATURES--}}
 			<div class="form-group">
 				<div class="col-md-4">
@@ -72,6 +79,7 @@
 					<input type="text" class="form-control" id="conditions" name="conditions" value="{{ $book->conditions }}">
 				</div>
 			</div>
+
 			<div class="form-group">
 				<div class="col-md-4">
 					<label for="stock"> Stock </label>
@@ -100,14 +108,15 @@
 	                </select>
               	</div>
 			</div>
+			{{-- /. BOOK FEATURES --}}
 
-			{{-- /BOOK FEATURES --}}
+		</div> <!-- /. class="box-body" -->
 
-		</div>
 		<div class="box-footer">
 			<button type="submit" class="btn btn-primary btn-block"> Guardar </button>
 			<a class="btn btn-danger btn-block" href="{{ route('books.show', $book->id) }}"> Cancelar </a>
 		</div>
+
 	</form>
 		
 

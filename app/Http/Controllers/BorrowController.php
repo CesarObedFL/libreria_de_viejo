@@ -21,6 +21,13 @@ class BorrowController extends Controller
         $this->middleware('auth');
     }
 
+    /**
+     * función para listar los prestamos de libros hechos
+     * cuenta con un filtro de fechas para la información
+     * 
+     * @param Request con la información del filtro de fechas
+     * @return View de la lista de los prestamos filtrados más el filtro aplicado
+     */
     public function index(Request $request)
     {
         $start_date = '2019-05-14';
@@ -39,11 +46,24 @@ class BorrowController extends Controller
         return view('borrows.index_borrows', [ 'borrows' => $borrows, 'start_date' => $start_date, 'end_date' => $end_date ]);
     }
 
+    /**
+     * función para renderizar la vista de creación de prestamos de libros
+     * solo se le presta a clientes registrados en la plataforma y de tipo interno, es decir, trabajadores
+     * el registro de los clientes la lleva a cabo los usuarios vendedores y/o administradores
+     * 
+     * @return View con la vista de creación de prestamos más los clientes registrados
+     */
     public function create()
     {
         return view('borrows.create_borrow', [ 'clients' => Client::all()->where('type','Interno') ]);
     }
 
+    /**
+     * función para almacenar en la base de datos un préstamo realizado
+     * 
+     * @param Request con la información del préstamo a realizar y el cliente al que se le presta
+     * @return Redirect hacia el detalle del préstamo realizado con el mesaje correspondiente
+     */
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(), [
@@ -86,19 +106,38 @@ class BorrowController extends Controller
         }
         $borrow->amount_book = $total_borrowed_books;
         $borrow->save();
-        return redirect()->action([ BorrowController::class, 'show' ], $borrow->id)->with('success','El préstamo se ha registrado exitosamente!...');
+        return redirect()->action([ BorrowController::class, 'show' ], $borrow->id)->with('success', 'El préstamo se ha registrado exitosamente!...');
     }
 
+    /**
+     * función para mostrar el detalle de los préstamos
+     * 
+     * @param Integer con el $id del préstamo a mostrar
+     * @return View con la información del prestamo a mostrar
+     */
     public function show($id)
     {
         return view('borrows.show_borrow', [ 'borrow' => Borrow::findOrFail($id) ]);
     }
     
+    /**
+     * función para mostrar el formulario de devolucion de libros
+     * 
+     * @param Integer con el $id del préstamo al que se registrará la devolución
+     * @return View con la información del préstamo
+     */
     public function edit($id)
     {
         return view('borrows.devolution', [ 'borrow' => Borrow::findOrFail($id) ]);
     }
 
+    /**
+     * función para resigtrar las devoluciones en la base de datos
+     * 
+     * @param Request con la información de la devolución
+     * @param Integer con el $id del préstamo al que se registrará la devolución
+     * @return Redirect hacia el detalle del préstamo con la información actualizada y los mensajes correspondientes, éxito y los cargos por retraso
+     */
     public function update(Request $request, $id) // DEVOLUTION...
     {
         $validator = Validator::make($request->all(), [
@@ -132,6 +171,12 @@ class BorrowController extends Controller
         return redirect()->action([ BorrowController::class, 'show' ], $borrow->id)->with(['success' => 'La devolución se ha registrado exitosamente!...', 'balancedue' => 'El cambio de la operación es: $'.$balance]);
     }
 
+    /**
+     * función para buscar los libros en la base de datos en base a su ISBN
+     * 
+     * @param String con el ISBN del libro a buscar
+     * @return JSON con la información del libro encontrado
+     */
     public function searchbook($isbn)
     {
         $book = DB::table('books')->where('ISBN',$isbn)->where('stock','>=',0)->first();
@@ -145,6 +190,12 @@ class BorrowController extends Controller
         ]);
     }
 
+    /**
+     * función para buscar libros prestados
+     * 
+     * @param String con el ISBN del libro a buscar
+     * @return JSON con la información del libro encontrado
+     */
     public function searchborrowedbook($isbn)
     {
         $book = DB::table('books')->where('ISBN', $isbn)->where('borrowed_books', '>', 0)->first();

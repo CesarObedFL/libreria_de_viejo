@@ -62,7 +62,7 @@ Route::put('book/updateStock', [ BookController::class, 'updateStock' ] )->name(
 Route::get('book/search', [ BookController::class, 'search' ] )->name('book.search');
 Route::resource('books',BookController::class);
 Route::get('feature/newFeature/{book_id}', [ FeatureController::class, 'newFeature' ] )->name('feature.newFeature');
-Route::resource('features', FeatureController::class )->except([ 'index', 'create' ]);
+Route::resource('features', FeatureController::class )->except([ 'index', 'create', 'show' ]);
 
 Route::resource('classifications', ClassificationController::class )->except([ 'show' ]);
 Route::resource('clients', ClientController::class );

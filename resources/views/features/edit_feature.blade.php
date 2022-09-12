@@ -15,6 +15,7 @@
 		{{ csrf_field() }}
 		<div class="box-body">
 			<input name="_method" type="hidden" value="PATCH">
+
 			<div class="form-group">
 				<div class="col-md-4">
 					<label for="edition"> Edición </label>
@@ -31,7 +32,8 @@
 					<label for="conditions"> Condiciones </label>
 					<input type="text" class="form-control" id="conditions" name="conditions" value="{{ $feature->conditions }}">
 				</div>
-			</div>
+			</div> <!-- /. class="form-group" -->
+
 			<div class="form-group">
 				<div class="col-md-3">
 					<label for="stock"> Stock </label>
@@ -59,7 +61,8 @@
 					<label for="language"> Lenguaje </label>
 					<input type="text" class="form-control" id="language" name="language" value="{{ $feature->language }}">
 				</div>
-			</div>
+			</div> <!-- /. class="form-group" -->
+
 			<div class="form-group">
 				<div class="col-md-1">
 					<label>Estante:</label>
@@ -70,12 +73,14 @@
 	                @endfor
 	                <label>[Bodega <input type="radio" name="location" id="location" value="0" checked>]</label>
               	</div>
-			</div>
-		</div>
+			</div> <!-- /. class="form-group" -->
+
+		</div> <!-- /. class="box-body" -->
+
 		<div class="box-footer">
 			<button type="submit" class="btn btn-primary btn-block"> Guardar </button>
 			<a class="btn btn-danger btn-block" href="{{ route('features.show', $feature->id) }}"> Cancelar </a>
-		</div>
+		</div>  <!-- /. class="box-footer" -->
 	</form>
 		
 

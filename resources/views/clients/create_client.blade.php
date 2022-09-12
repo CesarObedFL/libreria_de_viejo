@@ -16,7 +16,7 @@
 			<div class="form-group col-md-12">
 				<label for="name"> Nombre </label>
 				<input class="form-control" type="text" name="name" id="name" value="{{ old('name') }}">
-			</div>
+			</div> <!-- /. class="form-group col-md-12" -->
 			<div class="form-group">
 				<div class="col-md-4">
 					<label for="email"> E-Mail </label>
@@ -33,18 +33,18 @@
 	                  <option value="2"> Externo </option>
 	                </select>
 				</div>
-			</div>
+			</div> <!-- /. class="form-group" -->
 			<div class="form-group">
 				<div class="col-md-12">
 					<label for="interests"> Intereses </label>
 					<input class="form-control" type="text" name="interests" id="interests" value="{{ old('interests') }}">
 				</div>
-			</div>
-		</div>
+			</div> <!-- /. class="form-group" -->
+		</div> <!-- /. class="box-body" -->
 		<div class="box-footer">
 			<button type="submit" class="btn btn-primary btn-block"> Registrar </button>
 			<a class="btn btn-danger btn-block" href="{{ route('clients.index') }}"> Cancelar </a>
-		</div>
+		</div> <!-- /. class="box-footer" -->
 	</form>
 
 @endsection

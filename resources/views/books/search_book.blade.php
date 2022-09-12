@@ -6,7 +6,7 @@
 	<h1><div class="col-md-8"><strong> Registro de Libros </strong></div></h1><hr>
 @endsection
 
-@section('content')
+@section('content') 
 
 	<form action="{{ route('book.search') }}" method="get" class="sidebar-form">
     	<div class="input-group">

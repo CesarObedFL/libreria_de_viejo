@@ -23,6 +23,13 @@ class SaleController extends Controller
         $this->middleware('auth');
     }
 
+    /**
+     * función para listar las ventas que se han realizado, 
+     * cuenta con el filtro por fechas
+     * 
+     * @param Request con las fechas de la información a filtrar
+     * @return View con la información de las ventas hechas dentro del filtro aplicado y el filtro mismo
+     */
     public function index(Request $request)
     {
         $start_date = '2019-05-14';
@@ -39,11 +46,22 @@ class SaleController extends Controller
         return view('sales.index', [ 'invoices' => $invoices, 'start_date' => $start_date, 'end_date' => $end_date ]);
     }
 
+    /**
+     * función para renderizar la vista de venta de productos, libros y plantas
+     * 
+     * @return View del formulario de venta, se mandan los clientes registrados en la base de datos, así como las plantas con stock mayor a cero
+     */
     public function create()
     {
         return view('sales.realize', [ 'clients' => Client::all(), 'plants' => Plant::all()->where('stock','>',0) ]);
     }
     
+    /**
+     * función para almacenar las ventas realizadas se crean y guardan todos los modelos de datos necesarios para la realización de la venta así como se calcúla la cantidad restante
+     * del monto del pago efectuado menos el monto total de los productos
+     * 
+     * @param Redirect hacía los detalles de la venta realizada junto el mensaje de la operación realizada y, si así sucede, la cantidad restante del pago efectuado al realizar la venta
+     */
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(), [
@@ -60,7 +78,7 @@ class SaleController extends Controller
         $invoice = new Invoice ([
             'user_id' => Auth::id(),
             'date' => Carbon::now()->toDateString(),
-            'shift' => $this->get_current_shift(), 
+            'shift' => self::get_current_shift(), 
             'client_id' => $request->get('client_id'),
             'subtotal' => 0,
             'total' => 0,
@@ -107,11 +125,25 @@ class SaleController extends Controller
         return redirect()->action([ SaleController::class, 'show' ], $invoice->id)->with(['success' => 'La venta se ha realizado exitosamente!...', 'balancedue' => 'El cambio de la operación es: $'.$balance]);
     }
 
+    /**
+     * función para mostrar los detalles de las ventas realizadas
+     * 
+     * @param Integer con el $id de la venta a mostrar
+     * @return View con la vista y la información
+     */
     public function show($id) 
     { 
         return view('sales.show', [ 'invoice' => Invoice::findOrFail($id) ]);
     }
 
+    /**
+     * función para mostrar la información de los libros almacenados en la base de datos
+     * es empleada por un buscador dentro de la vista de 'realizar venta' para mostrar los libros a vender
+     * funciona como una API con operación GET
+     * 
+     * @param String con el $isbn del libro a buscar, se introduce en un input
+     * @return JSON con la información necesaria del libro encontrado
+     */
     public function searchbook($isbn)
     {
         $book = DB::table('books')->where('ISBN',$isbn)->first();
@@ -126,6 +158,14 @@ class SaleController extends Controller
         ]);
     }
 
+    /**
+     * función para mostrar la información de las plantas almacenadas en la base de datos
+     * como el buscador de libros, es empleado dentro de la vista para realizar ventas para mostrar la información necesaria de las plantas a vender
+     * funciona como una operación de API con GET
+     * 
+     * @param Integer con el $id de la planta a mostrar
+     * @return JSON con la información de la planta encontrada
+     */
     public function searchplant($id)
     {
         $plant = DB::table('plants')->where('id',$id)->first();
@@ -140,8 +180,10 @@ class SaleController extends Controller
         ]);
     }
 
-    // turno laboral
-    private function get_current_shift()
+    /**
+     * función para determinar el turno laboral en el que se esta trabajando, es empleada para registrar las ventas en este mismo controlador
+     */
+    private static function get_current_shift()
     {
         $today = Carbon::now();
         if($today->dayOfWeek == 0) // sunday

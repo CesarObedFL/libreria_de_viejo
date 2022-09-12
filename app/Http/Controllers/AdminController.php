@@ -20,6 +20,12 @@ class AdminController extends Controller
         $this->middleware('auth');
     }
     
+    /**
+     * función para registrar los pagos que se le hacen a los empleados, solo es empleada por usuarios administradores
+     * 
+     * @param Integer con el id del empleado al que se le pagará
+     * @return View del pago con los datos del usuario al que se le pagará y el monto de lo que se le debe a dicho usuario
+     */
     public function edit($id) // payment
     {
         if(Auth::user()->isAdmin()) {
@@ -28,6 +34,13 @@ class AdminController extends Controller
         return redirect()->action([ HomeController::class, 'index' ]);
     }
     
+    /**
+     * función para actualizar el monto y el pago realizado al empleado
+     * 
+     * @param Request $request con la información correspondiente al pago realizado
+     * @param Integer $id con el id del empleado al que se le paga
+     * @return Redirect con la vista del corte de caja y el mensaje del pago realizado
+     */
     public function update(Request $request, $id) // update payments
     {
         $validator = Validator::make($request->all(), [
@@ -48,6 +61,12 @@ class AdminController extends Controller
         return redirect()->action([ AdminController::class, 'cut' ])->with('success', 'El pago se ha realizado exitosamente!...');
     }
 
+    /**
+     * función que muestra el corte de caja a realizar, función empleada solo por usuarios administradores
+     * 
+     * @param Request con la información del filtro a aplicar en la consulta, fechas inicial y final
+     * @return View con la información del corte de caja a realizar organizada por vendedor y ventas totales realizadas
+     */
     public function cut(Request $request) 
     {
         if(Auth::user()->isAdmin()) {
@@ -109,6 +128,11 @@ class AdminController extends Controller
         return redirect()->action([ HomeController::class, 'index' ]);
     }
 
+    /**
+     * función que muestra la vista de la creación de codigos de barras a generar e imprimir en pdf
+     * 
+     * @return View del formulario de creación de codigos de barras, dicho formulario incluye un buscador de libros por si se requiere clonar un código ya creado anteriormente
+     */
     public function barcodes()
     {
         if(Auth::user()->isAdmin()) {
@@ -117,6 +141,13 @@ class AdminController extends Controller
         return redirect()->action([ HomeController::class, 'index' ]);
     }
 
+    /**
+     * función para la generación del pdf con los códigos de barras creados, 
+     * emplea el paquete composer "barryvdh/laravel-dompdf"
+     * 
+     * @param Request con los parametros de las hojas y si se require los códigos de los libros a clonar
+     * @return PDF descargado con los códigos de barras generados
+     */
     public function pdf(Request $request) 
     {
         if(Auth::user()->isAdmin()) {
@@ -155,6 +186,12 @@ class AdminController extends Controller
         return redirect()->action([ HomeController::class, 'index' ]);
     }
 
+    /**
+     * función para buscar libros en la base de datos, es empleada por el generador de codigos de barras en caso de que se requiera clonar el código de un libro ya generado
+     * 
+     * @param String con el nombre del libro a clonar
+     * @return JSON con la información pertinente del libro encontrado en caso de éxito
+     */
     public function searchbook($title)
     {
         $book = DB::table('books')->where('title', $title)->first();

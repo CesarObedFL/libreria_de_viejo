@@ -40,12 +40,11 @@
 					<input class="form-control" type="text" name="commercial_business" id="commercial_business" value="{{ $donor->commercial_business }}">
 				</div>
 			</div>
-			</div>
-		</div>
+		</div> <!-- /. class="box-body" -->
 		<div class="box-footer">
 			<button type="submit" class="btn btn-primary btn-block"> Guardar </button>
 			<a class="btn btn-danger btn-block" href="{{ route('donors.index') }}"> Cancelar </a>
-		</div>
+		</div> <!-- /. class="box-footer" -->
 	</form>
 
 @endsection

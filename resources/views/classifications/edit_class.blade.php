@@ -17,12 +17,12 @@
             <div class="form-group col-md-12">
                 <label for="class"> Nombre </label> 
                 <input type="text" class="form-control" id="name" name="name" value="{{ $class->name }}">
-            </div>
-        </div>
+            </div> <!-- /. class="form-group col-md-12" -->
+        </div> <!-- /. class="box-body" -->
         <div class="box-footer">
             <button type="submit" class="btn btn-primary btn-block"> Guardar </button>
             <a class="btn btn-danger btn-block" href="{{ route('classifications.index') }}"> Cancelar </a>
-        </div>
+        </div>  <!-- /. class="box-footer" -->
     </form>
 
 @endsection

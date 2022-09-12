@@ -21,7 +21,7 @@
           'autoWidth'   : true
         })
       })
-    </script>
+    </script> 
 @endsection
 
 @section('content-header')
@@ -71,6 +71,6 @@
             </tbody>
             <tfoot>
             </tfoot>
-        </table>
+        </table> <!-- /. id="clients_table" -->
     @endif
 @endsection

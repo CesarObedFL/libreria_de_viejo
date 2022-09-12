@@ -36,8 +36,6 @@
     
     @else
         <div class="box">
-            <div class="box-header">
-            </div>
             <div class="box-body">
                 <table id="donations_table" class="table table-bordered table-striped">
                     <thead>
@@ -65,11 +63,9 @@
                             </tr>
                         @endforeach
                     </tbody>
-                    <tfoot>
-                    </tfoot>
-                </table>
-            </div>
-        </div>
+                </table> <!-- /. id="donations_table" -->
+            </div> <!-- /. class="box-body" -->
+        </div> <!-- /. class="box" -->
     @endif
 @endsection
 

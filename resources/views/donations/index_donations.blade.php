@@ -10,9 +10,11 @@
     </style>
 @endsection
 
-@section('content-header')
+@section('content-header') 
     <h1>
-        <div class="col-md-6"><strong>Donaciones Realizadas</strong></div>
+        <div class="col-md-6">
+            <strong>Donaciones Realizadas</strong>
+        </div>
         <div class="col-md-2">
             <a class="btn btn-block pull-right" href="{{ route('donors.index') }}">
             <i class="fa fa-institution"></i> INSTITUCIONES </a>
@@ -57,9 +59,9 @@
                             <input type="date" name="end_date" id="end_date">
                             <button type="submit" class="btn btn-primary btn-sm"> Buscar </button>
                         </div>
-                    </div>
+                    </div> <!-- /. class="box-body" -->
                 </form>
-            </div>
+            </div> <!-- /. class="box-header" -->
             <div class="box-body">
                 <table id="donations_table" class="table table-condensed text-center">
                     <thead>
@@ -82,11 +84,9 @@
                             </tr>
                         @endforeach
                     </tbody>
-                    <tfoot>
-                    </tfoot>
-                </table>
-            </div>
-        </div>
+                </table> <!-- /. id="donations_table" -->
+            </div> <!-- /. class="box-body" -->
+        </div> <!-- /. class="box" -->
     @endif
 @endsection
 

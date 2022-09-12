@@ -33,17 +33,18 @@
                     <div class="box-body">
                         <div class="form-group col-md-4"> 
                             <label>Periodo: {{ $start_date .' / '.$end_date }}</label>
-                        </div>
+                        </div> <!-- /. class="form-group col-md-4" -->
                         <div class="form-group col-md-8">
                             <label for="start_date"> Fecha Inicial: </label>
                             <input type="date" name="start_date" id="start_date">
                             <label for="end_date"> Fecha Final: </label>
                             <input type="date" name="end_date" id="end_date">
                             <button type="submit" class="btn btn-primary btn-sm"> Buscar </button>
-                        </div>
-                    </div>
+                        </div> <!-- /. class="form-group col-md-8" -->
+                    </div> <!-- /. class="box-body" -->
                 </form>
-            </div>
+            </div> <!-- /. class="box-header" -->
+
             <div class="box-body">
                 <table id="salesTable" class="table table-condensed text-center">
                     <thead>
@@ -84,11 +85,10 @@
                             </tr>
                         @endforeach
                     </tbody>
-                    <tfoot>
-                    </tfoot>
-                </table>
+                </table> <!-- /. id="salesTable" -->
 
                 <hr><hr>
+
                 <table id="totalTable" class="table table-condensed text-center">
                     <thead>
                         <tr class="info">
@@ -116,10 +116,10 @@
                             <td width="10%">{{ '$ '.$totals['comissions'] }}</td> <!-- COMISIONES -->
                         </tr>
                     </tbody>
-                </table>
-            </div> {{-- /BODY --}}
-            <div class="box-footer"> </div>
-        </div>
+                </table> <!-- /. id="totalTable" -->
+            </div> <!-- /. class="box-body" -->
+
+        </div> <!-- /. class="box" -->
     @endif
 @endsection
 

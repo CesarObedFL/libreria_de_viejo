@@ -17,6 +17,7 @@
 
   <body class="hold-transition login-page">
     <div class="login-box">
+      
       <div class="login-logo">
         <a href="{{ route('home') }}"><span class="logo-lg"><b>Librería</b><i>De</i><b>Viejo</b></span></a>
       </div>
@@ -41,10 +42,12 @@
                 </div>
             </div>
         </form>
-      </div>
+      </div> <!-- /. class="login-box-body" -->
 
-    </div>
+    </div> <!-- /. class="login-box" -->
+
     <script src="{{ asset('bower_components/jquery/dist/jquery.min.js') }}"></script>
     <script src="{{ asset('bower_components/bootstrap/dist/js/bootstrap.min.js') }}"></script>
-  </body>
+
+  </body> <!-- /. class="hold-transition login-page" -->
 </html>

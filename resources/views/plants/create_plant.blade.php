@@ -16,20 +16,20 @@
 			<div class="form-group col-md-12">
 				<label for="name"> Nombre: </label>
 				<input class="form-control" type="text" name="name" id="name" value="{{ old('name') }}">
-			</div>
+			</div> <!-- /. class="form-group col-md-12" -->
 			<div class="form-group">
 				<div class="col-md-8">
 					<label for="tips"> Recomendaciones: </label>
 					<input class="form-control" type="text" name="tips" id="tips" value="{{ old('tips') }}">
 				</div>
-			</div>
+			</div> <!-- /. class="form-group" -->
 			<div class="form-group">
 				<div class="col-md-4">
 					<label for="classification"> Clasificación: </label>
 	                <select class="form-control select2" style="width:100%;" name="classification_id" id="classification_id" value="{{ old('classification_id') }}">
 	                  	<option value="" selected="disabled"> </option>
-	                  	@foreach($CLASSES as $CLASS)
-	                  		<option value="{{ $CLASS->id }}"> {{ $CLASS->name }} </option>
+	                  	@foreach($classes as $class)
+	                  		<option value="{{ $class->id }}"> {{ $class->name }} </option>
 						@endforeach
 					</select>
             	</div>
@@ -44,7 +44,7 @@
 						<input class="form-control" type="text" name="price" id="price" value="{{ old('price') }}">
 					</div>
 				</div>
-			</div>
+			</div> <!-- /. class="form-group" -->
 			{{--
 			<div class="form-group">
 				<div class="col-md-6">
@@ -53,11 +53,12 @@
 				</div>
 			</div> 
 			--}}
-		</div>
+		</div> <!-- /. class="box-body" -->
+
 		<div class="box-footer">
 			<button type="submit" class="btn btn-primary btn-block"> Registrar </button>
 			<a class="btn btn-danger btn-block" href="{{ route('plants.index') }}"> Cancelar </a>
-		</div>
+		</div> <!-- /. class="box-footer" -->
 	</form>
 
 @endsection

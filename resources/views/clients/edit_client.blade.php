@@ -3,7 +3,12 @@
 @section('title', 'Edición de Clientes')
 
 @section('content-header')
-	<h1><div class="col-md-8"><strong> Edición de Clientes : {{ $client->id }} </strong></div></h1><hr>
+	<h1>
+		<div class="col-md-8">
+			<strong> Edición de Clientes : {{ $client->id }} </strong>
+		</div>
+	</h1>
+	<hr>
 @endsection
 
 @section('content')
@@ -17,12 +22,12 @@
 			<div class="form-group col-md-12">
 				<label for="name"> Nombre </label>
 				<input type="text" class="form-control" id="name" name="name" value="{{ $client->name }}">
-			</div>
+			</div> <!-- /. class="form-group col-md-12" -->
 			<div class="form-group">
 				<div class="col-md-4">
 					<label for="email"> E-Mail </label>
 					<input type="text" class="form-control" id="email" name="email" value="{{ $client->email }}">
-				</div>
+				</div> 
 				<div class="col-md-4">
 					<label for="phone"> Teléfono </label>
 					<input type="text" class="form-control" id="phone" name="phone" value="{{ $client->phone }}">
@@ -39,12 +44,12 @@
 					<label for="interests"> Intereses </label>
 					<input type="text" class="form-control" id="interests" name="interests" value="{{ $client->interests }}">
 				</div>
-			</div>
-		</div>
+			</div> <!-- /. class="form-group" -->
+		</div> <!-- /. class="box-body" -->
 		<div class="box-footer">
 			<button type="submit" class="btn btn-primary btn-block"> Guardar </button>
 			<a class="btn btn-danger btn-block" href="{{ route('clients.index') }}"> Cancelar </a>
-		</div>
+		</div> <!-- /. class="box-footer" -->
 	</form>
 
 @endsection

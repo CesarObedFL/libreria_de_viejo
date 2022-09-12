@@ -20,28 +20,49 @@ class SwapController extends Controller
         $this->middleware('auth');
     }
 
+    /**
+     * función para renderizar la lista de los intercambios de libros
+     * cuenta con un filtro de fechas
+     * 
+     * @param Request con el filtro de fechas a aplicar
+     * @return View con los intercambios filtrados y el filtro de las fechas aplicado
+     */
     public function index(Request $request)
     {
         $start_date = '2019-05-14';
         $end_date = Carbon::now()->toDateString();
-
-        $swaps = Swap::all();
 
         if(!is_null($request->start_date) && !empty($request->start_date) &&
             !is_null($request->end_date) && !empty($request->end_date)) {
             $start_date = $request->start_date;
             $end_date = $request->end_date;
             $swaps = Swap::whereBetween('date', [ $start_date, $end_date ])->get();
+
+        } else {
+            $swaps = Swap::all();
         }
         
         return view('swaps.index_swaps', [ 'swaps' => $swaps, 'start_date' => $start_date, 'end_date' => $end_date ]);
     }
 
+    /**
+     * función para renderizar la vista del formulario de creación de intercambios
+     * 
+     * @return View con el formulario
+     */
     public function create()
     {
         return view('swaps.create_swap');
     }
 
+    /**
+     * función para almacenar la información de los intercambios creados, 
+     * se guardan todos los libros intercambiados, tanto los salientes como los entrantes 
+     * y se decrementa e incrementa la cantidad disponible 
+     * 
+     * @param Request con la información a guardar
+     * @return Redirect hacía la vista de los detalles del intercambio creado
+     */
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(), [
@@ -76,15 +97,15 @@ class SwapController extends Controller
             $outgoing_books += $product->amount;
             
             // decrementar libros salientes
-            $newbb = Book::findOrFail($product->id)->stock - $product->amount;
-            Book::where('id', $product->id)->update(['stock' => $newbb]);
+            $new_stock = Book::findOrFail($product->id)->stock - $product->amount;
+            Book::where('id', $product->id)->update([ 'stock' => $new_stock ]);
         }
 
         $in_products = json_decode($request->get('inProducts'));
         $incoming_books = 0; 
         $status = '';
         foreach($in_products as $product) {
-            $book = DB::table('books')->where('ISBN',$product->isbn)->first();
+            $book = DB::table('books')->where('ISBN', $product->isbn)->first();
             if($book) {
                 $new_stock = $book->stock + $product->amount;
                 Book::where('ISBN', $product->isbn)->update(['stock' => $new_stock]);
@@ -124,11 +145,23 @@ class SwapController extends Controller
 
     }
 
+    /**
+     * función para mostrar los detalles de los intercambios
+     * 
+     * @param Integer con el $id del intercambio a detallar
+     * @return View con la información del intercambio
+     */
     public function show($id)
     {
         return view('swaps.show_swap', [ 'swap' => Swap::findOrFail($id) ]);
     }
 
+    /**
+     * función para renderizar el formulario de registro de los libros entrantes del intercambio que aún no se registran en la base de datos
+     * 
+     * @param Integer con el $id del intercambio que aún tiene libros por registrar
+     * @return View hacía el formulario de registro del libro o redirect hacía los detalles del intercambio
+     */
     public function edit($id)
     {
         $swap = Swap::findOrFail($id);
@@ -141,6 +174,13 @@ class SwapController extends Controller
         return redirect()->action( [ SwapController::class, 'show' ], $swap->id )->with('edit', 'No hay libros pendientes por registrar...');
     }
 
+    /**
+     * función para guardar la información de los libros intercambiados sin registrar
+     * 
+     * @param Request con la información del libro a registrar
+     * @param Integer con el $id del intercambio para modificar el estatus del libro a 'Registrado'
+     * @return Redirect hacía los detalles del intercambio con el mensaje de la operación
+     */
     public function update(Request $request, $id)
     {
         $validator = Validator::make($request->all(), [
@@ -166,15 +206,28 @@ class SwapController extends Controller
         return redirect()->action([ SwapController::class, 'show' ], $id )->with('edit', 'El libro pendiente se ha registrado exitosamente!...');
     }
 
+    /**
+     * función para eliminar los intercambios, no se usa
+     * 
+     * @param Integer con el $id del intercambio a elimnar
+     * @return Redirect hacía la lista de intercambios con el mensaje de la operación
+     */
     public function destroy($id)
     {
         Swap::findOrFail($id)->delete();
         return redirect()->action([ SwapController::class, 'index' ])->with('delete', 'El trueque se ha eliminado exitosamente!...');
     }
 
+    /**
+     * función para buscar los libros a intercambiar, salientes
+     * es empleada por el formulario de creación de intercambios
+     * funciona como una función API con GET
+     * 
+     * @param String con el $isbn del libro a intercambiar
+     * @return JSON con la información del libro
+     */
     public function searchbook($isbn) // out books
     {
-
         $book = DB::table('books')->where('ISBN', $isbn)->first();
         return response()->json([
             'id' => $book->id,

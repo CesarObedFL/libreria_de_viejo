@@ -21,17 +21,20 @@
           'autoWidth'   : true
         })
       })
-    </script>
+    </script> 
 @endsection
 
 @section('content-header')
 	<h1>
-		<div class="col-md-8"><strong>Lista de Clasificaciones</strong></div>
+		<div class="col-md-8">
+			<strong>Lista de Clasificaciones</strong>
+		</div>
 		<div class="col-md-4">
 			<a class="btn btn-success btn-block pull-right" href="{{ route('classifications.create') }}">
 			<i class="fa fa-pencil-square-o"></i> NUEVO REGISTRO </a>
 		</div>
-	</h1> <hr>
+	</h1> 
+	<hr>
 @endsection
 
 @section('content')
@@ -77,6 +80,6 @@
 	            </tr>
 	            @endforeach
 	        </tbody>
-		</table>
+		</table> <!-- /. id="classesTable" -->
 	@endif
 @endsection
