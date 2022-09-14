@@ -5,8 +5,8 @@
 @section('styles')
     <link rel="stylesheet" href="{{ asset('bower_components/datatables.net-bs/css/dataTables.bootstrap.min.css') }}">
     <style>
-        td.Recibida { background-color: rgba(0,188,212,0.5); }
-        td.Realizada { background-color: rgba(244,67,54,0.5); }
+        .Recibida { background-color: rgba(0,188,212,0.5); }
+        .Realizada { background-color: rgba(244,67,54,0.5); }
     </style>
 @endsection
 
@@ -80,7 +80,7 @@
                                 <td>{{ $donation->getDate() }}</td>
                                 <td>{{ $donation->amount }}</td>
                                 <td>{{ $donation->classification->name }}</td>
-                                <td class="{{ $donation->type }}">{{ $donation->type }}</td>
+                                <td><span class="badge badge-pill {{ $donation->type }}">{{ $donation->type }}</span></td>
                             </tr>
                         @endforeach
                     </tbody>

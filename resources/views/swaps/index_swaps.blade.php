@@ -6,8 +6,8 @@
     <link rel="stylesheet" href="{{ asset('bower_components/datatables.net-bs/css/dataTables.bootstrap.min.css') }}">
 
     <style>
-        td.Incompleto { background-color: rgba(244,67,54,0.5); }
-        td.Completo { background-color: rgba(76,175,80,0.5); }
+        .Incompleto { background-color: rgba(244,67,54,0.5); }
+        .Completo { background-color: rgba(76,175,80,0.5); }
     </style>
 @endsection
 
@@ -74,7 +74,7 @@
                                 <td>{{ $swap->incoming_books }}</td>
                                 <td>{{ $swap->outgoing_books }}</td>
                                 <td>{{ '$ '.$swap->amount_to_pay }}</td>
-                                <td class="{{ $swap->isComplete() }}">{{ $swap->isComplete() }}</td>
+                                <td><span class="badge badge-pill {{ $swap->isComplete() }}">{{ $swap->isComplete() }}</span></td>
                             </tr>
                         @endforeach
                     </tbody>

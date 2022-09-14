@@ -6,8 +6,8 @@
     <link rel="stylesheet" href="{{ asset('bower_components/datatables.net-bs/css/dataTables.bootstrap.min.css') }}">
 
     <style>
-        td.empty { background-color: rgba(244,67,54,0.5); }
-        td.full { background-color: rgba(76,175,80,0.5); }
+        .empty { background-color: rgba(244,67,54,0.5); }
+        .full { background-color: rgba(76,175,80,0.5); }
     </style>
 
 @endsection
@@ -99,7 +99,7 @@
                         <td>{{ $book->author }}</td>
                         <td>{{ $book->editorial }}</td>
                         <td>{{ $book->getLocation() }}</td>
-                        <td class="{{ $book->getStockState() }}">{{ $book->stock }}</td>
+                        <td><span class="badge badge-pill {{ $book->getStockState() }}">{{ $book->stock }}</span></td>
                     </tr>
                 @endforeach
             </tbody>

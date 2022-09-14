@@ -6,9 +6,9 @@
     <link rel="stylesheet" href="{{ asset('bower_components/datatables.net-bs/css/dataTables.bootstrap.min.css') }}">
 
     <style>
-        td.Activo { background-color: rgba(255,235,59,0.5); }
-        td.Vencido { background-color: rgba(244,67,54,0.5); }
-        td.Entregado { background-color: rgba(76,175,80,0.5); }
+        .Activo { background-color: rgba(255,235,59,0.5); }
+        .Vencido { background-color: rgba(244,67,54,0.5); }
+        .Entregado { background-color: rgba(76,175,80,0.5); }
     </style>
 
 @endsection
@@ -99,7 +99,7 @@
                                 <td>{{ $borrow->client->name }}</td>
                                 <td>{{ $borrow->getDays() }}</td>
                                 <td>{{ '$ '.$borrow->getOwed() }}</td>
-                                <td class="{{ $borrow->getCondition() }}">{{ $borrow->getCondition() }}</td>
+                                <td><span class="badge badge-pill {{ $borrow->getCondition() }}">{{ $borrow->getCondition() }}</span></td>
                             </tr>
                         @endforeach
                     </tbody>

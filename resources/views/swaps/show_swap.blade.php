@@ -2,6 +2,13 @@
 
 @section('title', 'Trueque')
 
+@section('styles')
+    <style>
+        .SinRegistro { background-color: rgba(244,67,54,0.5); }
+        .Registrado { background-color: rgba(76,175,80,0.5); }
+    </style>
+@endsection
+
 @section('content-header')
     <h1><div class="col-md-8"><strong>Info. del Trueque</strong></div></h1><hr>
 @endsection
@@ -31,7 +38,9 @@
 
                 <div class="col-md-6"> {{-- LIBROS ENTRANTES Y SALIENTES --}}
                     <div class="box-group" id="accordion">
-                        <div class="box-title">Libros Intercambiados </div>
+                        <div class="box-title">
+                            Libros Intercambiados 
+                        </div> <!-- /. class="box-title" -->
                         <div class="panel box box-primary">
                             <div class="box-header with-border">
                                 <div class="pull-right">
@@ -44,7 +53,7 @@
                                 <div class="box-body">
                                     <dl class="dl-horizontal">
                                         @foreach($swap->inbooks as $bbook)
-                                            <dt>Título: </dt><dd>{{ $bbook->book->title }} - {{ $bbook->status }}</dd>
+                                            <dt>Título: </dt><dd>{{ $bbook->book->title }} <span class="badge badge-pill {{ ($bbook->status == 'Registrado') ? 'Registrado' : 'SinRegistro' }}">{{ $bbook->status }}</span></dd>
                                         @endforeach
                                     </dl>
                                 </div> <!-- /. class="box-body" -->
@@ -61,7 +70,7 @@
                                 <div class="box-body">
                                     <dl class="dl-horizontal">
                                         @foreach($swap->outbooks as $bbook)
-                                            <dt>Título:</dt><dd>{{ $bbook->book->title }}</dd>
+                                            <dt>Título: </dt><dd>{{ $bbook->book->title }}</dd>
                                         @endforeach
                                     </dl>
                                 </div> <!-- /. class="box-body" -->
