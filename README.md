@@ -35,7 +35,7 @@ Fue elaborado para la Fundación [casacem]
 
 ## _requerimientos_
 
-- php ^7.3
+- php ^8.1
 - composer ^2.2.4 
 
 ## _instalación_
