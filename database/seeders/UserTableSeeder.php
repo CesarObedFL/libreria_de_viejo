@@ -12,8 +12,8 @@ class UserTableSeeder extends Seeder
     {
         User::create([
             'name' => 'César Obed Figueroa Luna',
-            'email' => 'test@test.com',
-            'password' => bcrypt('secret'),
+            'email' => 'cesar@test.com',
+            'password' => bcrypt('12345678'),
             'phone' => '0011223344',
             'role' => 'Administrador',
             'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
