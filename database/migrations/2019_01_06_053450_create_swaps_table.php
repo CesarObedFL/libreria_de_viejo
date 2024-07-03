@@ -15,7 +15,7 @@ class CreateSwapsTable extends Migration
             $table->foreignId('user_id')->constrained();
             $table->unsignedInteger('incoming_books');
             $table->unsignedInteger('outgoing_books');
-            $table->unsignedDecimal('amount_to_pay', 6, 2);
+            $table->decimal('amount_to_pay', total: 6, places: 2); 
         });
     }
 

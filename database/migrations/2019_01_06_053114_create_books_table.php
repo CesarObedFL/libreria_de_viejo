@@ -19,7 +19,7 @@ class CreateBooksTable extends Migration
             $table->foreignId('classification_id')->constrained(); 
             $table->unsignedInteger('location'); // FEATURE
             $table->unsignedInteger('stock'); // FEATURE
-            $table->unsignedDecimal('price', 6, 2); // FEATURE
+            $table->decimal('price', total: 6, places: 2); // FEATURE
             $table->unsignedInteger('borrowed_books')->default(0); // FEATURE
             $table->string('genre', 20)->nullable();
             $table->string('collection', 20)->nullable();

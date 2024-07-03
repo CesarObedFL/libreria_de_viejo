@@ -12,7 +12,7 @@ class CreatePlantsTable extends Migration
         Schema::create('plants', function (Blueprint $table) {
             $table->id();
             $table->string('name', 30);
-            $table->unsignedDecimal('price', 5, 2);
+            $table->decimal('price', total: 5, places: 2);
             $table->string('image_path', 30)->nullable();
             $table->string('tips', 50);
             $table->unsignedInteger('stock');

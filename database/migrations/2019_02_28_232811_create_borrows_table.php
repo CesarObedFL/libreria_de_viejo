@@ -16,7 +16,7 @@ class CreateBorrowsTable extends Migration
             $table->date('in_date');
             $table->foreignId('client_id')->constrained();
             $table->foreignId('user_id')->constrained();
-            $table->unsignedDecimal('amount');
+            $table->decimal('amount', total: 8, places: 2);
             $table->enum('status', [ 'Activo', 'Entregado' ])->default('Activo');
         });
     }

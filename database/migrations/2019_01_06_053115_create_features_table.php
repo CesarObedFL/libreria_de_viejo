@@ -17,7 +17,7 @@ class CreateFeaturesTable extends Migration
             $table->unsignedInteger('location');
             $table->enum('place', [ 'Libreria', 'Almacén', 'Exhibición', 'Bazar' ]); // lugar donde se encuentra actualmente el libro
             $table->string('language', 20)->default('español');
-            $table->unsignedDecimal('price', 6, 2);
+            $table->decimal('price', total: 6, places: 2);
             $table->enum('status', [ 'Disponible', 'Prestado' ])->default('Disponible');
             $table->unsignedInteger('stock');
         });

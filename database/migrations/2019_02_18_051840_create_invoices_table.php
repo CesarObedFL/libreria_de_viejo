@@ -15,9 +15,9 @@ class CreateInvoicesTable extends Migration
             $table->date('date');
             $table->enum('shift', [ 'M', 'V', 'S', 'D' ]);
             $table->foreignId('client_id')->constrained(); 
-            $table->unsignedDecimal('subtotal', 8, 2);
-            $table->unsignedDecimal('total', 8, 2);
-            $table->unsignedDecimal('received', 8, 2);
+            $table->decimal('subtotal', total: 8, places: 2); 
+            $table->decimal('total',  total: 8, places: 2); 
+            $table->decimal('received', total: 8, places: 2); 
         });
     }
 

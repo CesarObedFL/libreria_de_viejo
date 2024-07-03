@@ -13,8 +13,8 @@ class CreatePaymentsTable extends Migration
             $table->id();
             $table->foreignId('user_id')->constrained();
             $table->date('date');
-            $table->unsignedDecimal('amount', 8, 2);
-            $table->unsignedDecimal('owed', 8, 2);
+            $table->decimal('amount', total: 8, places: 2);
+            $table->decimal('owed', total: 8, places: 2);
         });
     }
 
